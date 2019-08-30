@@ -211,4 +211,16 @@ public interface HisService {
      */
     QueryResult<List<OutpatientExpensesBillDto>> getHISPrePayOutpatientExpensesBillList(OutpatientExpensesBillDto outpatientExpensesBillDto) throws HisException;
 
+
+    /**
+     *  No.24 ：30-8：门诊缴费：此接口用于HIS中的门诊收费
+     *
+     *
+     * @param outpatientPaymentDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<OutpatientPaymentDto> getHISOutpatientPayment(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+
+
 }
