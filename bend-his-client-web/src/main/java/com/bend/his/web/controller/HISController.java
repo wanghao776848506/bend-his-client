@@ -1,0 +1,440 @@
+package com.bend.his.web.controller;
+
+import com.bend.his.bean.entity.*;
+import com.bend.his.common.result.QueryResult;
+import com.bend.his.constant.TradeCode;
+import com.bend.his.exception.HisException;
+import com.bend.his.service.HisService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Api(description = "HIS接口", value = "", tags = {"HIS接口"})
+@RestController
+public class HISController {
+
+    @Resource
+    private HisService hisService;
+
+
+    /**
+     * 登录验证
+     *
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "01 登录验证", notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
+            @ApiImplicitParam(name = "memberName", value = "用户名"),
+            @ApiImplicitParam(name = "password", value = "密码"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号")
+    })
+    @PostMapping("his/auth")
+    public ResponseEntity<AuthenticationDto> getHISAuth(@RequestBody AuthenticationDto authenticationDto) throws HisException {
+        QueryResult<AuthenticationDto> result = hisService.getHISAuth(authenticationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 03 医院综合目录查询
+     *
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "03 医院综合目录查询(科室、医生、病区、床位)", notes = "此接口用于获取HIS系统中科室、医师、病区、床位的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_03),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryName", value = "目录名称")
+    })
+    @PostMapping("his/comprehensive/catalogue")
+    public ResponseEntity<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(@RequestBody ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
+        QueryResult<List<ComprehensiveCatalogueDto>> result = hisService.getHISComprehensiveCatalogue(comprehensiveCatalogueDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+
+    /**
+     * 05 医院三大目录查询
+     *
+     * @param hospitalThreeCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "05 医院三大目录查询(药品、诊疗、耗材)", notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_05),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryName", value = "目录名称"),
+            @ApiImplicitParam(name = "beginRowNum", value = "开始行数"),
+            @ApiImplicitParam(name = "endRowNum", value = "结束行数"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/three/catalogue")
+    public ResponseEntity<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogue(@RequestBody HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException {
+        QueryResult<List<HospitalThreeCatalogueDto>> result = hisService.getHISHospitalThreeCatalogue(hospitalThreeCatalogueDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * @param hospitalThreeCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "06 医院三大目录行数(药品、诊疗、耗材)", notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的行数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_06),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryName", value = "目录名称"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/three/catalogue/rows")
+    public ResponseEntity<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogueRows(@RequestBody HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException {
+        QueryResult<List<HospitalThreeCatalogueDto>> result = hisService.getHISHospitalThreeCatalogueRows(hospitalThreeCatalogueDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * ICD10数据查询
+     *
+     * @param icd10Dto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "07 ICD10数据查询", notes = "此接口用于获取HIS系统中ICD10的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_07),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "diseaseName", value = "病种名称"),
+            @ApiImplicitParam(name = "diseaseCategory", value = "疾病类别"),
+            @ApiImplicitParam(name = "beginRowNum", value = "开始行数"),
+            @ApiImplicitParam(name = "endRowNum", value = "结束行数"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间")
+    })
+    @PostMapping("his/hospital/icd10/list")
+    public ResponseEntity<List<ICD10Dto>> getHISHospitalICD10(@RequestBody ICD10Dto icd10Dto) throws HisException {
+        QueryResult<List<ICD10Dto>> result = hisService.getHISHospitalICD10(icd10Dto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 08 ICD10数据行数
+     *
+     * @param icd10Dto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "08 ICD10数据行数 ", notes = "此接口用于获取HIS系统中ICD10数据的行数")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_08),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "diseaseName", value = "病种名称"),
+            @ApiImplicitParam(name = "diseaseCategory", value = "疾病类别"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间")
+    })
+    @PostMapping("his/hospital/icd10/rows")
+    public ResponseEntity<List<ICD10Dto>> getHISHospitalICD10Rows(@RequestBody ICD10Dto icd10Dto) throws HisException {
+        QueryResult<List<ICD10Dto>> result = hisService.getHISHospitalICD10Rows(icd10Dto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "10 住院病人信息查询", notes = "此接口用于获取HIS系统中住院病人的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_10),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "state", value = "状态"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间")
+    })
+    @PostMapping("his/hospital/inpatient/list")
+    public ResponseEntity<List<InpatientDto>> getHISInpatientList(@RequestBody InpatientDto inpatientDto) throws HisException {
+        QueryResult<List<InpatientDto>> result = hisService.getHISInpatientList(inpatientDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "12 门诊病人信息查询", notes = "此接口用于获取HIS系统中住院病人的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_12),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间")
+    })
+    @PostMapping("his/hospital/outpatient/list")
+    public ResponseEntity<List<OutpatientDto>> getHISOutpatientList(@RequestBody OutpatientDto outpatientDto) throws HisException {
+        QueryResult<List<OutpatientDto>> result = hisService.getHISOutpatientList(outpatientDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 13 中途结算记录查询
+     *
+     * @param hospitalizationSettlementDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "13 中途结算记录查询", notes = "此接口用于获取HIS系统中住院病人的结算信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_13),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "hospitalizationNo", value = "住院号")
+    })
+    @PostMapping("his/hospital/halfway/settlement/list")
+    public ResponseEntity<List<HospitalizationSettlementDto>> getHISHospitalizationSettlement(@RequestBody HospitalizationSettlementDto hospitalizationSettlementDto) throws HisException {
+        QueryResult<List<HospitalizationSettlementDto>> result = hisService.getHISHospitalizationSettlement(hospitalizationSettlementDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 住院费用明细查询
+     *
+     * @param hospitalizationFeeDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "14 住院费用明细查询", notes = "此接口用于获取HIS系统中住院费用明细的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_14),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "hospitalizationNo", value = "住院号"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间"),
+            @ApiImplicitParam(name = "state", value = "状态")
+    })
+    @PostMapping("his/hospital/hospitalization/fee/detail")
+    public ResponseEntity<List<HospitalizationFeeDto>> getHISHospitalizationFee(@RequestBody HospitalizationFeeDto hospitalizationFeeDto) throws HisException {
+        QueryResult<List<HospitalizationFeeDto>> result = hisService.getHISHospitalizationFee(hospitalizationFeeDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+
+    /**
+     * 16 门诊费用明细查询
+     */
+    @ApiOperation(value = "16 门诊费用明细查询", notes = "此接口用于获取HIS系统中门诊费用明细的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_16),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "outpatientNumber", value = "门诊号")
+    })
+    @PostMapping("his/hospital/outpatient/fee/detail")
+    public ResponseEntity<List<OutpatientFeeDto>> getHISOutpatientFee(@RequestBody OutpatientFeeDto outpatientFeeDto) throws HisException {
+        QueryResult<List<OutpatientFeeDto>> result = hisService.getHISOutpatientFee(outpatientFeeDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * @param hospitalOrganizationDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30 医疗机构信息查询", notes = "此接口用于获取HIS系统中医疗机构的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "hospitalName", value = "医院名称")
+    })
+    @PostMapping("his/hospital/organization/detail")
+    public ResponseEntity<List<HospitalOrganizationDto>> getHISHospitalInstitutionDetail(@RequestBody HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
+        QueryResult<List<HospitalOrganizationDto>> result = hisService.getHISHospitalInstitutionDetail(hospitalOrganizationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * @param hospitalOrganizationDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30-100 机构信息获取", notes = "此接口用于获取HIS系统中 的乡镇卫生院和社区服务中心列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_100),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationName", value = "机构名称")
+    })
+    @PostMapping("his/hospital/organization/list")
+    public ResponseEntity<List<HospitalOrganizationDto>> getHISHospitalInstitutionList(@RequestBody HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
+        QueryResult<List<HospitalOrganizationDto>> result = hisService.getHISHospitalInstitutionList(hospitalOrganizationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 30-99 获取机构支付方式列表
+     */
+    @ApiOperation(value = "30-99 获取机构支付方式列表", notes = "此接口用于获取HIS系统中机构支付方式列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_99),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationID", value = "机构ID")
+    })
+    @PostMapping("his/hospital/payment/list")
+    public ResponseEntity<List<HospitalPaymentDto>> getHISHospitalPaymentList(@RequestBody HospitalPaymentDto hospitalPaymentDto) throws HisException {
+        QueryResult<List<HospitalPaymentDto>> result = hisService.getHISHospitalPaymentList(hospitalPaymentDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 30-98 获取挂号费用类型列表
+     */
+    @ApiOperation(value = "30-98 获取挂号费用类型列表", notes = "此接口用于获取HIS系统中挂号费用类型列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_98),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+    })
+    @PostMapping("his/hospital/registration/feeType/list")
+    public ResponseEntity<List<RegistrationFeeTypeDto>> getHISPatientRegistrationList(@RequestBody RegistrationFeeTypeDto registrationFeeTypeDto) throws HisException {
+        QueryResult<List<RegistrationFeeTypeDto>> result = hisService.getHISPatientRegistrationList(registrationFeeTypeDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "30-1 查询挂号模板", notes = "此接口用于获取HIS系统中挂号费用类型列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/registration/template/list")
+    public ResponseEntity<List<RegistrationTemplateDto>> getHISHospitalRegistrationTemplateList(@RequestBody RegistrationTemplateDto registrationTemplateDto) throws HisException {
+        QueryResult<List<RegistrationTemplateDto>> result = hisService.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * @param hospitalSectionDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30-2 查询挂号模板下科室", notes = "此接口用于获取HIS系统中挂号模板下科室")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_2),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "templateId", value = "模板ID")
+    })
+    @PostMapping("his/hospital/registration/section/list")
+    public ResponseEntity<List<HospitalSectionDto>> getHISHospitalRegistrationSectionList(@RequestBody HospitalSectionDto hospitalSectionDto) throws HisException {
+        QueryResult<List<HospitalSectionDto>> result = hisService.getHISHospitalRegistrationSectionList(hospitalSectionDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 查询科室下医生
+     *
+     * @param doctorDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30-3 查询科室下医生", notes = "此接口用于获取HIS科室下医生")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_3),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "sectionId", value = "科室编码或科室ID")
+    })
+    @PostMapping("his/hospital/doctor/list")
+    public ResponseEntity<List<DoctorDto>> getHISSectionDoctorList(@RequestBody DoctorDto doctorDto) throws HisException {
+        QueryResult<List<DoctorDto>> result = hisService.getHISSectionDoctorList(doctorDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "30-4 门诊挂号", notes = "保存挂号信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_4),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "patientName", value = "病人姓名"),
+            @ApiImplicitParam(name = "patientSex", value = "病人性别"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
+            @ApiImplicitParam(name = "userId", value = "收费人员ID"),
+            @ApiImplicitParam(name = "fee", value = "金额"),
+            @ApiImplicitParam(name = "costTypeId", value = "费用类型ID"),
+            @ApiImplicitParam(name = "templateId", value = "模板ID"),
+            @ApiImplicitParam(name = "sectionId", value = "科室ID"),
+            @ApiImplicitParam(name = "doctorId", value = "医生ID"),
+            @ApiImplicitParam(name = "paymentList", value = "缴费方式列表"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商唯一标识"),
+            @ApiImplicitParam(name = "paySerialNumber", value = "缴费流水号")
+    })
+    @PostMapping("his/hospital/registration")
+    public ResponseEntity<List<RegistrationDto>> getHISRegistration(@RequestBody RegistrationDto registrationDto) throws HisException {
+        QueryResult<List<RegistrationDto>> result = hisService.getHISRegistration(registrationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 退挂号
+     *
+     * @param registrationDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30-5 退挂号", notes = "此接口用于厂商在HIS系统中退挂号")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_5),
+            @ApiImplicitParam(name = "registrationId", value = "挂号ID"),
+            @ApiImplicitParam(name = "userId", value = "收费人员ID"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商唯一标识")
+    })
+    @PostMapping("his/hospital/withdrawal/registration")
+    public ResponseEntity<String> getHISWithdrawalRegistration(@RequestBody RegistrationDto registrationDto) throws HisException {
+        QueryResult<String> result = hisService.getHISWithdrawalRegistration(registrationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 30-6 查询挂号记录
+     */
+    @ApiOperation(value = "30-6 查询挂号记录", notes = "此接口用于获取HIS系统中的挂号记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_6),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
+            @ApiImplicitParam(name = "beginTime", value = "开始日期"),
+            @ApiImplicitParam(name = "endTime", value = "结束日期"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/registration/record")
+    public ResponseEntity<List<RegistrationDto>> getHISRegistrationRecord(@RequestBody RegistrationDto registrationDto) throws HisException {
+        QueryResult<List<RegistrationDto>> result = hisService.getHISRegistrationRecord(registrationDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 30-7 待缴费门诊费用清单查询
+     */
+    @ApiOperation(value = "30-7 待缴费门诊费用清单查询", notes = "此接口用于获取HIS系统中的费用清单")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_7),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "registrationId", value = "挂号ID")
+    })
+    @PostMapping("his/hospital/prepay/outpatient/expenses/bill/List")
+    public ResponseEntity<List<OutpatientExpensesBillDto>> getHISPrePayOutpatientExpensesBillList(@RequestBody OutpatientExpensesBillDto outpatientExpensesBillDto) throws HisException {
+        QueryResult<List<OutpatientExpensesBillDto>> result = hisService.getHISPrePayOutpatientExpensesBillList(outpatientExpensesBillDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+}

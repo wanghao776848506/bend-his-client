@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+  <!--
+
+此文件是由 JavaTM Architecture for XML Binding (JAXB) 引用实现 v2.3.0 生成的
+请访问 <a href="https://javaee.github.io/jaxb-v2/">https://javaee.github.io/jaxb-v2/</a> 
+在重新编译源模式时, 对此文件的所有修改都将丢失。
+生成时间: 2019.08.29 时间 11:32:14 AM CST 
+
+  -->
+  <bindings xmlns:tns="http://tempuri.org/" if-exists="true" scd="x-schema::tns">
+    <schemaBindings map="false">
+      <package name="com.bend.his.wsdl"/>
+    </schemaBindings>
+    <bindings if-exists="true" scd="tns:HIS_Interface">
+      <class ref="com.bend.his.wsdl.HISInterface"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:HIS_InterfaceResponse">
+      <class ref="com.bend.his.wsdl.HISInterfaceResponse"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:HIPMessageServer">
+      <class ref="com.bend.his.wsdl.HIPMessageServer"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:HIPMessageServerResponse">
+      <class ref="com.bend.his.wsdl.HIPMessageServerResponse"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_HIS_05">
+      <class ref="com.bend.his.wsdl.TCMHIS05"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_HIS_05Response">
+      <class ref="com.bend.his.wsdl.TCMHIS05Response"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_HIS_06">
+      <class ref="com.bend.his.wsdl.TCMHIS06"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_HIS_06Response">
+      <class ref="com.bend.his.wsdl.TCMHIS06Response"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_AE_04">
+      <class ref="com.bend.his.wsdl.TCMAE04"/>
+    </bindings>
+    <bindings if-exists="true" scd="tns:TCM_AE_04Response">
+      <class ref="com.bend.his.wsdl.TCMAE04Response"/>
+    </bindings>
+  </bindings>
+</bindings>
