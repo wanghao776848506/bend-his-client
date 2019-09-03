@@ -47,6 +47,34 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <profiles>
+        <profile>
+            <!-- 本地开发环境 -->
+            <id>dev</id>
+            <properties>
+                <profiles.active>dev</profiles.active>
+            </properties>
+            <activation>
+                <!-- 设置默认激活这个配置 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <!-- 发布环境 -->
+            <id>online</id>
+            <properties>
+                <profiles.active>online</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 测试环境 -->
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencies>
         <!-- 生成wsdl文件 -->
         <dependency>
@@ -80,9 +108,28 @@
 
 
     <build>
+        <finalName>${project.artifactId}</finalName>
+
         <!-- Used for packaging NOTICE & LICENSE to each sub-module jar-->
         <resources>
+
+            <!-- 先指定 src/main/resources下所有文件及文件夹为资源文件 -->
             <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}/classes</targetPath>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <!-- 根据env部署环境值，把对应环境的配置文件拷贝到classes目录 -->
+            <resource>
+                <directory>src/main/${env}</directory>
+                <targetPath>${project.build.directory}/classes</targetPath>
+                <filtering>true</filtering>
+            </resource>
+
+            <!--<resource>
                 <directory>src/main/resources/</directory>
                 <filtering>false</filtering>
             </resource>
@@ -94,7 +141,7 @@
                     <include>NOTICE</include>
                     <include>LICENSE</include>
                 </includes>
-            </resource>
+            </resource>-->
         </resources>
         <plugins>
             <!-- tag::wsdl[] -->
