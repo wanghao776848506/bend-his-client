@@ -213,14 +213,23 @@ public interface HisService {
 
 
     /**
-     *  No.24 ：30-8：门诊缴费：此接口用于HIS中的门诊收费
-     *
+     * No.24 ：30-8：门诊缴费：此接口用于HIS中的门诊收费
      *
      * @param outpatientPaymentDto
      * @return
      * @throws HisException
      */
     QueryResult<OutpatientPaymentDto> getHISOutpatientPayment(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+
+
+    /**
+     * No.25：30-81:已缴费列表获取:此接口用于获取HIS系统中门诊缴费记录
+     *
+     * @param outpatientPaymentDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<OutpatientPaymentDto> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
 
 
 }

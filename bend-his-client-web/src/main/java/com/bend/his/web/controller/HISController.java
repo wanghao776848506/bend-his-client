@@ -456,4 +456,17 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
+    @ApiOperation(value = "30-81 已缴费列表获取", notes = "此接口用于获取HIS系统中门诊缴费记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_81),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "门诊ID")
+    })
+    @PostMapping("his/hospital/outpatient/paid/list")
+    public ResponseEntity<OutpatientPaymentDto> getHISOutpatientPaidList(@RequestBody OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+        QueryResult<OutpatientPaymentDto> result = hisService.getHISOutpatientPayment(outpatientPaymentDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+
 }

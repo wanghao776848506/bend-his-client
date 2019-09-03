@@ -22,7 +22,13 @@ import java.util.List;
 @ApiModel(description = "门诊缴费")
 public class OutpatientPaymentDto extends AbstractBaseEntity {
 
-    /*----------------*/
+    /*--------request params--------*/
+
+    /*门诊ID在其他接口里面也就是业务ID*/
+    @ApiModelProperty(notes = "业务ID/门诊ID")
+    @JSONField(name = "门诊ID")
+    private String businessId;
+
     @ApiModelProperty(notes = "处方ID/处方IDS,多处方ID用,分隔")
     @JSONField(name = "处方IDS")
     private String recipeIds;
@@ -61,12 +67,22 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "收费记录ID")
     @JSONField(name = "收费记录ID")
     private String chargeRecordId;
-
+    /*返回值：key不一致的情况*/
+    @ApiModelProperty(notes = "记录ID/收费记录ID")
+    @JSONField(name = "记录ID")
+    private String recordId;
+    /*与收费人员ID对应*/
+    @ApiModelProperty(notes = "操作员")
+    @JSONField(name = "操作员")
+    private String userName;
 
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
+        /*param1*/
+        inputJson.put("门诊ID", this.getBusinessId());
+        /*param2*/
         inputJson.put("处方IDS", this.getRecipeIds());
         inputJson.put("收费人员ID", this.getUserId());
         inputJson.put("机构ID", this.getOrganizationID());

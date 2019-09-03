@@ -17,7 +17,7 @@ public class AbstractBaseEntity implements Serializable {
     @JSONField(name = "交易编号")
     protected String tradeCode;
 
-    @ApiModelProperty(notes = "验证码-认证")
+    @ApiModelProperty(notes = "验证码/授权码")
     @JSONField(name = "验证码")
     protected String authCode;
 
