@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院三大目录查询(药品、诊疗、耗材)")
+@ApiModel(value = "HospitalThreeCatalogueDto - 医院三大目录查询(药品、诊疗、耗材)",description = "医院三大目录查询(药品、诊疗、耗材)")
 public class HospitalThreeCatalogueDto extends AbstractBaseEntity{
     /*request params*/
     /*0中药、1、西药、2诊疗、3耗材*/

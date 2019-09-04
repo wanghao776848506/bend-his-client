@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "门诊费用清单")
+@ApiModel(value = "OutpatientExpensesBillDto - 门诊费用清单",description = "门诊费用清单")
 public class OutpatientExpensesBillDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "挂号ID")

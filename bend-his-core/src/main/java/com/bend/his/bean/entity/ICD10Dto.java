@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "ICD10")
+@ApiModel(value = "ICD10Dto - ICD10标准病种",description = "ICD10")
 public class ICD10Dto extends AbstractBaseEntity{
 
     @ApiModelProperty(notes = "病种名称")

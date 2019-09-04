@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 
 /**
  * 医院综合目录查询(科室、医生、病区、床位)
+ *
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院综合目录查询")
+@ApiModel(value = "ComprehensiveCatalogueDto - 医院综合目录",description = "医院综合目录查询")
 public class ComprehensiveCatalogueDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")

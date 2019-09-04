@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "挂号费用类型")
+@ApiModel(value = "RegistrationFeeTypeDto - 挂号费用类型",description = "挂号费用类型")
 public class RegistrationFeeTypeDto extends AbstractBaseEntity {
 
     /*response data*/

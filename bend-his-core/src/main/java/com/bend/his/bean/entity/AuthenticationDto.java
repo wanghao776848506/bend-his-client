@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "登录认证数据")
+@ApiModel(value = "AuthenticationDto - 登录认证数据",description = "登录认证数据")
 public class AuthenticationDto extends AbstractBaseEntity {
 
     /*params*/

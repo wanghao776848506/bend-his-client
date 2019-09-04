@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医生")
+@ApiModel(value = "DoctorDto - 医生",description = "医生")
 public class DoctorDto extends AbstractBaseEntity{
 
     /*request params*/

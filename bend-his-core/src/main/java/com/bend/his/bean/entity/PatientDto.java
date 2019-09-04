@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "病人或患者")
+@ApiModel(value = "PatientDto - 病人或患者 ",description = "病人或患者")
 public class PatientDto extends AbstractBaseEntity{
 
     @ApiModelProperty(notes = "病人姓名")

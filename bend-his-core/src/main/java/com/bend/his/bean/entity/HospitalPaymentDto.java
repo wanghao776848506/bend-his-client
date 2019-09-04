@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院机构支付方式")
+@ApiModel(value = "HospitalPaymentDto - 医院机构支付方式",description = "医院机构支付方式")
 public class HospitalPaymentDto extends AbstractBaseEntity{
     /*request params*/
     @ApiModelProperty(notes = "机构ID")

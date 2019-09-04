@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院科室")
+@ApiModel(value = "HospitalSectionDto - 医院科室",description = "医院科室")
 public class HospitalSectionDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")

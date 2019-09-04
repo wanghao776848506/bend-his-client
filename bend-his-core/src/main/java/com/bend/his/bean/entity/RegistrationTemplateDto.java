@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院挂号模板")
+@ApiModel(value = "RegistrationTemplateDto - 医院挂号模板",description = "医院挂号模板")
 public class RegistrationTemplateDto extends AbstractBaseEntity{
 
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")

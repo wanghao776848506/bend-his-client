@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "机构支付账户")
+@ApiModel(value = "PayAccountBO - 机构支付账户",description = "机构支付账户")
 public class PayAccountBO {
 
     @ApiModelProperty(notes = "账户名字")

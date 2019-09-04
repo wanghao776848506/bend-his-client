@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "门诊挂号")
+@ApiModel(value = "RegistrationDto - 门诊挂号",description = "门诊挂号")
 public class RegistrationDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "病人姓名")

@@ -231,5 +231,13 @@ public interface HisService {
      */
     QueryResult<OutpatientPaymentDto> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
 
+    /**
+     * No.26 30-82：获取缴费清单明细：此接口用于获取HIS中的缴费清单明细
+     * @param outpatientPaymentDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<OutpatientPaymentDto> getHISOutpatientBillDetail(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+
 
 }

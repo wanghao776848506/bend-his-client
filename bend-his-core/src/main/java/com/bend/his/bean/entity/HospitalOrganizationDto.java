@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "医院机构信息")
+@ApiModel(value = "HospitalOrganizationDto - 医院机构信息",description = "医院机构信息")
 public class HospitalOrganizationDto extends AbstractBaseEntity {
     /*request params*/
     @ApiModelProperty(notes = "医院名称")

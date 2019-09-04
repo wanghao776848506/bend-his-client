@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "门诊费用明细")
+@ApiModel(value = "OutpatientFeeDto - 门诊费用明细",description = "门诊费用明细")
 public class OutpatientFeeDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "业务ID")
