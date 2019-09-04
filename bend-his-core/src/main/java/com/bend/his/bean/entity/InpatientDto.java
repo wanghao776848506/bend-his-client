@@ -84,11 +84,11 @@ public class InpatientDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "入院科室")
     @JSONField(name = "入院科室")
-    private String inSectionName;
+    private String inDepartmentName;
 
     @ApiModelProperty(notes = "入院科室编码")
     @JSONField(name = "入院科室编码")
-    private String inSectionId;
+    private String inDepartmentId;
 
     @ApiModelProperty(notes = "入院诊断医生")
     @JSONField(name = "入院诊断医生")
@@ -136,11 +136,11 @@ public class InpatientDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "出院科室名称")
     @JSONField(name = "出院科室名称")
-    private String leaveSectionName;
+    private String leaveDepartmentName;
 
     @ApiModelProperty(notes = "出院科室编码")
     @JSONField(name = "出院科室编码")
-    private String leaveSectionId;
+    private String leaveDepartmentId;
 
     @ApiModelProperty(notes = "出院病区")
     @JSONField(name = "出院病区")

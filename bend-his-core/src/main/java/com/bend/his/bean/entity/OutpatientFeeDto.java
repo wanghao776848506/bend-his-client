@@ -112,11 +112,11 @@ public class OutpatientFeeDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "开单科室名称")
     @JSONField(name = "开单科室名称")
-    private String billSectionName;
+    private String billDepartmentName;
 
     @ApiModelProperty(notes = "开单科室编码")
     @JSONField(name = "开单科室编码")
-    private String billSectionId;
+    private String billDepartmentId;
 
     @ApiModelProperty(notes = "开单医生姓名")
     @JSONField(name = "开单医生姓名")
@@ -132,11 +132,11 @@ public class OutpatientFeeDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "执行科室名称")
     @JSONField(name = "执行科室名称")
-    private String operateSectionName;
+    private String operateDepartmentName;
 
     @ApiModelProperty(notes = "执行科室编码")
     @JSONField(name = "执行科室编码")
-    private String operateSectionId;
+    private String operateDepartmentId;
 
     @ApiModelProperty(notes = "执行医生姓名")
     @JSONField(name = "执行医生姓名")

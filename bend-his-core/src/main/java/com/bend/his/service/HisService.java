@@ -163,16 +163,16 @@ public interface HisService {
     /**
      * No.18: 30-2:查询挂号模板下科室:此接口用于获取HIS系统中挂号模板下科室
      *
-     * @param hospitalSectionDto
+     * @param hospitalDepartmentDto
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalSectionDto>> getHISHospitalRegistrationSectionList(HospitalSectionDto hospitalSectionDto) throws HisException;
+    QueryResult<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException;
 
     /**
      * No.19 : 30-3:查询科室下医生:此接口用于获取HIS科室下医生
      */
-    QueryResult<List<DoctorDto>> getHISSectionDoctorList(DoctorDto doctorDto) throws HisException;
+    QueryResult<List<DoctorDto>> getHISDepartmentDoctorList(DoctorDto doctorDto) throws HisException;
 
 
     /**

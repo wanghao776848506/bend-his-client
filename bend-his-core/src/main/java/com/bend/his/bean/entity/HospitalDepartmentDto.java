@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "HospitalSectionDto - 医院科室",description = "医院科室")
-public class HospitalSectionDto extends AbstractBaseEntity {
+@ApiModel(value = "HospitalDepartmentDto - 医院科室",description = "医院科室")
+public class HospitalDepartmentDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
     @JSONField(name = "机构编码")
@@ -28,11 +28,11 @@ public class HospitalSectionDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "科室编码或科室ID")
     @JSONField(name = "科室编码")
-    private String sectionId;
+    private String departmentId;
 
     @ApiModelProperty(notes = "科室名称")
     @JSONField(name = "科室名称")
-    private String sectionName;
+    private String departmentName;
 
     @Override
     public String createJSONObject() {

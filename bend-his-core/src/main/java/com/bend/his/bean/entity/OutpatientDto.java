@@ -58,11 +58,11 @@ public class OutpatientDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "科室编码或科室ID")
     @JSONField(name = "科室编码")
-    private String sectionId;
+    private String departmentId;
 
     @ApiModelProperty(notes = "科室名称")
     @JSONField(name = "科室名称")
-    private String sectionName;
+    private String departmentName;
 
     @ApiModelProperty(notes = "诊断医生")
     @JSONField(name = "诊断医生")

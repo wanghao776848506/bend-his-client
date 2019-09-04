@@ -324,7 +324,7 @@ public class HISController {
     }
 
     /**
-     * @param hospitalSectionDto
+     * @param hospitalDepartmentDto
      * @return
      * @throws HisException
      */
@@ -336,8 +336,8 @@ public class HISController {
             @ApiImplicitParam(name = "templateId", value = "模板ID")
     })
     @PostMapping("his/hospital/registration/section/list")
-    public ResponseEntity<List<HospitalSectionDto>> getHISHospitalRegistrationSectionList(@RequestBody HospitalSectionDto hospitalSectionDto) throws HisException {
-        QueryResult<List<HospitalSectionDto>> result = hisService.getHISHospitalRegistrationSectionList(hospitalSectionDto);
+    public ResponseEntity<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(@RequestBody HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
+        QueryResult<List<HospitalDepartmentDto>> result = hisService.getHISHospitalRegistrationDepartmentList(hospitalDepartmentDto);
         return ResponseEntity.ok(result.getData());
     }
 
@@ -353,11 +353,11 @@ public class HISController {
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_3),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
             @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
-            @ApiImplicitParam(name = "sectionId", value = "科室编码或科室ID")
+            @ApiImplicitParam(name = "departmentId", value = "科室编码或科室ID")
     })
     @PostMapping("his/hospital/doctor/list")
-    public ResponseEntity<List<DoctorDto>> getHISSectionDoctorList(@RequestBody DoctorDto doctorDto) throws HisException {
-        QueryResult<List<DoctorDto>> result = hisService.getHISSectionDoctorList(doctorDto);
+    public ResponseEntity<List<DoctorDto>> getHISDepartmentDoctorList(@RequestBody DoctorDto doctorDto) throws HisException {
+        QueryResult<List<DoctorDto>> result = hisService.getHISDepartmentDoctorList(doctorDto);
         return ResponseEntity.ok(result.getData());
     }
 
@@ -372,7 +372,7 @@ public class HISController {
             @ApiImplicitParam(name = "fee", value = "金额"),
             @ApiImplicitParam(name = "costTypeId", value = "费用类型ID"),
             @ApiImplicitParam(name = "templateId", value = "模板ID"),
-            @ApiImplicitParam(name = "sectionId", value = "科室ID"),
+            @ApiImplicitParam(name = "departmentId", value = "科室ID"),
             @ApiImplicitParam(name = "doctorId", value = "医生ID"),
             @ApiImplicitParam(name = "paymentList", value = "缴费方式列表"),
             @ApiImplicitParam(name = "manufacturerNumber", value = "厂商唯一标识"),

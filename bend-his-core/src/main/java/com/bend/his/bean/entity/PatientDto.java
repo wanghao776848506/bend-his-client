@@ -39,7 +39,7 @@ public class PatientDto extends AbstractBaseEntity{
 
     @ApiModelProperty(notes = "科室编码或科室ID")
     @JSONField(name = "科室ID")
-    private String sectionId;
+    private String departmentId;
 
     @ApiModelProperty(notes = "医生ID")
     @JSONField(name = "医生ID")

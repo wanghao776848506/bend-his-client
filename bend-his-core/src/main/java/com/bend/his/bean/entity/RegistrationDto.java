@@ -51,7 +51,7 @@ public class RegistrationDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "科室编码或科室ID")
     @JSONField(name = "科室ID")
-    private String sectionId;
+    private String departmentId;
 
     @ApiModelProperty(notes = "医生ID")
     @JSONField(name = "医生ID")
@@ -101,7 +101,7 @@ public class RegistrationDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "科室或科室名称")
     @JSONField(name = "科室")
-    private String sectionName;
+    private String departmentName;
 
     @ApiModelProperty(notes = "医生或医生名称")
     @JSONField(name = "医生")
@@ -123,7 +123,7 @@ public class RegistrationDto extends AbstractBaseEntity {
         inputJson.put("金额", this.getFee());
         inputJson.put("费用类型ID", this.getCostTypeId());
         inputJson.put("模板ID", this.getTemplateId());
-        inputJson.put("科室ID", this.getSectionId());
+        inputJson.put("科室ID", this.getDepartmentId());
         inputJson.put("医生ID", this.getDoctorId());
         inputJson.put("PaymentID", this.getDoctorId());
         inputJson.put("缴费方式列表", this.getPaymentList());

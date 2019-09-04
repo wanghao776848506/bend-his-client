@@ -25,7 +25,7 @@ public class DoctorDto extends AbstractBaseEntity{
 
     @ApiModelProperty(notes = "科室编码或科室ID")
     @JSONField(name = "科室ID")
-    private String sectionId;
+    private String departmentId;
 
     /*response data*/
     @ApiModelProperty(notes = "医生ID")
@@ -40,7 +40,7 @@ public class DoctorDto extends AbstractBaseEntity{
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("科室ID", this.getSectionId());
+        inputJson.put("科室ID", this.getDepartmentId());
         inputJson.put("机构编码", this.getOrganizationCode());
         return inputJson.toJSONString();
     }

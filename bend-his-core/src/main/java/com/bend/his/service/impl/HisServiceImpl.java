@@ -466,10 +466,10 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<HospitalSectionDto>> getHISHospitalRegistrationSectionList(HospitalSectionDto hospitalSectionDto) throws HisException {
+    public QueryResult<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(hospitalSectionDto.getTradeCode());
-        queryRequest.setInputParameter(hospitalSectionDto.createJSONObject());
+        queryRequest.setTradeCode(hospitalDepartmentDto.getTradeCode());
+        queryRequest.setInputParameter(hospitalDepartmentDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
@@ -479,14 +479,14 @@ public class HisServiceImpl implements HisService {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
 
-            List<HospitalSectionDto> hospitalSectionDtoList = new ArrayList<>();
+            List<HospitalDepartmentDto> hospitalDepartmentDtoList = new ArrayList<>();
 
             for (int i = 0; i < jsonArray.size(); i++) {
                 String jsonArrayString = jsonArray.getString(i);
-                HospitalSectionDto hospitalSection = JSON.parseObject(jsonArrayString, HospitalSectionDto.class);
-                hospitalSectionDtoList.add(hospitalSection);
+                HospitalDepartmentDto hospitalDepartment = JSON.parseObject(jsonArrayString, HospitalDepartmentDto.class);
+                hospitalDepartmentDtoList.add(hospitalDepartment);
             }
-            queryResult.setData(hospitalSectionDtoList);
+            queryResult.setData(hospitalDepartmentDtoList);
         } else {
             throw new HisException("Request failed or timeout.");
         }
@@ -494,7 +494,7 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<DoctorDto>> getHISSectionDoctorList(DoctorDto doctorDto) throws HisException {
+    public QueryResult<List<DoctorDto>> getHISDepartmentDoctorList(DoctorDto doctorDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(doctorDto.getTradeCode());
         queryRequest.setInputParameter(doctorDto.createJSONObject());
@@ -656,5 +656,10 @@ public class HisServiceImpl implements HisService {
             throw new HisException("Request failed or timeout.");
         }
         return queryResult;
+    }
+
+    @Override
+    public QueryResult<OutpatientPaymentDto> getHISOutpatientBillDetail(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+        return null;
     }
 }
