@@ -639,7 +639,61 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<OutpatientPaymentDto> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+    public QueryResult<List<OutpatientPaymentDto>> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
+        queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<OutpatientPaymentDto> outpatientPaymentDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                OutpatientPaymentDto outpatientPayment = JSON.parseObject(jsonArrayString, OutpatientPaymentDto.class);
+                outpatientPaymentDtoList.add(outpatientPayment);
+            }
+            queryResult.setData(outpatientPaymentDtoList);
+        }else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<ExpenseBillDto>> getHISOutpatientBillDetail(ExpenseBillDto expenseBillDto)  throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(expenseBillDto.getTradeCode());
+        queryRequest.setInputParameter(expenseBillDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<ExpenseBillDto> expenseBillDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                ExpenseBillDto expenseBill = JSON.parseObject(jsonArrayString, ExpenseBillDto.class);
+                expenseBillDtoList.add(expenseBill);
+            }
+            queryResult.setData(expenseBillDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<OutpatientPaymentDto> getHISOutpatientRefund(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
         queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
@@ -656,10 +710,5 @@ public class HisServiceImpl implements HisService {
             throw new HisException("Request failed or timeout.");
         }
         return queryResult;
-    }
-
-    @Override
-    public QueryResult<OutpatientPaymentDto> getHISOutpatientBillDetail(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
-        return null;
     }
 }

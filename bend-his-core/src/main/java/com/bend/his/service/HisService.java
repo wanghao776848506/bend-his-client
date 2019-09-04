@@ -229,15 +229,21 @@ public interface HisService {
      * @return
      * @throws HisException
      */
-    QueryResult<OutpatientPaymentDto> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+    QueryResult<List<OutpatientPaymentDto>> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
 
     /**
      * No.26 30-82：获取缴费清单明细：此接口用于获取HIS中的缴费清单明细
-     * @param outpatientPaymentDto
+     * @param expenseBillDto
      * @return
      * @throws HisException
      */
-    QueryResult<OutpatientPaymentDto> getHISOutpatientBillDetail(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+    QueryResult<List<ExpenseBillDto>> getHISOutpatientBillDetail(ExpenseBillDto expenseBillDto) throws HisException;
+
+    /**
+     * No.27:30-9 门诊退费:此接口用于退APP或微信公众号收取的费用整退
+     *
+     */
+    QueryResult<OutpatientPaymentDto> getHISOutpatientRefund(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
 
 
 }

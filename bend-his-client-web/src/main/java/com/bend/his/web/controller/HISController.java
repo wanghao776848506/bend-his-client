@@ -463,10 +463,44 @@ public class HISController {
             @ApiImplicitParam(name = "businessId", value = "门诊ID")
     })
     @PostMapping("his/hospital/outpatient/paid/list")
-    public ResponseEntity<OutpatientPaymentDto> getHISOutpatientPaidList(@RequestBody OutpatientPaymentDto outpatientPaymentDto) throws HisException {
-        QueryResult<OutpatientPaymentDto> result = hisService.getHISOutpatientPayment(outpatientPaymentDto);
+    public ResponseEntity<List<OutpatientPaymentDto>> getHISOutpatientPaidList(@RequestBody OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+        QueryResult<List<OutpatientPaymentDto>> result = hisService.getHISOutpatientPaidList(outpatientPaymentDto);
         return ResponseEntity.ok(result.getData());
     }
+
+    @ApiOperation(value = "30-82 获取缴费的清单明细", notes = "此接口用于获取HIS中的缴费清单明细")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_82),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "chargeRecordId", value = "收费记录ID")
+    })
+    @PostMapping("his/hospital/outpatient/bill/detail")
+    public ResponseEntity<List<ExpenseBillDto>> getHISOutpatientBillDetail(@RequestBody ExpenseBillDto expenseBillDto) throws HisException {
+        QueryResult<List<ExpenseBillDto>> result = hisService.getHISOutpatientBillDetail(expenseBillDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     *
+     * @param outpatientPaymentDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "30-9 门诊退费", notes = "此接口用于退APP或微信公众号收取的费用整退")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_9),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "chargeRecordId", value = "收费记录ID"),
+            @ApiImplicitParam(name = "vmUserId", value = "虚拟收费人员ID"),
+            @ApiImplicitParam(name = "refundAmount", value = "退费金额"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商唯一标识"),
+    })
+    @PostMapping("his/hospital/outpatient/refund")
+    public ResponseEntity<OutpatientPaymentDto> getHISOutpatientRefund(@RequestBody OutpatientPaymentDto outpatientPaymentDto) throws HisException {
+        QueryResult<OutpatientPaymentDto> result = hisService.getHISOutpatientRefund(outpatientPaymentDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
 
 
 }
