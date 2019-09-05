@@ -241,9 +241,20 @@ public interface HisService {
 
     /**
      * No.27:30-9 门诊退费:此接口用于退APP或微信公众号收取的费用整退
-     *
+     * @param outpatientPaymentDto
+     * @return
+     * @throws HisException
      */
     QueryResult<OutpatientPaymentDto> getHISOutpatientRefund(OutpatientPaymentDto outpatientPaymentDto) throws HisException;
+
+    /**
+     * No.28	30-10 获取住院记录：此接口用于获取HIS系统中住院记录
+     */
+    QueryResult<List<InpatientDto>> getHISInpatientRecordList(InpatientDto inpatientDto) throws HisException;
+
+    /**
+     * No.29	30-11 保存预交金/住院预交费:此接口用于HIS中的住院预交费
+     */
 
 
 }

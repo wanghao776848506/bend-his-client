@@ -76,7 +76,7 @@ public class HISController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_05),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0中药、1、西药、2诊疗、3耗材]"),
             @ApiImplicitParam(name = "directoryName", value = "目录名称"),
             @ApiImplicitParam(name = "beginRowNum", value = "开始行数"),
             @ApiImplicitParam(name = "endRowNum", value = "结束行数"),
@@ -99,7 +99,7 @@ public class HISController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_06),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0中药、1、西药、2诊疗、3耗材]"),
             @ApiImplicitParam(name = "directoryName", value = "目录名称"),
             @ApiImplicitParam(name = "beginTime", value = "开始时间"),
             @ApiImplicitParam(name = "endTime", value = "结束时间"),
@@ -501,6 +501,18 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
+    @ApiOperation(value = "30-10 获取住院记录", notes = "此接口用于获取HIS系统中住院记录")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_10),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/hospitalization/record/list")
+    public ResponseEntity<List<InpatientDto>> getHISHospitalizationRecordList(@RequestBody InpatientDto inpatientDto) throws HisException {
+        QueryResult<List<InpatientDto>> result = hisService.getHISInpatientRecordList(inpatientDto);
+        return ResponseEntity.ok(result.getData());
+    }
 
 
 }

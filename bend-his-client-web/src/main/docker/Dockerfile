@@ -1,4 +1,7 @@
+#FROM frolvlad/alpine-oraclejdk8
 FROM jdk1.8:144
 VOLUME /tmp
-ADD bend-his-client-web-1.0.jar app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ADD bend-his-client-web.jar app.jar
+RUN sh -c 'touch /app.jar'
+ENV JAVA_OPTS=""
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]

@@ -711,4 +711,31 @@ public class HisServiceImpl implements HisService {
         }
         return queryResult;
     }
+
+    @Override
+    public QueryResult<List<InpatientDto>> getHISInpatientRecordList(InpatientDto inpatientDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(inpatientDto.getTradeCode());
+        queryRequest.setInputParameter(inpatientDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<InpatientDto> inpatientDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                InpatientDto inpatient = JSON.parseObject(jsonArrayString, InpatientDto.class);
+                inpatientDtoList.add(inpatient);
+            }
+            queryResult.setData(inpatientDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
 }

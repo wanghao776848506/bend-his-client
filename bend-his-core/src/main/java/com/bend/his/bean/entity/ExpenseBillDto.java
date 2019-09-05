@@ -1,5 +1,6 @@
 package com.bend.his.bean.entity;
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -77,9 +78,11 @@ public class ExpenseBillDto extends AbstractBaseEntity {
     private String billTime;
 
 
-
-
-
-
-
+    @Override
+    public String createJSONObject() {
+        JSONObject inputJson = new JSONObject();
+        inputJson.put("验证码", this.getAuthCode());
+        inputJson.put("收费记录ID", this.getChargeRecordId());
+        return inputJson.toJSONString();
+    }
 }
