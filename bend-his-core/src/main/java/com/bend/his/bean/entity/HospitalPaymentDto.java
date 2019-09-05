@@ -20,9 +20,10 @@ import java.util.List;
 @ApiModel(value = "HospitalPaymentDto - 医院机构支付方式",description = "医院机构支付方式")
 public class HospitalPaymentDto extends AbstractBaseEntity{
     /*request params*/
-    @ApiModelProperty(notes = "机构ID")
+    /*机构编码/机构ID 叫法不一样，数据其实一样*/
+    @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
     @JSONField(name = "机构ID")
-    private String organizationID;
+    private String organizationCode;
 
     /*response data*/
     @ApiModelProperty(notes = "支付方式ID")
@@ -54,7 +55,7 @@ public class HospitalPaymentDto extends AbstractBaseEntity{
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("机构ID", this.getOrganizationID());
+        inputJson.put("机构ID", this.getOrganizationCode());
         return inputJson.toJSONString();
     }
 

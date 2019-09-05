@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 @ApiModel(value = "InpatientDto - 住院病人",description = "住院病人")
 public class InpatientDto extends AbstractBaseEntity {
 
+    /*机构编码/机构ID 叫法不一样，数据其实一样*/
     @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
     @JSONField(name = "机构编码")
     private String organizationCode;

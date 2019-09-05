@@ -738,4 +738,159 @@ public class HisServiceImpl implements HisService {
         }
         return queryResult;
     }
+
+    @Override
+    public QueryResult<PrepaymentDto> getHISInpatientPrepayment(PrepaymentDto prepaymentDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(prepaymentDto.getTradeCode());
+        queryRequest.setInputParameter(prepaymentDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            PrepaymentDto prepayment = JSON.parseObject(queryResultMsg, PrepaymentDto.class);
+            queryResult.setData(prepayment);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<PrepaymentDto>> getHISInpatientPrepaymentRecordList(PrepaymentDto prepaymentDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(prepaymentDto.getTradeCode());
+        queryRequest.setInputParameter(prepaymentDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<PrepaymentDto> prepaymentDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                PrepaymentDto prepayment = JSON.parseObject(jsonArrayString, PrepaymentDto.class);
+                prepaymentDtoList.add(prepayment);
+            }
+            queryResult.setData(prepaymentDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<DailyBillDto>> getHISInpatientDailyBillList(DailyBillDto dailyBillDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(dailyBillDto.getTradeCode());
+        queryRequest.setInputParameter(dailyBillDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<DailyBillDto> dailyBillDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                DailyBillDto dailyBill = JSON.parseObject(jsonArrayString, DailyBillDto.class);
+                dailyBillDtoList.add(dailyBill);
+            }
+            queryResult.setData(dailyBillDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<InspectionReportDto>> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(inspectionReportDto.getTradeCode());
+        queryRequest.setInputParameter(inspectionReportDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<InspectionReportDto> inspectionReportDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                InspectionReportDto inspectionReport = JSON.parseObject(jsonArrayString, InspectionReportDto.class);
+                inspectionReportDtoList.add(inspectionReport);
+            }
+            queryResult.setData(inspectionReportDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<InspectionApplyFormDto>> getHISInspectionReportApplyForm(InspectionApplyFormDto inspectionApplyFormDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(inspectionApplyFormDto.getTradeCode());
+        queryRequest.setInputParameter(inspectionApplyFormDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<InspectionApplyFormDto> inspectionApplyFormDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                InspectionApplyFormDto inspectionApplyForm = JSON.parseObject(jsonArrayString, InspectionApplyFormDto.class);
+                inspectionApplyFormDtoList.add(inspectionApplyForm);
+            }
+            queryResult.setData(inspectionApplyFormDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<DoctorScheduleDto>> getHISDoctorScheduleList(DoctorScheduleDto doctorScheduleDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(doctorScheduleDto.getTradeCode());
+        queryRequest.setInputParameter(doctorScheduleDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<DoctorScheduleDto> doctorScheduleDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                DoctorScheduleDto doctorSchedule = JSON.parseObject(jsonArrayString, DoctorScheduleDto.class);
+                doctorScheduleDtoList.add(doctorSchedule);
+            }
+            queryResult.setData(doctorScheduleDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
 }

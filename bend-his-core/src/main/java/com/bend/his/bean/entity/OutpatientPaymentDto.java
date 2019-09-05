@@ -61,9 +61,10 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
     @JSONField(name = "厂商唯一标识")
     private String manufacturerNumber;
 
-    @ApiModelProperty(notes = "机构ID")
+    /*机构编码/机构ID 叫法不一样，数据其实一样*/
+    @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
     @JSONField(name = "机构ID")
-    private String organizationID;
+    private String organizationCode;
 
     @ApiModelProperty(notes = "退费金额")
     @JSONField(name = "退费金额")
@@ -104,7 +105,7 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
         inputJson.put("处方IDS", this.getRecipeIds());
         inputJson.put("收费人员ID", this.getUserId());
         inputJson.put("虚拟收费人员ID", this.getVmUserId());
-        inputJson.put("机构ID", this.getOrganizationID());
+        inputJson.put("机构ID", this.getOrganizationCode());
         inputJson.put("挂号ID", this.getRegistrationId());
         inputJson.put("总金额", this.getTotalFee());
         inputJson.put("退费金额", this.getRefundAmount());

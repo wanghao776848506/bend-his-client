@@ -233,6 +233,7 @@ public interface HisService {
 
     /**
      * No.26 30-82：获取缴费清单明细：此接口用于获取HIS中的缴费清单明细
+     *
      * @param expenseBillDto
      * @return
      * @throws HisException
@@ -241,6 +242,7 @@ public interface HisService {
 
     /**
      * No.27:30-9 门诊退费:此接口用于退APP或微信公众号收取的费用整退
+     *
      * @param outpatientPaymentDto
      * @return
      * @throws HisException
@@ -255,6 +257,47 @@ public interface HisService {
     /**
      * No.29	30-11 保存预交金/住院预交费:此接口用于HIS中的住院预交费
      */
+    QueryResult<PrepaymentDto> getHISInpatientPrepayment(PrepaymentDto prepaymentDto) throws HisException;
 
+    /**
+     * No.30	30-12 查询预交记录:此接口用于获取HIS系统中预交记录
+     *
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<PrepaymentDto>> getHISInpatientPrepaymentRecordList(PrepaymentDto prepaymentDto) throws HisException;
+
+    /**
+     * No.31 30-13 每日清单查询:此接口用于获取HIS系统中每日清单记录
+     *
+     * @param dailyBillDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<DailyBillDto>> getHISInpatientDailyBillList(DailyBillDto dailyBillDto) throws HisException;
+
+    /**
+     * No.32	30-14 检查检验报告/结果查询:此接口用于获取HIS系统中检查检验报告
+     *
+     * @param inspectionReportDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<InspectionReportDto>> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException;
+
+    /**
+     * No.33	30-15 获取已完成的检查检验申请列表:此接口用于获取HIS系统中已完成的检查检验申请列表
+     *
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<InspectionApplyFormDto>> getHISInspectionReportApplyForm(InspectionApplyFormDto inspectionApplyFormDto) throws HisException;
+
+
+    /**
+     * No.34	30-16 获取机构、人员的排班信息:此接口用于获取HIS系统中机构、人员的排班信息
+     */
+
+    QueryResult<List<DoctorScheduleDto>> getHISDoctorScheduleList(DoctorScheduleDto doctorScheduleDto) throws HisException;
 
 }

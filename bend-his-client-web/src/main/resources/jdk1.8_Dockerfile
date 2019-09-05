@@ -2,8 +2,6 @@
 FROM centos:7
 #指定镜像创建者信息
 MAINTAINER blackancers
-#切换工作目录
-WORKDIR /usr/local/dockerjdk8
 RUN mkdir /usr/local/java
 #ADD 是相对路径jar，把java添加到容器中
 ADD jdk-8u144-linux-x64.tar.gz /usr/local/java

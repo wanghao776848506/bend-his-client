@@ -26,6 +26,7 @@ public class PrepaymentDto extends AbstractBaseEntity {
     @JSONField(name = "收费人员ID")
     private String userId;
 
+    /*机构编码/机构ID 叫法不一样，数据其实一样*/
     @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
     @JSONField(name = "机构ID")
     private String organizationCode;

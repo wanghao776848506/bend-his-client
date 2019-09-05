@@ -44,7 +44,7 @@ public class OutpatientDto extends AbstractBaseEntity {
     @JSONField(name = "性别")
     private String patientSex;
 
-    @ApiModelProperty(notes = "业务ID")
+    @ApiModelProperty(notes = "业务ID/门诊ID")
     @JSONField(name = "业务ID")
     private String businessId;
 
