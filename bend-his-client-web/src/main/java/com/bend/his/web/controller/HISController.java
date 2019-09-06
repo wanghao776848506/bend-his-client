@@ -605,5 +605,48 @@ public class HISController {
     }
 
 
+    @ApiOperation(value = "32 住院医嘱查询", notes = "此接口用于获取HIS系统中住院医嘱的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_32),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "beginTime", value = "开始时间[医嘱开具时间：2014-01-01 15:11:22]"),
+            @ApiImplicitParam(name = "endTime", value = "结束时间"),
+    })
+    @PostMapping("his/hospital/doctor/order/list")
+    public ResponseEntity<List<MedicalOrderDto>> getHISMedicalOrderList(@RequestBody MedicalOrderDto medicalOrderDto) throws HisException {
+        QueryResult<List<MedicalOrderDto>> result = hisService.getHISMedicalOrderList(medicalOrderDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "34 删除费用结算信息", notes = "此接口用于删除门诊、住院的结算相关信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_34),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+    })
+    @PostMapping("his/settlement/fee/delete")
+    public ResponseEntity<String> deleteSettlementFeeByBusinessId(@RequestBody CommonDto commonDto) throws HisException {
+        QueryResult<String> result = hisService.deleteSettlementFeeByBusinessId(commonDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "36 住院医保信息保存", notes = "此接口用于 保存 个人住院医保 报账 返回的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_36),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "insuranceNo", value = "医保卡号"),
+            @ApiImplicitParam(name = "insuranceTotalFee", value = "医保总费用"),
+            @ApiImplicitParam(name = "reimburseFee", value = "报账费用"),
+            @ApiImplicitParam(name = "selfPayFee", value = "自付费用"),
+            @ApiImplicitParam(name = "otherInfo", value = "其他信息"),
+    })
+    @PostMapping("his/personal/medical/insurance/save")
+    public ResponseEntity<String> savePersonalMedicalInsurance(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryResult<String> result = hisService.savePersonalMedicalInsurance(medicalInsuranceDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
 
 }

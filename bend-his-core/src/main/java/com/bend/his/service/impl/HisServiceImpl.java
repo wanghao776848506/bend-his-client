@@ -893,4 +893,63 @@ public class HisServiceImpl implements HisService {
         }
         return queryResult;
     }
+
+    @Override
+    public QueryResult<List<MedicalOrderDto>> getHISMedicalOrderList(MedicalOrderDto medicalOrderDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(medicalOrderDto.getTradeCode());
+        queryRequest.setInputParameter(medicalOrderDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<MedicalOrderDto> medicalOrderDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                MedicalOrderDto medicalOrder = JSON.parseObject(jsonArrayString, MedicalOrderDto.class);
+                medicalOrderDtoList.add(medicalOrder);
+            }
+            queryResult.setData(medicalOrderDtoList);
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<String> deleteSettlementFeeByBusinessId(CommonDto commonDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(commonDto.getTradeCode());
+        queryRequest.setInputParameter(commonDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("删除成功!");//返回的msg文本比较长
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<String> savePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
+        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("保存成功!");//返回的msg文本比较长
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
 }

@@ -20,13 +20,14 @@ import java.math.BigDecimal;
 @ApiModel(value = "HospitalizationFeeDto - 住院费用明细",description = "住院费用明细")
 public class HospitalizationFeeDto extends AbstractBaseEntity {
 
+    @ApiModelProperty(notes = "业务ID/住院ID")
+    @JSONField(name = "业务ID")
+    private String businessId;
+
     @ApiModelProperty(notes = "住院号")
     @JSONField(name = "住院号")
     private String hospitalizationNo;
 
-    @ApiModelProperty(notes = "业务ID:住院ID")
-    @JSONField(name = "业务ID")
-    private String businessId;
 
     @ApiModelProperty(notes = "开始时间")
     @JSONField(name = "开始时间")

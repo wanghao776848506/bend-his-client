@@ -21,7 +21,7 @@ import java.util.List;
 @ApiModel(value = "OutpatientFeeDto - 门诊费用明细",description = "门诊费用明细")
 public class OutpatientFeeDto extends AbstractBaseEntity {
 
-    @ApiModelProperty(notes = "业务ID")
+    @ApiModelProperty(notes = "业务ID/门诊ID")
     @JSONField(name = "业务ID")
     private String businessId;
 

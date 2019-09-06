@@ -297,7 +297,30 @@ public interface HisService {
     /**
      * No.34	30-16 获取机构、人员的排班信息:此接口用于获取HIS系统中机构、人员的排班信息
      */
-
     QueryResult<List<DoctorScheduleDto>> getHISDoctorScheduleList(DoctorScheduleDto doctorScheduleDto) throws HisException;
+
+    /**
+     * No.35	32 住院医嘱查询:此接口用于获取HIS系统中住院医嘱的详细信息
+     *
+     * @param medicalOrderDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<MedicalOrderDto>> getHISMedicalOrderList(MedicalOrderDto medicalOrderDto) throws HisException;
+
+    /**
+     * No.36	34 删除费用结算信息:此接口用于删除门诊、住院的结算相关信息
+     * @param commonDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<String> deleteSettlementFeeByBusinessId(CommonDto commonDto) throws HisException;
+
+    /**
+     * No.37	36 住院医保信息保存:此接口用于 保存 个人住院 医保报账 返回的 详细信息
+     *
+     */
+    QueryResult<String> savePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
+
 
 }
