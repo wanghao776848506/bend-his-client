@@ -623,7 +623,7 @@ public class HISController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_34),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID【在接口“10 住院病人信息查询”中返回】"),
     })
     @PostMapping("his/settlement/fee/delete")
     public ResponseEntity<String> deleteSettlementFeeByBusinessId(@RequestBody CommonDto commonDto) throws HisException {
@@ -631,7 +631,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "36 住院医保信息保存", notes = "此接口用于 保存 个人住院医保 报账 返回的详细信息")
+    @ApiOperation(value = "36 保存住院医保信息", notes = "此接口用于 保存 个人住院医保 报账 返回的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_36),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -645,6 +645,18 @@ public class HISController {
     @PostMapping("his/personal/medical/insurance/save")
     public ResponseEntity<String> savePersonalMedicalInsurance(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
         QueryResult<String> result = hisService.savePersonalMedicalInsurance(medicalInsuranceDto);
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "37 删除住院医保信息", notes = "此接口用于删除个人住院医保报账返回的详细信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_37),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID【在接口“10住院病人信息查询”中返回】"),
+    })
+    @PostMapping("his/personal/medical/insurance/delete")
+    public ResponseEntity<String> deletePersonalMedicalInsurance(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryResult<String> result = hisService.deletePersonalMedicalInsurance(medicalInsuranceDto);
         return ResponseEntity.ok(result.getData());
     }
 

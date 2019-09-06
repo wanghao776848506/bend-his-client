@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @ApiModel(value = "CommonDto - 基础字段", description = "基础字段")
 public class CommonDto extends AbstractBaseEntity {
-    @ApiModelProperty(notes = "业务ID/门诊ID/住院ID")
+    @ApiModelProperty(notes = "业务ID/门诊ID/住院ID,[在接口“10住院病人信息查询”中返回。]")
     @JSONField(name = "业务ID")
     private String businessId;
 

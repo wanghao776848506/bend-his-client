@@ -39,7 +39,7 @@ public class MedicalInsuranceDto extends AbstractBaseEntity {
     @JSONField(name = "自付费用")
     private BigDecimal selfPayFee;
 
-    @ApiModelProperty(notes = "其他信息[其他信息<JSON格式>]")
+    @ApiModelProperty(notes = "其他信息[其他信息<JSON格式>],如：{'统筹支付':'统筹支付','起付线':'起付线'}")
     @JSONField(name = "其他信息")
     private String otherInfo;
 

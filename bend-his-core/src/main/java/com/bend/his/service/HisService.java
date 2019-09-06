@@ -310,6 +310,7 @@ public interface HisService {
 
     /**
      * No.36	34 删除费用结算信息:此接口用于删除门诊、住院的结算相关信息
+     *
      * @param commonDto
      * @return
      * @throws HisException
@@ -318,9 +319,15 @@ public interface HisService {
 
     /**
      * No.37	36 住院医保信息保存:此接口用于 保存 个人住院 医保报账 返回的 详细信息
-     *
      */
     QueryResult<String> savePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
 
-
+    /**
+     * No.38	37 住院医保信息删除:此接口用于删除个人住院医保报账返回的详细信息
+     *
+     * @param medicalInsuranceDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<String> deletePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
 }

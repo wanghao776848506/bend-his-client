@@ -357,7 +357,7 @@ public class HisServiceImpl implements HisService {
     @Override
     public QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionList( HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(queryRequest.getTradeCode());
+        queryRequest.setTradeCode(hospitalOrganizationDto.getTradeCode());
         queryRequest.setInputParameter(hospitalOrganizationDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
@@ -947,6 +947,22 @@ public class HisServiceImpl implements HisService {
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("保存成功!");//返回的msg文本比较长
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<String> deletePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
+        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("删除成功!");//返回的msg文本比较长
         } else {
             throw new HisException("Request failed or timeout.");
         }
