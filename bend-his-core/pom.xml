@@ -147,7 +147,7 @@
         </resources>
         <plugins>
             <!-- tag::wsdl[] -->
-            <plugin>
+            <!--<plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
                 <version>0.14.0</version>
@@ -168,7 +168,7 @@
                         </schema>
                     </schemas>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <!-- end::wsdl[] -->
 
             <plugin>

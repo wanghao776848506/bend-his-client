@@ -93,8 +93,8 @@
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <!--<dockerHost>http://192.168.198.128:2375</dockerHost>-->
-                    <dockerHost>http://192.168.198.129:2375</dockerHost>
-                    <!--<dockerHost>http://47.93.216.252:2375</dockerHost>-->
+                    <!--<dockerHost>http://192.168.198.129:2375</dockerHost>-->
+                    <dockerHost>http://47.93.216.252:2375</dockerHost>
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>

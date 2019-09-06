@@ -530,7 +530,9 @@ public class HisServiceImpl implements HisService {
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        if (IConstant.RESULT_FAILURE_CODE.equals(queryResult.getResult())) {
+            throw new HisException(queryResult.getMsg());
+        }
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
@@ -963,6 +965,22 @@ public class HisServiceImpl implements HisService {
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("删除成功!");//返回的msg文本比较长
+        } else {
+            throw new HisException("Request failed or timeout.");
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<String> saveExpenseSettlementToHis(ExpenseSettlementDto expenseSettlementDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(expenseSettlementDto.getTradeCode());
+        queryRequest.setInputParameter(expenseSettlementDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("回写至基层系统成功!");//返回的msg文本比较长
         } else {
             throw new HisException("Request failed or timeout.");
         }

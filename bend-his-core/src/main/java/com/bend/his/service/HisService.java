@@ -330,4 +330,15 @@ public interface HisService {
      * @throws HisException
      */
     QueryResult<String> deletePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
+
+    /**
+     * No.39	 33 费用结算信息回写至基层系统:此接口用于将门诊、住院的结算相关信息回写至基层系统中
+     *
+     * @param expenseSettlementDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<String> saveExpenseSettlementToHis(ExpenseSettlementDto expenseSettlementDto) throws HisException;
+
+
 }

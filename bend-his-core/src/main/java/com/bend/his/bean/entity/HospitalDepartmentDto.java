@@ -27,7 +27,7 @@ public class HospitalDepartmentDto extends AbstractBaseEntity {
 
     /*response data*/
     @ApiModelProperty(notes = "科室编码或科室ID")
-    @JSONField(name = "科室编码")
+    @JSONField(name = "科室ID")
     private String departmentId;
 
     @ApiModelProperty(notes = "科室名称")
