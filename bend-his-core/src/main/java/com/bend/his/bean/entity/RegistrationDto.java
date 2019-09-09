@@ -126,7 +126,6 @@ public class RegistrationDto extends AbstractBaseEntity {
         inputJson.put("模板ID", this.getTemplateId());
         inputJson.put("科室ID", this.getDepartmentId());
         inputJson.put("医生ID", this.getDoctorId());
-        inputJson.put("PaymentID", this.getDoctorId());
         inputJson.put("缴费方式列表", this.getPaymentList());
         inputJson.put("挂号日期", this.getCreateDate());
         inputJson.put("厂商唯一标识", this.getManufacturerNumber());
@@ -134,6 +133,7 @@ public class RegistrationDto extends AbstractBaseEntity {
         /*查询挂号记录*/
 //        inputJson.put("验证码", this.getAuthCode());
 //        inputJson.put("身份证号码", this.getIdCardNo());
+        inputJson.put("挂号ID", this.getRegistrationId());
         inputJson.put("机构编码", this.getOrganizationCode());
         inputJson.put("开始日期", this.getBeginTime());
         inputJson.put("结束日期", this.getEndTime());

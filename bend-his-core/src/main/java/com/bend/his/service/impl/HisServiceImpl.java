@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.wsdl.WSDLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class HisServiceImpl implements HisService {
 
 
     @Override
-    public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) {
+    public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException{
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
 //        String tradeCode = "100";
 //        inputJson.put("厂商编号", "510303001");
@@ -53,7 +54,7 @@ public class HisServiceImpl implements HisService {
             queryResult.setData(dto);
             return queryResult;
         } else {
-            throw new HisException("");
+            throw new HisException("登陆失败!");
         }
 
     }
@@ -67,19 +68,18 @@ public class HisServiceImpl implements HisService {
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            //TODO 接口请求成功或失败逻辑处理
-        }
-        String queryResultMsg = queryResult.getMsg();
+            String queryResultMsg = queryResult.getMsg();
 
-        JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
 
-        List<ComprehensiveCatalogueDto> comprehensiveCatalogueDtoList = new ArrayList<>();
-        for (int i = 0; i < jsonArray.size(); i++) {
-            String jsonArrayString = jsonArray.getString(i);
-            ComprehensiveCatalogueDto catalogueDto = JSON.parseObject(jsonArrayString, ComprehensiveCatalogueDto.class);
-            comprehensiveCatalogueDtoList.add(catalogueDto);
+            List<ComprehensiveCatalogueDto> comprehensiveCatalogueDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                ComprehensiveCatalogueDto catalogueDto = JSON.parseObject(jsonArrayString, ComprehensiveCatalogueDto.class);
+                comprehensiveCatalogueDtoList.add(catalogueDto);
+            }
+            queryResult.setData(comprehensiveCatalogueDtoList);
         }
-        queryResult.setData(comprehensiveCatalogueDtoList);
         return queryResult;
     }
 
@@ -292,8 +292,6 @@ public class HisServiceImpl implements HisService {
                 hospitalizationFeeDtoList.add(hospitalizationFee);
             }
             queryResult.setData(hospitalizationFeeDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -319,8 +317,6 @@ public class HisServiceImpl implements HisService {
                 outpatientFeeDtoList.add(outpatientFee);
             }
             queryResult.setData(outpatientFeeDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -348,8 +344,6 @@ public class HisServiceImpl implements HisService {
                 hospitalOrganizationDtoList.add(hospitalInstitution);
             }
             queryResult.setData(hospitalOrganizationDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -375,8 +369,6 @@ public class HisServiceImpl implements HisService {
                 hospitalOrganizationDtoList.add(hospitalInstitution);
             }
             queryResult.setData(hospitalOrganizationDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -403,8 +395,6 @@ public class HisServiceImpl implements HisService {
                 hospitalPaymentDtoList.add(hospitalPayment);
             }
             queryResult.setData(hospitalPaymentDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -431,8 +421,6 @@ public class HisServiceImpl implements HisService {
                 registrationFeeTypeDtoList.add(patientRegistration);
             }
             queryResult.setData(registrationFeeTypeDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -459,8 +447,6 @@ public class HisServiceImpl implements HisService {
                 registrationTemplateDtoList.add(registrationTemplateDto);
             }
             queryResult.setData(registrationTemplateDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -487,8 +473,6 @@ public class HisServiceImpl implements HisService {
                 hospitalDepartmentDtoList.add(hospitalDepartment);
             }
             queryResult.setData(hospitalDepartmentDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -515,8 +499,6 @@ public class HisServiceImpl implements HisService {
                 doctorDtoList.add(doctor);
             }
             queryResult.setData(doctorDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -544,8 +526,6 @@ public class HisServiceImpl implements HisService {
                 registrationDtoList.add(registration);
             }
             queryResult.setData(registrationDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -555,13 +535,16 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(registrationDto.getTradeCode());
         queryRequest.setInputParameter(registrationDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("退号成功!");
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -572,7 +555,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(registrationDto.getTradeCode());
         queryRequest.setInputParameter(registrationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -587,8 +575,6 @@ public class HisServiceImpl implements HisService {
                 registrationDtoList.add(registration);
             }
             queryResult.setData(registrationDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -599,7 +585,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientExpensesBillDto.getTradeCode());
         queryRequest.setInputParameter(outpatientExpensesBillDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -626,7 +617,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
         queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -646,7 +642,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
         queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -673,7 +674,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(expenseBillDto.getTradeCode());
         queryRequest.setInputParameter(expenseBillDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -700,7 +706,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
         queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -720,7 +731,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(inpatientDto.getTradeCode());
         queryRequest.setInputParameter(inpatientDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -735,8 +751,6 @@ public class HisServiceImpl implements HisService {
                 inpatientDtoList.add(inpatient);
             }
             queryResult.setData(inpatientDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -747,7 +761,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(prepaymentDto.getTradeCode());
         queryRequest.setInputParameter(prepaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -755,8 +774,6 @@ public class HisServiceImpl implements HisService {
             String queryResultMsg = queryResult.getMsg();
             PrepaymentDto prepayment = JSON.parseObject(queryResultMsg, PrepaymentDto.class);
             queryResult.setData(prepayment);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -767,7 +784,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(prepaymentDto.getTradeCode());
         queryRequest.setInputParameter(prepaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -782,8 +804,6 @@ public class HisServiceImpl implements HisService {
                 prepaymentDtoList.add(prepayment);
             }
             queryResult.setData(prepaymentDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -794,7 +814,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(dailyBillDto.getTradeCode());
         queryRequest.setInputParameter(dailyBillDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -809,8 +834,6 @@ public class HisServiceImpl implements HisService {
                 dailyBillDtoList.add(dailyBill);
             }
             queryResult.setData(dailyBillDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -821,7 +844,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(inspectionReportDto.getTradeCode());
         queryRequest.setInputParameter(inspectionReportDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -836,8 +864,6 @@ public class HisServiceImpl implements HisService {
                 inspectionReportDtoList.add(inspectionReport);
             }
             queryResult.setData(inspectionReportDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -848,7 +874,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(inspectionApplyFormDto.getTradeCode());
         queryRequest.setInputParameter(inspectionApplyFormDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -863,8 +894,6 @@ public class HisServiceImpl implements HisService {
                 inspectionApplyFormDtoList.add(inspectionApplyForm);
             }
             queryResult.setData(inspectionApplyFormDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -875,7 +904,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(doctorScheduleDto.getTradeCode());
         queryRequest.setInputParameter(doctorScheduleDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -890,8 +924,6 @@ public class HisServiceImpl implements HisService {
                 doctorScheduleDtoList.add(doctorSchedule);
             }
             queryResult.setData(doctorScheduleDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -902,7 +934,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(medicalOrderDto.getTradeCode());
         queryRequest.setInputParameter(medicalOrderDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -917,8 +954,6 @@ public class HisServiceImpl implements HisService {
                 medicalOrderDtoList.add(medicalOrder);
             }
             queryResult.setData(medicalOrderDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -928,7 +963,12 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(commonDto.getTradeCode());
         queryRequest.setInputParameter(commonDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
@@ -944,13 +984,16 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
         queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("保存成功!");//返回的msg文本比较长
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -960,13 +1003,16 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
         queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("删除成功!");//返回的msg文本比较长
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -976,13 +1022,16 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(expenseSettlementDto.getTradeCode());
         queryRequest.setInputParameter(expenseSettlementDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("回写至基层系统成功!");//返回的msg文本比较长
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
