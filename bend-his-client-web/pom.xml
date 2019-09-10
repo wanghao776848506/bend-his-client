@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.bend.his</groupId>
             <artifactId>bend-his-core</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <!-- swagger -->
@@ -103,7 +103,6 @@
                     <dockerDirectory>src/main/docker</dockerDirectory>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                        <JAR_EXPOSE>8080</JAR_EXPOSE>
                     </buildArgs>
                     <resources>
                         <resource>

@@ -1,7 +1,6 @@
 FROM jdk1.8:144
 
 VOLUME /tmp
-EXPOSE $JAR_EXPOSE
 
 ARG JAR_FILE
 ADD $JAR_FILE /app.jar

@@ -592,6 +592,7 @@ public class HISController {
     public ResponseEntity<List<InpatientDto>> getHISHospitalizationRecordList(@RequestBody InpatientDto inpatientDto) throws HisException {
         QueryResult<List<InpatientDto>> result = hisService.getHISInpatientRecordList(inpatientDto);
         if (Objects.isNull(result.getData())){
+            System.out.println("do ....");
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());

@@ -1,7 +1,0 @@
-#本地虚拟机Centos7环境
-FROM java:8u144
-VOLUME /tmp
-ARG JAR_FILE
-ADD $JAR_FILE /app.jar
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
-EXPOSE $JAR_EXPOSE
