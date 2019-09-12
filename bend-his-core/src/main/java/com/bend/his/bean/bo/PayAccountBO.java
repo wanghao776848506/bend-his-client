@@ -60,5 +60,5 @@ public class PayAccountBO {
 
     @ApiModelProperty(notes = "金额")
     @JSONField(name = "Fee")
-    private BigDecimal fee;
+    private String fee;
 }

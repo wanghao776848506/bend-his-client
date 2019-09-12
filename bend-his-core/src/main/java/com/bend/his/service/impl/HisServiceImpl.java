@@ -2,6 +2,7 @@ package com.bend.his.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.*;
 import com.bend.his.common.request.QueryRequest;
 import com.bend.his.common.result.QueryResult;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.wsdl.WSDLException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(authenticationDto.getTradeCode());
         queryRequest.setInputParameter(authenticationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         /**/
@@ -507,6 +514,24 @@ public class HisServiceImpl implements HisService {
     public QueryResult<List<RegistrationDto>> getHISRegistration(RegistrationDto registrationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(registrationDto.getTradeCode());
+        //"缴费方式列表": "[{\"PaymentID\":\"支付方式ID\",\"OrgAccID\":\"账户ID\",\"Fee\",\"金额\"}]"
+        List<PayAccountBO> paymentList = registrationDto.getPaymentList();
+        String paymentListStr ="";
+        StringBuilder sbs = new StringBuilder();
+        sbs.append("[");
+        for (PayAccountBO payAccountBO:paymentList){
+            String orgAccID = payAccountBO.getOrgAccID();
+            String paymentId = payAccountBO.getPaymentId();
+            String fee = payAccountBO.getFee();
+            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+                    .append(",");
+        }
+        sbs.append("]");
+        paymentListStr = sbs.toString();
+        registrationDto.setPaymentListStr(paymentListStr);
+
         queryRequest.setInputParameter(registrationDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
@@ -605,8 +630,6 @@ public class HisServiceImpl implements HisService {
                 outpatientExpensesBillDtoList.add(outpatientExpensesBill);
             }
             queryResult.setData(outpatientExpensesBillDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -615,6 +638,23 @@ public class HisServiceImpl implements HisService {
     public QueryResult<OutpatientPaymentDto> getHISOutpatientPayment(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
+        List<PayAccountBO> paymentList = outpatientPaymentDto.getPaymentList();
+        String paymentListStr ="";
+        StringBuilder sbs = new StringBuilder();
+        sbs.append("[");
+        for (PayAccountBO payAccountBO:paymentList){
+            String orgAccID = payAccountBO.getOrgAccID();
+            String paymentId = payAccountBO.getPaymentId();
+            String fee = payAccountBO.getFee();
+            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+            /*.append(",")*/;
+        }
+        sbs.append("]");
+        paymentListStr = sbs.toString();
+        outpatientPaymentDto.setPaymentListStr(paymentListStr);
+
         queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = null;
@@ -630,8 +670,6 @@ public class HisServiceImpl implements HisService {
             String queryResultMsg = queryResult.getMsg();
             OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
             queryResult.setData(outpatientPayment);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -662,8 +700,6 @@ public class HisServiceImpl implements HisService {
                 outpatientPaymentDtoList.add(outpatientPayment);
             }
             queryResult.setData(outpatientPaymentDtoList);
-        }else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -694,8 +730,6 @@ public class HisServiceImpl implements HisService {
                 expenseBillDtoList.add(expenseBill);
             }
             queryResult.setData(expenseBillDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -719,8 +753,6 @@ public class HisServiceImpl implements HisService {
             String queryResultMsg = queryResult.getMsg();
             OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
             queryResult.setData(outpatientPayment);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -759,6 +791,24 @@ public class HisServiceImpl implements HisService {
     public QueryResult<PrepaymentDto> getHISInpatientPrepayment(PrepaymentDto prepaymentDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(prepaymentDto.getTradeCode());
+
+        List<PayAccountBO> paymentList = prepaymentDto.getPaymentList();
+        String paymentListStr ="";
+        StringBuilder sbs = new StringBuilder();
+        sbs.append("[");
+        for (PayAccountBO payAccountBO:paymentList){
+            String orgAccID = payAccountBO.getOrgAccID();
+            String paymentId = payAccountBO.getPaymentId();
+            String fee = payAccountBO.getFee();
+            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+                    /*.append(",")*/;
+        }
+        sbs.append("]");
+        paymentListStr = sbs.toString();
+        prepaymentDto.setPaymentListStr(paymentListStr);
+
         queryRequest.setInputParameter(prepaymentDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = null;
@@ -839,7 +889,7 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<InspectionReportDto>> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException {
+    public QueryResult<InspectionReportDto> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(inspectionReportDto.getTradeCode());
         queryRequest.setInputParameter(inspectionReportDto.createJSONObject());
@@ -855,15 +905,8 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<InspectionReportDto> inspectionReportDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                InspectionReportDto inspectionReport = JSON.parseObject(jsonArrayString, InspectionReportDto.class);
-                inspectionReportDtoList.add(inspectionReport);
-            }
-            queryResult.setData(inspectionReportDtoList);
+            InspectionReportDto inspectionReport = JSON.parseObject(queryResultMsg, InspectionReportDto.class);
+            queryResult.setData(inspectionReport);
         }
         return queryResult;
     }
@@ -973,8 +1016,6 @@ public class HisServiceImpl implements HisService {
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("删除成功!");//返回的msg文本比较长
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }

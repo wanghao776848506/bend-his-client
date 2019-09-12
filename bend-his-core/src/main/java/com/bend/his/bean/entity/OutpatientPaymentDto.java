@@ -47,15 +47,19 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "总金额")
     @JSONField(name = "总金额")
-    private BigDecimal totalFee;
+    private String totalFee;
 
     @ApiModelProperty(notes = "缴费流水号")
     @JSONField(name = "缴费流水号")
     private String paySerialNumber;
 
     @ApiModelProperty(notes = "缴费方式列表,格式：[{'PaymentID':'支付方式ID','OrgAccID':'账户ID'，'Fee','金额'}]")
-    @JSONField(name = "缴费方式列表")
     private List<PayAccountBO> paymentList;
+
+    @ApiModelProperty(notes = "缴费方式列表,格式：[{'PaymentID':'支付方式ID','OrgAccID':'账户ID'，'Fee','金额'}]")
+    @JSONField(name = "缴费方式列表")
+    private String paymentListStr;
+
 
     @ApiModelProperty(notes = "厂商编号或厂商唯一标识")
     @JSONField(name = "厂商唯一标识")
@@ -110,7 +114,7 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
         inputJson.put("总金额", this.getTotalFee());
         inputJson.put("退费金额", this.getRefundAmount());
         inputJson.put("缴费流水号", this.getPaySerialNumber());
-        inputJson.put("缴费方式列表", this.getPaymentList());
+        inputJson.put("缴费方式列表", this.getPaymentListStr());
         inputJson.put("厂商唯一标识", this.getManufacturerNumber());
         return inputJson.toJSONString();
     }

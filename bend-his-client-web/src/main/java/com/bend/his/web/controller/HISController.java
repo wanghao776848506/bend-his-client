@@ -34,10 +34,10 @@ public class HISController {
      */
     @ApiOperation(value = "01 登录验证", notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
-            @ApiImplicitParam(name = "memberName", value = "用户名"),
-            @ApiImplicitParam(name = "password", value = "密码"),
-            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号")
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01,defaultValue = TradeCode.TRADE_01),
+            @ApiImplicitParam(name = "memberName", value = "用户名",defaultValue = "liqian"),
+            @ApiImplicitParam(name = "password", value = "密码",defaultValue = "123"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号",defaultValue = "510303001")
     })
     @PostMapping("his/auth")
     public ResponseEntity<AuthenticationDto> getHISAuth(@RequestBody AuthenticationDto authenticationDto) throws HisException {
@@ -610,6 +610,7 @@ public class HISController {
             @ApiImplicitParam(name = "authCode", value = "验证码"),
             @ApiImplicitParam(name = "userId", value = "收费人员ID"),
             @ApiImplicitParam(name = "hospitalizationId", value = "住院ID"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码/机构ID"),
             @ApiImplicitParam(name = "totalFee", value = "总金额"),
             @ApiImplicitParam(name = "paySerialNumber", value = "缴费流水号"),
             @ApiImplicitParam(name = "paymentList", value = "缴费方式列表"),
@@ -678,11 +679,11 @@ public class HISController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_14),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "applyId", value = "申请ID[30-15接口获取]"),
+            @ApiImplicitParam(name = "applyId", value = "申请单ID[30-15接口获取]"),
     })
     @PostMapping("his/hospital/inspection/report/list")
-    public ResponseEntity<List<InspectionReportDto>> getHISInspectionReportList(@RequestBody InspectionReportDto inspectionReportDto) throws HisException {
-        QueryResult<List<InspectionReportDto>> result = hisService.getHISInspectionReportList(inspectionReportDto);
+    public ResponseEntity<InspectionReportDto> getHISInspectionReportList(@RequestBody InspectionReportDto inspectionReportDto) throws HisException {
+        QueryResult<InspectionReportDto> result = hisService.getHISInspectionReportList(inspectionReportDto);
         if (Objects.isNull(result.getData())){
             throw new HisException(result.getMsg());
         }

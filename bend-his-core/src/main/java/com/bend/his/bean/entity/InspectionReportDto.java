@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class InspectionReportDto extends AbstractBaseEntity {
 
     /*request data*/
-    @ApiModelProperty(notes = "申请ID,[30-15接口获取]")
-    @JSONField(name = "申请ID")
+    @ApiModelProperty(notes = "申请ID/申请单ID[30-15接口获取]")
+    @JSONField(name = "申请单ID")
     private String applyId;
 
     @ApiModelProperty(notes = "收费人员ID/操作员ID")
@@ -44,7 +44,7 @@ public class InspectionReportDto extends AbstractBaseEntity {
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("申请ID", this.getApplyId());
+        inputJson.put("申请单ID", this.getApplyId());
         inputJson.put("虚拟操作人员ID", this.getVmUserId());
         return inputJson.toJSONString();
     }

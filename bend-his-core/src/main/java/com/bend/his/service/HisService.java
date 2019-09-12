@@ -283,7 +283,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
-    QueryResult<List<InspectionReportDto>> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException;
+    QueryResult<InspectionReportDto> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException;
 
     /**
      * No.33	30-15 获取已完成的检查检验申请列表:此接口用于获取HIS系统中已完成的检查检验申请列表

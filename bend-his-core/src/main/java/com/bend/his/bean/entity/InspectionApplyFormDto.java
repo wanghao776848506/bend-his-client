@@ -27,8 +27,8 @@ public class InspectionApplyFormDto extends AbstractBaseEntity {
     private String hospitalizationId;*/
 
     /*response data*/
-    @ApiModelProperty(notes = "申请ID")
-    @JSONField(name = "申请ID")
+    @ApiModelProperty(notes = "申请ID/申请单ID")
+    @JSONField(name = "申请单ID")
     private String applyId;
 
     @ApiModelProperty(notes = "申请Item名称")

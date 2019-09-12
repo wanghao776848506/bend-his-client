@@ -39,7 +39,7 @@ public class RegistrationDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "金额")
     @JSONField(name = "金额")
-    private BigDecimal fee;
+    private String fee;
 
     @ApiModelProperty(notes = "费用类型ID")
     @JSONField(name = "费用类型ID")
@@ -58,10 +58,13 @@ public class RegistrationDto extends AbstractBaseEntity {
     private String doctorId;
 
     @ApiModelProperty(notes = "缴费方式列表,格式：[{'PaymentID':'支付方式ID','OrgAccID':'账户ID'，'Fee','金额'}]")
-    @JSONField(name = "缴费方式列表")
     private List<PayAccountBO> paymentList;
 
-    @ApiModelProperty(notes = "挂号日期")
+    @ApiModelProperty(notes = "缴费方式列表,格式：[{'PaymentID':'支付方式ID','OrgAccID':'账户ID'，'Fee','金额'}]")
+    @JSONField(name = "缴费方式列表")
+    private String paymentListStr;
+
+    @ApiModelProperty(notes = "挂号日期[YYYY-MM-DD，注：为空默认为当前时间]")
     @JSONField(name = "挂号日期")
     private String createDate; //YYYY-MM-DD，注：为空默认为当前时间
 
@@ -89,7 +92,7 @@ public class RegistrationDto extends AbstractBaseEntity {
 
     /*response data*/
     @ApiModelProperty(notes = "挂号ID")
-    @JSONField(name = "ID")
+    @JSONField(name = "挂号ID")
     private String registrationId;
 
     @ApiModelProperty(notes = "挂号CODE")
@@ -112,7 +115,6 @@ public class RegistrationDto extends AbstractBaseEntity {
     @JSONField(name = "是否可退")
     private String refundable;
 
-
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
@@ -126,7 +128,7 @@ public class RegistrationDto extends AbstractBaseEntity {
         inputJson.put("模板ID", this.getTemplateId());
         inputJson.put("科室ID", this.getDepartmentId());
         inputJson.put("医生ID", this.getDoctorId());
-        inputJson.put("缴费方式列表", this.getPaymentList());
+        inputJson.put("缴费方式列表", this.getPaymentListStr());
         inputJson.put("挂号日期", this.getCreateDate());
         inputJson.put("厂商唯一标识", this.getManufacturerNumber());
         inputJson.put("缴费流水号", this.getPaySerialNumber());
