@@ -41,6 +41,7 @@ public final class TradeCode {
     public static final String TRADE_30_16  = "30-16"; //获取机构、人员的排班信息
 
     public static final String TRADE_32 = "32";         //住院医嘱查询
+    public static final String TRADE_33 = "33";         //费用结算信息回写至基层系统
     public static final String TRADE_34 = "34";         //住院病历查询
     public static final String TRADE_35 = "35";         //对码信息回写||处理类
     public static final String TRADE_36 = "36";         //住院医保信息保存||处理类

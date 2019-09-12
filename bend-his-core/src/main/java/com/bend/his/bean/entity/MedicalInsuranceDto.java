@@ -43,6 +43,40 @@ public class MedicalInsuranceDto extends AbstractBaseEntity {
     @JSONField(name = "其他信息")
     private String otherInfo;
 
+    /*接口38参数*/
+//    @ApiModelProperty(notes = "业务ID")
+//    @JSONField(name = "业务ID")
+//    private String businessId;
+
+    @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
+    @JSONField(name = "机构ID")
+    private String organizationCode;
+
+    @ApiModelProperty(notes = "操作人ID/操作员ID")
+    @JSONField(name = "操作人ID")
+    private String userId;
+
+    @ApiModelProperty(notes = "HIS调用医保交易动作产生的唯一ID")
+    @JSONField(name = "发起交易的动作ID")
+    private String dealBusinessId;
+
+    @ApiModelProperty(notes = "入参")
+    @JSONField(name = "入参")
+    private String inputParam;
+
+    @ApiModelProperty(notes = "出参")
+    @JSONField(name = "出参")
+    private String outParam;
+
+    @ApiModelProperty(notes = "医保返回的业务号")
+    @JSONField(name = "医保返回的业务号")
+    private String dealBusinessNum;
+
+    @ApiModelProperty(notes = "医保交易码")
+    @JSONField(name = "医保交易码")
+    private String dealCode;
+
+
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
@@ -53,6 +87,15 @@ public class MedicalInsuranceDto extends AbstractBaseEntity {
         inputJson.put("报账费用", this.getReimburseFee());
         inputJson.put("自付费用", this.getSelfPayFee());
         inputJson.put("其他信息", this.getOtherInfo());
+        /*38接口*/
+//        inputJson.put("业务ID", this.getBusinessId());
+        inputJson.put("机构ID", this.getOrganizationCode());
+        inputJson.put("操作人ID", this.getUserId());
+        inputJson.put("发起交易的动作ID", this.getDealBusinessId());
+        inputJson.put("入参", this.getInputParam());
+        inputJson.put("出参", this.getOutParam());
+        inputJson.put("医保返回的业务号", this.getDealBusinessNum());
+        inputJson.put("医保交易码", this.getDealCode());
         return inputJson.toJSONString();
     }
 }

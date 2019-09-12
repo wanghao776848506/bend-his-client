@@ -34,15 +34,15 @@ public class HISController {
      */
     @ApiOperation(value = "01 登录验证", notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01,defaultValue = TradeCode.TRADE_01),
-            @ApiImplicitParam(name = "memberName", value = "用户名",defaultValue = "liqian"),
-            @ApiImplicitParam(name = "password", value = "密码",defaultValue = "123"),
-            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号",defaultValue = "510303001")
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01, defaultValue = TradeCode.TRADE_01),
+            @ApiImplicitParam(name = "memberName", value = "用户名", defaultValue = "liqian"),
+            @ApiImplicitParam(name = "password", value = "密码", defaultValue = "123"),
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号", defaultValue = "510303001")
     })
     @PostMapping("his/auth")
     public ResponseEntity<AuthenticationDto> getHISAuth(@RequestBody AuthenticationDto authenticationDto) throws HisException {
         QueryResult<AuthenticationDto> result = hisService.getHISAuth(authenticationDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -65,7 +65,7 @@ public class HISController {
     @PostMapping("his/comprehensive/catalogue")
     public ResponseEntity<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(@RequestBody ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
         QueryResult<List<ComprehensiveCatalogueDto>> result = hisService.getHISComprehensiveCatalogue(comprehensiveCatalogueDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -94,7 +94,7 @@ public class HISController {
     @PostMapping("his/hospital/three/catalogue")
     public ResponseEntity<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogue(@RequestBody HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException {
         QueryResult<List<HospitalThreeCatalogueDto>> result = hisService.getHISHospitalThreeCatalogue(hospitalThreeCatalogueDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -118,7 +118,7 @@ public class HISController {
     @PostMapping("his/hospital/three/catalogue/rows")
     public ResponseEntity<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogueRows(@RequestBody HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException {
         QueryResult<List<HospitalThreeCatalogueDto>> result = hisService.getHISHospitalThreeCatalogueRows(hospitalThreeCatalogueDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -145,7 +145,7 @@ public class HISController {
     @PostMapping("his/hospital/icd10/list")
     public ResponseEntity<List<ICD10Dto>> getHISHospitalICD10(@RequestBody ICD10Dto icd10Dto) throws HisException {
         QueryResult<List<ICD10Dto>> result = hisService.getHISHospitalICD10(icd10Dto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -170,7 +170,7 @@ public class HISController {
     @PostMapping("his/hospital/icd10/rows")
     public ResponseEntity<List<ICD10Dto>> getHISHospitalICD10Rows(@RequestBody ICD10Dto icd10Dto) throws HisException {
         QueryResult<List<ICD10Dto>> result = hisService.getHISHospitalICD10Rows(icd10Dto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -189,7 +189,7 @@ public class HISController {
     @PostMapping("his/hospital/inpatient/list")
     public ResponseEntity<List<InpatientDto>> getHISInpatientList(@RequestBody InpatientDto inpatientDto) throws HisException {
         QueryResult<List<InpatientDto>> result = hisService.getHISInpatientList(inpatientDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -207,7 +207,7 @@ public class HISController {
     @PostMapping("his/hospital/outpatient/list")
     public ResponseEntity<List<OutpatientDto>> getHISOutpatientList(@RequestBody OutpatientDto outpatientDto) throws HisException {
         QueryResult<List<OutpatientDto>> result = hisService.getHISOutpatientList(outpatientDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -230,7 +230,7 @@ public class HISController {
     @PostMapping("his/hospital/halfway/settlement/list")
     public ResponseEntity<List<HospitalizationSettlementDto>> getHISHospitalizationSettlement(@RequestBody HospitalizationSettlementDto hospitalizationSettlementDto) throws HisException {
         QueryResult<List<HospitalizationSettlementDto>> result = hisService.getHISHospitalizationSettlement(hospitalizationSettlementDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -256,7 +256,7 @@ public class HISController {
     @PostMapping("his/hospital/hospitalization/fee/detail")
     public ResponseEntity<List<HospitalizationFeeDto>> getHISHospitalizationFee(@RequestBody HospitalizationFeeDto hospitalizationFeeDto) throws HisException {
         QueryResult<List<HospitalizationFeeDto>> result = hisService.getHISHospitalizationFee(hospitalizationFeeDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -276,7 +276,7 @@ public class HISController {
     @PostMapping("his/hospital/outpatient/fee/detail")
     public ResponseEntity<List<OutpatientFeeDto>> getHISOutpatientFee(@RequestBody OutpatientFeeDto outpatientFeeDto) throws HisException {
         QueryResult<List<OutpatientFeeDto>> result = hisService.getHISOutpatientFee(outpatientFeeDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -296,7 +296,7 @@ public class HISController {
     @PostMapping("his/hospital/organization/detail")
     public ResponseEntity<List<HospitalOrganizationDto>> getHISHospitalInstitutionDetail(@RequestBody HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
         QueryResult<List<HospitalOrganizationDto>> result = hisService.getHISHospitalInstitutionDetail(hospitalOrganizationDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -316,7 +316,7 @@ public class HISController {
     @PostMapping("his/hospital/organization/list")
     public ResponseEntity<List<HospitalOrganizationDto>> getHISHospitalInstitutionList(@RequestBody HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
         QueryResult<List<HospitalOrganizationDto>> result = hisService.getHISHospitalInstitutionList(hospitalOrganizationDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -334,7 +334,7 @@ public class HISController {
     @PostMapping("his/hospital/payment/list")
     public ResponseEntity<List<HospitalPaymentDto>> getHISHospitalPaymentList(@RequestBody HospitalPaymentDto hospitalPaymentDto) throws HisException {
         QueryResult<List<HospitalPaymentDto>> result = hisService.getHISHospitalPaymentList(hospitalPaymentDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -351,7 +351,7 @@ public class HISController {
     @PostMapping("his/hospital/registration/feeType/list")
     public ResponseEntity<List<RegistrationFeeTypeDto>> getHISPatientRegistrationList(@RequestBody RegistrationFeeTypeDto registrationFeeTypeDto) throws HisException {
         QueryResult<List<RegistrationFeeTypeDto>> result = hisService.getHISPatientRegistrationList(registrationFeeTypeDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -366,7 +366,7 @@ public class HISController {
     @PostMapping("his/hospital/registration/template/list")
     public ResponseEntity<List<RegistrationTemplateDto>> getHISHospitalRegistrationTemplateList(@RequestBody RegistrationTemplateDto registrationTemplateDto) throws HisException {
         QueryResult<List<RegistrationTemplateDto>> result = hisService.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -387,7 +387,7 @@ public class HISController {
     @PostMapping("his/hospital/registration/section/list")
     public ResponseEntity<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(@RequestBody HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
         QueryResult<List<HospitalDepartmentDto>> result = hisService.getHISHospitalRegistrationDepartmentList(hospitalDepartmentDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -410,7 +410,7 @@ public class HISController {
     @PostMapping("his/hospital/doctor/list")
     public ResponseEntity<List<DoctorDto>> getHISDepartmentDoctorList(@RequestBody DoctorDto doctorDto) throws HisException {
         QueryResult<List<DoctorDto>> result = hisService.getHISDepartmentDoctorList(doctorDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -436,7 +436,7 @@ public class HISController {
     @PostMapping("his/hospital/registration")
     public ResponseEntity<List<RegistrationDto>> getHISRegistration(@RequestBody RegistrationDto registrationDto) throws HisException {
         QueryResult<List<RegistrationDto>> result = hisService.getHISRegistration(registrationDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -459,7 +459,7 @@ public class HISController {
     @PostMapping("his/hospital/withdrawal/registration")
     public ResponseEntity<String> getHISWithdrawalRegistration(@RequestBody RegistrationDto registrationDto) throws HisException {
         QueryResult<String> result = hisService.getHISWithdrawalRegistration(registrationDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -591,7 +591,7 @@ public class HISController {
     @PostMapping("his/hospital/hospitalization/record/list")
     public ResponseEntity<List<InpatientDto>> getHISHospitalizationRecordList(@RequestBody InpatientDto inpatientDto) throws HisException {
         QueryResult<List<InpatientDto>> result = hisService.getHISInpatientRecordList(inpatientDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             System.out.println("do ....");
             throw new HisException(result.getMsg());
         }
@@ -619,7 +619,7 @@ public class HISController {
     @PostMapping("his/hospital/hospitalization/pre/payment")
     public ResponseEntity<PrepaymentDto> getHISInpatientPrepayment(@RequestBody PrepaymentDto prepaymentDto) throws HisException {
         QueryResult<PrepaymentDto> result = hisService.getHISInpatientPrepayment(prepaymentDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -635,7 +635,7 @@ public class HISController {
     @PostMapping("his/hospital/pre/payment/record/list")
     public ResponseEntity<List<PrepaymentDto>> getHISInpatientPrepaymentRecordList(@RequestBody PrepaymentDto prepaymentDto) throws HisException {
         QueryResult<List<PrepaymentDto>> result = hisService.getHISInpatientPrepaymentRecordList(prepaymentDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -652,7 +652,7 @@ public class HISController {
     @PostMapping("his/hospital/daily/bill/list")
     public ResponseEntity<List<DailyBillDto>> getHISInpatientDailyBillList(@RequestBody DailyBillDto dailyBillDto) throws HisException {
         QueryResult<List<DailyBillDto>> result = hisService.getHISInpatientDailyBillList(dailyBillDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -668,7 +668,7 @@ public class HISController {
     @PostMapping("his/hospital/inspection/apply/form")
     public ResponseEntity<List<InspectionApplyFormDto>> getHISInspectionReportApplyForm(@RequestBody InspectionApplyFormDto inspectionApplyFormDto) throws HisException {
         QueryResult<List<InspectionApplyFormDto>> result = hisService.getHISInspectionReportApplyForm(inspectionApplyFormDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -684,7 +684,7 @@ public class HISController {
     @PostMapping("his/hospital/inspection/report/list")
     public ResponseEntity<InspectionReportDto> getHISInspectionReportList(@RequestBody InspectionReportDto inspectionReportDto) throws HisException {
         QueryResult<InspectionReportDto> result = hisService.getHISInspectionReportList(inspectionReportDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -702,7 +702,7 @@ public class HISController {
     @PostMapping("his/hospital/doctor/schedule/list")
     public ResponseEntity<List<DoctorScheduleDto>> getHISDoctorScheduleList(@RequestBody DoctorScheduleDto doctorScheduleDto) throws HisException {
         QueryResult<List<DoctorScheduleDto>> result = hisService.getHISDoctorScheduleList(doctorScheduleDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -720,7 +720,7 @@ public class HISController {
     @PostMapping("his/hospital/doctor/order/list")
     public ResponseEntity<List<MedicalOrderDto>> getHISMedicalOrderList(@RequestBody MedicalOrderDto medicalOrderDto) throws HisException {
         QueryResult<List<MedicalOrderDto>> result = hisService.getHISMedicalOrderList(medicalOrderDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -735,7 +735,7 @@ public class HISController {
     @PostMapping("his/settlement/fee/delete")
     public ResponseEntity<String> deleteSettlementFeeByBusinessId(@RequestBody CommonDto commonDto) throws HisException {
         QueryResult<String> result = hisService.deleteSettlementFeeByBusinessId(commonDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -755,7 +755,7 @@ public class HISController {
     @PostMapping("his/personal/medical/insurance/save")
     public ResponseEntity<String> savePersonalMedicalInsurance(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
         QueryResult<String> result = hisService.savePersonalMedicalInsurance(medicalInsuranceDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -770,7 +770,99 @@ public class HISController {
     @PostMapping("his/personal/medical/insurance/delete")
     public ResponseEntity<String> deletePersonalMedicalInsurance(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
         QueryResult<String> result = hisService.deletePersonalMedicalInsurance(medicalInsuranceDto);
-        if (Objects.isNull(result.getData())){
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+
+    /**
+     * 费用结算信息回写至基层系统(门诊、住院的结算相关信息)
+     *
+     * @param expenseSettlementDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "33 费用结算信息回写至基层系统", notes = "此接口用于将门诊、住院的结算相关信息回写至基层系统中")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_33),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID【在接口“10住院病人信息查询”中返回】"),
+            @ApiImplicitParam(name = "patientFromType", value = "病人来源[1门诊 2住院]"),
+            @ApiImplicitParam(name = "patientName", value = "姓名"),
+            @ApiImplicitParam(name = "idCardNo", value = "身份证"),
+            @ApiImplicitParam(name = "insuranceNo", value = "医保卡号"),
+            @ApiImplicitParam(name = "medicalCategory", value = "医疗类别"),
+            @ApiImplicitParam(name = "personnelCategory", value = "人员类别"),
+            @ApiImplicitParam(name = "treatmentCategory", value = "待遇类别"),
+            @ApiImplicitParam(name = "specialTreatmentCategory", value = "特殊待遇类别"),
+            @ApiImplicitParam(name = "diseaseCode", value = "疾病编码/疾病代码"),
+            @ApiImplicitParam(name = "proportionalMethod", value = "比例取法"),
+            @ApiImplicitParam(name = "otherInfo", value = "其他信息,JSON格式，此处必须是单引号，参考：{ '用户名':'hl','密码':'123'}"),
+            @ApiImplicitParam(name = "medicalInsuranceAgencyCode", value = "医保机构编码"),
+            @ApiImplicitParam(name = "medicalInsuranceAgencyName", value = "医保机构名称"),
+            @ApiImplicitParam(name = "liquidationMethodCode", value = "清算方式编码"),
+            @ApiImplicitParam(name = "liquidationMethodName", value = "清算方式名称"),
+            @ApiImplicitParam(name = "patientEnrollmentCode", value = "患者参保地编码"),
+            @ApiImplicitParam(name = "patientEnrollmentName", value = "患者参保地名称"),
+            @ApiImplicitParam(name = "insuranceTotalFee", value = "医保总费用"),
+            @ApiImplicitParam(name = "paySerialNumber", value = "流水号【开始日期，缴费流水号接口】"),
+            @ApiImplicitParam(name = "costAscriptionTime", value = "费用归属时间"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码"),
+            @ApiImplicitParam(name = "medicalInsuranceInputParam", value = "医保入参"),
+            @ApiImplicitParam(name = "medicalInsuranceOutParam", value = "医保出参"),
+            @ApiImplicitParam(name = "userId", value = "操作人ID"),
+            @ApiImplicitParam(name = "userName", value = "操作人姓名"),
+            @ApiImplicitParam(name = "remark", value = "备注"),
+            @ApiImplicitParam(name = "printInfo", value = "打印信息,[{'个人账户支付':'3728.86','其他账户支付':'0.00','统筹支付':'0.00','报账合计':'3728.86','个人支付':'0.00'}]"),
+    })
+    @PostMapping("his/expense/settlement/tohis/save")
+    public ResponseEntity<String> saveExpenseSettlementToHis(@RequestBody ExpenseSettlementDto expenseSettlementDto) throws HisException {
+        QueryResult<String> result = hisService.saveExpenseSettlementToHis(expenseSettlementDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+
+    @ApiOperation(value = "35 三大目录对码信息回写至基层系统", notes = "此接口用于将医保三大目录对码的相关信息回写至基层系统")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_35),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "userName", value = "操作人姓名"),
+            @ApiImplicitParam(name = "version", value = "版本"),
+            @ApiImplicitParam(name = "revocationStatus", value = "撤销状态"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码"),
+            @ApiImplicitParam(name = "pairCodeList", value = "对码详细信息,格式[{},{},...]"),
+    })
+    @PostMapping("his/catalogue/pair/code/tohis/save")
+    public ResponseEntity<String> saveThreeCataloguePairCodeToHis(@RequestBody ThreeCataloguePairCodeDto threeCataloguePairCodeDto) throws HisException {
+        QueryResult<String> result = hisService.saveThreeCataloguePairCodeToHis(threeCataloguePairCodeDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "38 医保信息回写至基层系统", notes = "此接口用于将医保报账的相关信息回写至基层系统")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_38),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "userId", value = "操作人ID"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码/机构ID"),
+            @ApiImplicitParam(name = "businessId", value = "业务ID"),
+            @ApiImplicitParam(name = "dealBusinessId", value = "发起交易的动作ID"),
+            @ApiImplicitParam(name = "inputParam", value = "入参"),
+            @ApiImplicitParam(name = "outParam", value = "出参"),
+            @ApiImplicitParam(name = "dealBusinessNum", value = "医保返回的业务号"),
+            @ApiImplicitParam(name = "dealCode", value = "医保交易码"),
+    })
+    @PostMapping("his/medical/insurance/tohis/save")
+    public ResponseEntity<String> saveMedicalInsuranceToHis(@RequestBody MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryResult<String> result = hisService.saveMedicalInsuranceToHis(medicalInsuranceDto);
+        if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());

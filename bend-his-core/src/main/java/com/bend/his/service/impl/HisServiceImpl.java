@@ -1076,4 +1076,42 @@ public class HisServiceImpl implements HisService {
         }
         return queryResult;
     }
+
+    @Override
+    public QueryResult<String> saveThreeCataloguePairCodeToHis(ThreeCataloguePairCodeDto threeCataloguePairCodeDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(threeCataloguePairCodeDto.getTradeCode());
+        queryRequest.setInputParameter(threeCataloguePairCodeDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<String> saveMedicalInsuranceToHis(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
+        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
+        }
+        return queryResult;
+    }
 }
