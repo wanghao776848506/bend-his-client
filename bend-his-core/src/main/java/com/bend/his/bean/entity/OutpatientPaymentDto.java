@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "OutpatientPaymentDto - 门诊缴费 ",description = "门诊缴费")
+@ApiModel(value = "OutpatientPaymentDto - 门诊缴费 ", description = "门诊缴费")
 public class OutpatientPaymentDto extends AbstractBaseEntity {
 
     /*--------request params--------*/
@@ -72,7 +71,7 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "退费金额")
     @JSONField(name = "退费金额")
-    private BigDecimal refundAmount;
+    private String refundAmount;
 
     /*----------------*/
 
@@ -108,6 +107,9 @@ public class OutpatientPaymentDto extends AbstractBaseEntity {
         /*param2*/
         inputJson.put("处方IDS", this.getRecipeIds());
         inputJson.put("收费人员ID", this.getUserId());
+
+        inputJson.put("收费记录ID", this.getChargeRecordId());
+
         inputJson.put("虚拟收费人员ID", this.getVmUserId());
         inputJson.put("机构ID", this.getOrganizationCode());
         inputJson.put("挂号ID", this.getRegistrationId());

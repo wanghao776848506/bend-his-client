@@ -1,4 +1,4 @@
-FROM jdk1.8:144
+FROM java:8u144
 
 VOLUME /tmp
 

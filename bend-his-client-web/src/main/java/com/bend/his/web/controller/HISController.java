@@ -868,5 +868,36 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
+    @ApiOperation(value = "70 查询居民接口", notes = "接口说明用于查询居民信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_70),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "NAME", value = "居民姓名"),
+            @ApiImplicitParam(name = "IDCARD", value = "居民身份证"),
+            @ApiImplicitParam(name = "CODE", value = "档案号"),
+    })
+    @PostMapping("his/personal/resident")
+    public ResponseEntity<List<ResidentDto>> getResidentList(@RequestBody ResidentDto residentDto) throws HisException {
+        QueryResult<List<ResidentDto>> result = hisService.getResidentList(residentDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+    @ApiOperation(value = "102 PACS检查项目查询", notes = "此接口用于获取HIS系统中PACS检查项目")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_102),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码"),
+    })
+    @PostMapping("his/pacs/item/list")
+    public ResponseEntity<List<PacsItemDto>> getPacsItemList(@RequestBody PacsItemDto pacsItemDto) throws HisException {
+        QueryResult<List<PacsItemDto>> result = hisService.getPacsItemList(pacsItemDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
 
 }

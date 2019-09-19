@@ -1114,4 +1114,64 @@ public class HisServiceImpl implements HisService {
         }
         return queryResult;
     }
+
+    @Override
+    public QueryResult<List<ResidentDto>> getResidentList(ResidentDto residentDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(residentDto.getTradeCode());
+        queryRequest.setInputParameter(residentDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<ResidentDto> residentDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                ResidentDto resident = JSON.parseObject(jsonArrayString, ResidentDto.class);
+                residentDtoList.add(resident);
+            }
+            queryResult.setData(residentDtoList);
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<List<PacsItemDto>> getPacsItemList(PacsItemDto pacsItemDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(pacsItemDto.getTradeCode());
+        queryRequest.setInputParameter(pacsItemDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+
+            List<PacsItemDto> pacsItemDtoList = new ArrayList<>();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                PacsItemDto pacsItem = JSON.parseObject(jsonArrayString, PacsItemDto.class);
+                pacsItemDtoList.add(pacsItem);
+            }
+            queryResult.setData(pacsItemDtoList);
+        }
+        return queryResult;
+    }
 }

@@ -11,4 +11,4 @@ ENV PATH $PATH:$JAVA_HOME/bin
 # docker build -t java:8u144 . -f jdkdockerfile
 #运行 docker run -d -it --name=jdk1.8 java:8u144 /bin/bash
 #验证镜像中的jdk: docker exec -it 容器ID /bin/bash
-#
+#从本地把jdk-8u144-linux-x64.tar.gz上传到<dir>/jdkdockerfile

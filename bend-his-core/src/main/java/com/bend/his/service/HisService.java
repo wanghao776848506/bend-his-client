@@ -342,6 +342,7 @@ public interface HisService {
 
     /**
      * No.40	35 三大目录对码信息回写至基层系统:此接口用于将医保三大目录对码的相关信息回写至基层系统
+     *
      * @param threeCataloguePairCodeDto
      * @return
      * @throws HisException
@@ -350,9 +351,30 @@ public interface HisService {
 
     /**
      * No.41	38 医保信息回写至基层系统:此接口用于将医保报账的相关信息回写至基层系统
+     *
      * @param medicalInsuranceDto
      * @return
      * @throws HisException
      */
     QueryResult<String> saveMedicalInsuranceToHis(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
+
+    /**
+     * No.60 70:查询居民接口:接口说明用于查询居民信息
+     *
+     * @param residentDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<ResidentDto>> getResidentList(ResidentDto residentDto) throws HisException;
+
+    /**
+     * No.62	102 PACS检查项目查询:此接口用于获取HIS系统中PACS检查项目
+     *
+     * @param pacsItemDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<PacsItemDto>> getPacsItemList(PacsItemDto pacsItemDto) throws HisException;
+
+
 }

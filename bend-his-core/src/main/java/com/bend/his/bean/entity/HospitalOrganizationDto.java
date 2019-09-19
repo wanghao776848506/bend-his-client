@@ -31,8 +31,8 @@ public class HospitalOrganizationDto extends AbstractBaseEntity {
     @JSONField(name = "ID")
     private String hospitalId;
 
-    @ApiModelProperty(notes = "医院地址")
-    @JSONField(name = "医院地址")
+    @ApiModelProperty(notes = "医院地址/地址")
+    @JSONField(name = "地址")
     private String hospitalAddr;
 
     @ApiModelProperty(notes = "联系电话")

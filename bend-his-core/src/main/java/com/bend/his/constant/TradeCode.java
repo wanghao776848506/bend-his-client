@@ -49,6 +49,8 @@ public final class TradeCode {
     public static final String TRADE_38 = "38";         //费用结算信息回写至基层系统||处理类
     public static final String TRADE_40 = "40";         //医保信息回写至基层系统||处理类
     public static final String TRADE_41 = "41";         //构建医保xml参数||查询类
+    public static final String TRADE_70 = "70";         //查询居民接口
+    public static final String TRADE_102 = "102";       //PACS检查项目查询
 
 
 
