@@ -14,6 +14,11 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "ResidentDto - 居民信息",description = "居民信息")
 public class ResidentDto extends AbstractBaseEntity{
 
+
+    @ApiModelProperty(notes = "验证码")
+    @JSONField(name = "ProductCode")
+    private String productCode;
+
     @ApiModelProperty(notes = "居民姓名")
     @JSONField(name = "NAME")
     private String residentName;
@@ -45,7 +50,7 @@ public class ResidentDto extends AbstractBaseEntity{
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
+        inputJson.put("ProductCode", this.getProductCode());
         inputJson.put("NAME", this.getResidentName());
         inputJson.put("IDCARD", this.getIdCardNo());
         inputJson.put("CODE", this.getFileCode());

@@ -6,6 +6,7 @@ import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.*;
 import com.bend.his.common.request.QueryRequest;
 import com.bend.his.common.result.QueryResult;
+import com.bend.his.config.HISPublicWSClient;
 import com.bend.his.config.HISWSClient;
 import com.bend.his.constant.IConstant;
 import com.bend.his.exception.HisException;
@@ -26,6 +27,12 @@ public class HisServiceImpl implements HisService {
 
     @Resource
     private HISWSClient hiswsClient;
+
+    /**
+     * for 公卫
+     */
+    @Resource
+    private HISPublicWSClient hisPublicWSClient;
 
 
     @Override
@@ -56,14 +63,37 @@ public class HisServiceImpl implements HisService {
         /**/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            AuthenticationDto dto = JSON.parseObject(jsonArray.getString(0), AuthenticationDto.class);
+            JSONArray array =  JSON.parseArray(queryResultMsg);
+            AuthenticationDto dto = JSON.parseObject(array.getString(0), AuthenticationDto.class);
             queryResult.setData(dto);
             return queryResult;
         } else {
             throw new HisException("登陆失败!");
         }
 
+    }
+
+    @Override
+    public QueryResult<PublicAuthDto> getHISPublicAuth(PublicAuthDto publicAuthDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(publicAuthDto.getTradeCode());
+        queryRequest.setInputParameter(publicAuthDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /**/
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            PublicAuthDto dto = JSON.parseObject(queryResultMsg, PublicAuthDto.class);
+            queryResult.setData(dto);
+        }
+        return queryResult;
     }
 
     @Override
@@ -1123,7 +1153,7 @@ public class HisServiceImpl implements HisService {
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
         } catch (HisException e) {
             throw new HisException("Request failed or timeout.");
         }

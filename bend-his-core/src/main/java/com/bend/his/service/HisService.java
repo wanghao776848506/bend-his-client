@@ -24,6 +24,14 @@ public interface HisService {
     QueryResult<AuthenticationDto> getHISAuth(AuthenticationDto authenticationDto) throws HisException;
 
     /**
+     *
+     * @param publicAuthDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<PublicAuthDto> getHISPublicAuth(PublicAuthDto publicAuthDto) throws HisException;
+
+    /**
      * No.3 03:医院综合目录查询(科室、医生、病区、床位):此接口用于获取HIS系统中科室、医师、病区、床位的基本信息
      *
      * @return

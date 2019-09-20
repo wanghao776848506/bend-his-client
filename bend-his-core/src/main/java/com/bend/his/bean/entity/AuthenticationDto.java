@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 用户登录信息:
  * [
@@ -32,25 +34,23 @@ public class AuthenticationDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "用户名")
     @JSONField(name = "用户名")
     private String memberName;
+
     @ApiModelProperty(notes = "密码")
     @JSONField(name = "密码")
     private String password;
+
     @ApiModelProperty(notes = "厂商编号")
     @JSONField(name = "厂商编号")
     private String manufacturerNumber;
 
     /*response data*/
-    @ApiModelProperty(notes = "验证码")
-    @JSONField(name = "验证码")
-    private String authCode;
-
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
     @JSONField(name = "机构编码")
     private String organizationCode;
 
     @ApiModelProperty(notes = "管辖区划")
     @JSONField(name = "管辖区划")
-    private String hospitalJurisdictionDivision;
+    private List<String> regionCodeList;
 
     @ApiModelProperty(notes = "机构名称")
     @JSONField(name = "机构名称")
@@ -67,9 +67,6 @@ public class AuthenticationDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "职员姓名")
     @JSONField(name = "职员姓名")
     private String userName;
-
-
-
 
     @Override
     public String createJSONObject() {
