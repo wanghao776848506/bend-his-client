@@ -32,7 +32,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "01 登录验证", position = 1 ,notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
+    @ApiOperation(value = "01 登录验证", position = 1, notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
             @ApiImplicitParam(name = "memberName", value = "用户名"),
@@ -48,8 +48,9 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "01 登录验证[公卫]", position = 2 ,notes = "此接口用于医院用户登录或医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
+    @ApiOperation(value = "01 登录验证[公卫]", position = 2, notes = "此接口用于医院用户登录或医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
     @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
             @ApiImplicitParam(name = "userName", value = "账号名/用户名", defaultValue = "bdzwsylhy"),
             @ApiImplicitParam(name = "password", value = "密码", defaultValue = "123"),
             @ApiImplicitParam(name = "productCode", value = "产品验证码")
@@ -69,7 +70,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "03 医院综合目录查询(科室、医生、病区、床位)",position = 3 , notes = "此接口用于获取HIS系统中科室、医师、病区、床位的基本信息")
+    @ApiOperation(value = "03 医院综合目录查询(科室、医生、病区、床位)", position = 3, notes = "此接口用于获取HIS系统中科室、医师、病区、床位的基本信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_03),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -94,7 +95,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "05 医院三大目录查询(药品、诊疗、耗材)",position = 4, notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的基本信息")
+    @ApiOperation(value = "05 医院三大目录查询(药品、诊疗、耗材)", position = 4, notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的基本信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_05),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -120,7 +121,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "06 医院三大目录行数(药品、诊疗、耗材)",position = 5, notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的行数")
+    @ApiOperation(value = "06 医院三大目录行数(药品、诊疗、耗材)", position = 5, notes = "此接口用于获取HIS系统中药品、诊疗、耗材三大目录的行数")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_06),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -146,7 +147,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "07 ICD10数据查询",position = 6, notes = "此接口用于获取HIS系统中ICD10的基本信息")
+    @ApiOperation(value = "07 ICD10数据查询", position = 6, notes = "此接口用于获取HIS系统中ICD10的基本信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_07),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -173,7 +174,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "08 ICD10数据行数 ",position = 7, notes = "此接口用于获取HIS系统中ICD10数据的行数")
+    @ApiOperation(value = "08 ICD10数据行数 ", position = 7, notes = "此接口用于获取HIS系统中ICD10数据的行数")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_08),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -191,7 +192,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "10 住院病人信息查询",position = 8, notes = "此接口用于获取HIS系统中住院病人的基本信息")
+    @ApiOperation(value = "10 住院病人信息查询", position = 8, notes = "此接口用于获取HIS系统中住院病人的基本信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_10),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -210,7 +211,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "12 门诊病人信息查询",position = 9, notes = "此接口用于获取HIS系统中住院病人的基本信息")
+    @ApiOperation(value = "12 门诊病人信息查询", position = 9, notes = "此接口用于获取HIS系统中住院病人的基本信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_12),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -235,7 +236,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "13 中途结算记录查询",position = 10, notes = "此接口用于获取HIS系统中住院病人的结算信息")
+    @ApiOperation(value = "13 中途结算记录查询", position = 10, notes = "此接口用于获取HIS系统中住院病人的结算信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_13),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -258,7 +259,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "14 住院费用明细查询",position = 11, notes = "此接口用于获取HIS系统中住院费用明细的详细信息")
+    @ApiOperation(value = "14 住院费用明细查询", position = 11, notes = "此接口用于获取HIS系统中住院费用明细的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_14),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -281,7 +282,7 @@ public class HISController {
     /**
      * 16 门诊费用明细查询
      */
-    @ApiOperation(value = "16 门诊费用明细查询",position = 12, notes = "此接口用于获取HIS系统中门诊费用明细的详细信息")
+    @ApiOperation(value = "16 门诊费用明细查询", position = 12, notes = "此接口用于获取HIS系统中门诊费用明细的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_16),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -302,7 +303,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30 医疗机构信息查询",position = 13, notes = "此接口用于获取HIS系统中医疗机构的详细信息")
+    @ApiOperation(value = "30 医疗机构信息查询", position = 13, notes = "此接口用于获取HIS系统中医疗机构的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -322,7 +323,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-100 机构信息获取",position = 14, notes = "此接口用于获取HIS系统中 的乡镇卫生院和社区服务中心列表")
+    @ApiOperation(value = "30-100 机构信息获取", position = 14, notes = "此接口用于获取HIS系统中 的乡镇卫生院和社区服务中心列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_100),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -340,7 +341,7 @@ public class HISController {
     /**
      * 30-99 获取机构支付方式列表
      */
-    @ApiOperation(value = "30-99 获取机构支付方式列表",position = 15, notes = "此接口用于获取HIS系统中机构支付方式列表")
+    @ApiOperation(value = "30-99 获取机构支付方式列表", position = 15, notes = "此接口用于获取HIS系统中机构支付方式列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_99),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -358,7 +359,7 @@ public class HISController {
     /**
      * 30-98 获取挂号费用类型列表
      */
-    @ApiOperation(value = "30-98 获取挂号费用类型列表",position = 16, notes = "此接口用于获取HIS系统中挂号费用类型列表")
+    @ApiOperation(value = "30-98 获取挂号费用类型列表", position = 16, notes = "此接口用于获取HIS系统中挂号费用类型列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_98),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -372,7 +373,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-1 查询挂号模板",position = 17, notes = "此接口用于获取HIS系统中挂号费用类型列表")
+    @ApiOperation(value = "30-1 查询挂号模板", position = 17, notes = "此接口用于获取HIS系统中挂号费用类型列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -392,7 +393,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-2 查询挂号模板下科室",position = 18, notes = "此接口用于获取HIS系统中挂号模板下科室")
+    @ApiOperation(value = "30-2 查询挂号模板下科室", position = 18, notes = "此接口用于获取HIS系统中挂号模板下科室")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_2),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -415,7 +416,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-3 查询科室下医生",position = 19, notes = "此接口用于获取HIS科室下医生")
+    @ApiOperation(value = "30-3 查询科室下医生", position = 19, notes = "此接口用于获取HIS科室下医生")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_3),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -431,7 +432,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-4 门诊挂号",position = 20, notes = "保存挂号信息")
+    @ApiOperation(value = "30-4 门诊挂号", position = 20, notes = "保存挂号信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_4),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -464,7 +465,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-5 退挂号",position = 21, notes = "此接口用于厂商在HIS系统中退挂号")
+    @ApiOperation(value = "30-5 退挂号", position = 21, notes = "此接口用于厂商在HIS系统中退挂号")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_5),
             @ApiImplicitParam(name = "registrationId", value = "挂号ID"),
@@ -483,7 +484,7 @@ public class HISController {
     /**
      * 30-6 查询挂号记录
      */
-    @ApiOperation(value = "30-6 查询挂号记录",position = 22, notes = "此接口用于获取HIS系统中的挂号记录")
+    @ApiOperation(value = "30-6 查询挂号记录", position = 22, notes = "此接口用于获取HIS系统中的挂号记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_6),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -505,7 +506,7 @@ public class HISController {
     /**
      * 30-7 待缴费门诊费用清单查询
      */
-    @ApiOperation(value = "30-7 待缴费门诊费用清单查询",position = 23, notes = "此接口用于获取HIS系统中的费用清单")
+    @ApiOperation(value = "30-7 待缴费门诊费用清单查询", position = 23, notes = "此接口用于获取HIS系统中的费用清单")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_7),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -521,7 +522,7 @@ public class HISController {
         return ResponseEntity.ok(data);
     }
 
-    @ApiOperation(value = "30-8 门诊缴费",position = 24, notes = "此接口用于HIS中的门诊收费")
+    @ApiOperation(value = "30-8 门诊缴费", position = 24, notes = "此接口用于HIS中的门诊收费")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_8),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -543,7 +544,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-81 已缴费列表获取",position = 25, notes = "此接口用于获取HIS系统中门诊缴费记录")
+    @ApiOperation(value = "30-81 已缴费列表获取", position = 25, notes = "此接口用于获取HIS系统中门诊缴费记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_81),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -558,7 +559,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-82 获取缴费的清单明细",position = 26, notes = "此接口用于获取HIS中的缴费清单明细")
+    @ApiOperation(value = "30-82 获取缴费的清单明细", position = 26, notes = "此接口用于获取HIS中的缴费清单明细")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_82),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -578,7 +579,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-9 门诊退费",position = 27, notes = "此接口用于退APP或微信公众号收取的费用整退")
+    @ApiOperation(value = "30-9 门诊退费", position = 27, notes = "此接口用于退APP或微信公众号收取的费用整退")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_9),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -596,7 +597,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-10 获取住院记录",position = 28, notes = "此接口用于获取HIS系统中住院记录")
+    @ApiOperation(value = "30-10 获取住院记录", position = 28, notes = "此接口用于获取HIS系统中住院记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_10),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -619,7 +620,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "30-11 住院预交费",position = 29, notes = "此接口用于HIS中的住院预交费")
+    @ApiOperation(value = "30-11 住院预交费", position = 29, notes = "此接口用于HIS中的住院预交费")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_11),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -641,7 +642,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "30-12 住院记录查询",position = 30, notes = "此接口用于获取HIS系统中预交记录")
+    @ApiOperation(value = "30-12 住院记录查询", position = 30, notes = "此接口用于获取HIS系统中预交记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_12),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -657,7 +658,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "30-13 每日清单查询",position = 31, notes = "此接口用于获取HIS系统中每日清单记录")
+    @ApiOperation(value = "30-13 每日清单查询", position = 31, notes = "此接口用于获取HIS系统中每日清单记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_13),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -674,7 +675,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "30-15 获取已完成的检查检验申请列表",position = 32, notes = "此接口用于获取HIS系统中已完成的检查检验申请列表")
+    @ApiOperation(value = "30-15 获取已完成的检查检验申请列表", position = 32, notes = "此接口用于获取HIS系统中已完成的检查检验申请列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_15),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -690,7 +691,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "30-14 检查检验报告/结果查询",position = 33, notes = "此接口用于获取HIS系统中检查检验报告")
+    @ApiOperation(value = "30-14 检查检验报告/结果查询", position = 33, notes = "此接口用于获取HIS系统中检查检验报告")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_14),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -705,7 +706,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "30-16 获取机构、人员的排班信息",position = 34, notes = "此接口用于获取HIS系统中机构、人员的排班信息")
+    @ApiOperation(value = "30-16 获取机构、人员的排班信息", position = 34, notes = "此接口用于获取HIS系统中机构、人员的排班信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_16),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -724,7 +725,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "32 住院医嘱查询",position = 35, notes = "此接口用于获取HIS系统中住院医嘱的详细信息")
+    @ApiOperation(value = "32 住院医嘱查询", position = 35, notes = "此接口用于获取HIS系统中住院医嘱的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_32),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -741,7 +742,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "34 删除费用结算信息",position = 36, notes = "此接口用于删除门诊、住院的结算相关信息")
+    @ApiOperation(value = "34 删除费用结算信息", position = 36, notes = "此接口用于删除门诊、住院的结算相关信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_34),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -756,7 +757,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "36 保存住院医保信息",position = 37, notes = "此接口用于 保存 个人住院医保 报账 返回的详细信息")
+    @ApiOperation(value = "36 保存住院医保信息", position = 37, notes = "此接口用于 保存 个人住院医保 报账 返回的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_36),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -776,7 +777,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "37 删除住院医保信息",position = 38, notes = "此接口用于删除个人住院医保报账返回的详细信息")
+    @ApiOperation(value = "37 删除住院医保信息", position = 38, notes = "此接口用于删除个人住院医保报账返回的详细信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_37),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -799,7 +800,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "33 费用结算信息回写至基层系统",position = 39, notes = "此接口用于将门诊、住院的结算相关信息回写至基层系统中")
+    @ApiOperation(value = "33 费用结算信息回写至基层系统", position = 39, notes = "此接口用于将门诊、住院的结算相关信息回写至基层系统中")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_33),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -842,7 +843,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "35 三大目录对码信息回写至基层系统",position = 40, notes = "此接口用于将医保三大目录对码的相关信息回写至基层系统")
+    @ApiOperation(value = "35 三大目录对码信息回写至基层系统", position = 40, notes = "此接口用于将医保三大目录对码的相关信息回写至基层系统")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_35),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -861,7 +862,7 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "38 医保信息回写至基层系统",position = 41, notes = "此接口用于将医保报账的相关信息回写至基层系统")
+    @ApiOperation(value = "38 医保信息回写至基层系统", position = 41, notes = "此接口用于将医保报账的相关信息回写至基层系统")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_38),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
@@ -883,25 +884,38 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "70 查询居民接口",position = 42, notes = "接口说明用于查询居民信息")
+    /**
+     * http://47.111.29.88:11004/publicdoc/index.php?s=/phisif&page_id=53
+     * 55-11 查询居民健康档案基本信息(综合查询)
+     *
+     * @param residentInfoDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "55-11 查询居民健康档案基本信息(综合查询)", position = 42, notes = "查询居民健康档案基本信息")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_70),
-//            @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "productCode", value = "验证码"),
-            @ApiImplicitParam(name = "NAME", value = "居民姓名"),
-            @ApiImplicitParam(name = "IDCARD", value = "居民身份证"),
-            @ApiImplicitParam(name = "CODE", value = "档案号"),
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_55_11),
+            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "name", value = "居民姓名"),
+            @ApiImplicitParam(name = "status", value = "状态,默认为活动"),
+            @ApiImplicitParam(name = "idCardNo", value = "居民身份证"),
+            @ApiImplicitParam(name = "personId", value = "居民ID"),
+            @ApiImplicitParam(name = "fileCode", value = "档案号"),
+            @ApiImplicitParam(name = "personType", value = "居民类型[01 一般人群,02 慢病疾病人群,03 老年人,04 0-6岁儿童,05 孕产妇]"),
+            @ApiImplicitParam(name = "typeValue", value = "居民类型值"),
+            @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)"),
     })
-    @PostMapping("his/personal/resident")
-    public ResponseEntity<List<ResidentDto>> getResidentList(@RequestBody ResidentDto residentDto) throws HisException {
-        QueryResult<List<ResidentDto>> result = hisService.getResidentList(residentDto);
+    @PostMapping("his/personal/resident/info")
+    public ResponseEntity<List<ResidentInfoDto>> getResidentList(@RequestBody ResidentInfoDto residentInfoDto) throws HisException {
+        QueryResult<List<ResidentInfoDto>> result = hisService.getResidentList(residentInfoDto);
         if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "102 PACS检查项目查询",position = 43, notes = "此接口用于获取HIS系统中PACS检查项目")
+    @ApiOperation(value = "102 PACS检查项目查询", position = 43, notes = "此接口用于获取HIS系统中PACS检查项目")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_102),
             @ApiImplicitParam(name = "authCode", value = "验证码"),

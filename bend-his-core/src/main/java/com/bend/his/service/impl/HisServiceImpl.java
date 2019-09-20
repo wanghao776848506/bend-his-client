@@ -16,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.wsdl.WSDLException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +79,7 @@ public class HisServiceImpl implements HisService {
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
         } catch (HisException e) {
             throw new HisException("Request failed or timeout.");
         }
@@ -1146,10 +1144,10 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<ResidentDto>> getResidentList(ResidentDto residentDto) throws HisException {
+    public QueryResult<List<ResidentInfoDto>> getResidentList(ResidentInfoDto residentInfoDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(residentDto.getTradeCode());
-        queryRequest.setInputParameter(residentDto.createJSONObject());
+        queryRequest.setTradeCode(residentInfoDto.getTradeCode());
+        queryRequest.setInputParameter(residentInfoDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
@@ -1164,13 +1162,13 @@ public class HisServiceImpl implements HisService {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
 
-            List<ResidentDto> residentDtoList = new ArrayList<>();
+            List<ResidentInfoDto> residentInfoDtoList = new ArrayList<>();
             for (int i = 0; i < jsonArray.size(); i++) {
                 String jsonArrayString = jsonArray.getString(i);
-                ResidentDto resident = JSON.parseObject(jsonArrayString, ResidentDto.class);
-                residentDtoList.add(resident);
+                ResidentInfoDto resident = JSON.parseObject(jsonArrayString, ResidentInfoDto.class);
+                residentInfoDtoList.add(resident);
             }
-            queryResult.setData(residentDtoList);
+            queryResult.setData(residentInfoDtoList);
         }
         return queryResult;
     }

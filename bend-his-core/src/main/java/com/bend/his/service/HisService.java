@@ -369,11 +369,11 @@ public interface HisService {
     /**
      * No.60 70:查询居民接口:接口说明用于查询居民信息
      *
-     * @param residentDto
+     * @param residentInfoDto
      * @return
      * @throws HisException
      */
-    QueryResult<List<ResidentDto>> getResidentList(ResidentDto residentDto) throws HisException;
+    QueryResult<List<ResidentInfoDto>> getResidentList(ResidentInfoDto residentInfoDto) throws HisException;
 
     /**
      * No.62	102 PACS检查项目查询:此接口用于获取HIS系统中PACS检查项目

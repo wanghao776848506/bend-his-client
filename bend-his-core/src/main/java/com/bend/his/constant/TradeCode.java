@@ -51,6 +51,7 @@ public final class TradeCode {
     public static final String TRADE_41 = "41";         //构建医保xml参数||查询类
     public static final String TRADE_70 = "70";         //查询居民接口
     public static final String TRADE_102 = "102";       //PACS检查项目查询
+    public static final String TRADE_55_11 = "55-11";  //查询居民健康档案基本信息
 
 
 

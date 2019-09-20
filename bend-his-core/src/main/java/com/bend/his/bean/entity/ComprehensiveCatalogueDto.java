@@ -44,7 +44,7 @@ public class ComprehensiveCatalogueDto extends AbstractBaseEntity {
     @JSONField(name = "目录类别名称")
     private String directoryCategoryName;
 
-    @ApiModelProperty(notes = "备注")
+    @ApiModelProperty(notes = "备注[目录类型1： 返回医生所在科室的编码;目录类型3： 返回床位所在的病区编码.]")
     @JSONField(name = "备注")
     private String remark;
 
