@@ -40,6 +40,14 @@ public interface HisService {
     QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
 
     /**
+     *
+     * @param comprehensiveCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByDoctorInfo(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
+
+    /**
      * No.4 05:医院三大目录查询(药品、诊疗、耗材) 此接口用于获取HIS系统中药品、诊疗、耗材三大目录的基本信息
      *
      * @param hospitalThreeCatalogueDto

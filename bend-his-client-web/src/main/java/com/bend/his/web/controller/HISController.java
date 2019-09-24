@@ -432,6 +432,30 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
+    /**
+     * 备注[目录类型1： 返回医生所在科室的编码;目录类型3： 返回床位所在的病区编码.]
+     * @param comprehensiveCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "查询医生信息", position = 20, notes = "此接口用于获取HIS系统医生的基本信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_03),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "directoryType", value = "目录类型[0科室、1医生、2病区、3床位]"),
+            @ApiImplicitParam(name = "directoryName", value = "目录名称[医生名称]")
+    })
+    @PostMapping("his/hospital/doctor/info")
+    public ResponseEntity<List<ComprehensiveCatalogueDto>> getHISDoctorInfo(@RequestBody ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
+        QueryResult<List<ComprehensiveCatalogueDto>> result = hisService.getHISComprehensiveCatalogueByDoctorInfo(comprehensiveCatalogueDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+
     @ApiOperation(value = "30-4 门诊挂号", position = 20, notes = "保存挂号信息")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_4),

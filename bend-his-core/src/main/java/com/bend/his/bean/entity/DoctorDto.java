@@ -36,6 +36,11 @@ public class DoctorDto extends AbstractBaseEntity{
     @JSONField(name = "医生名称")
     private String doctorName;
 
+    @ApiModelProperty(notes = "科室名称")
+    @JSONField(name = "科室名称")
+    private String departmentName;
+
+
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();

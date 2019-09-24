@@ -8,14 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 医院综合目录查询(科室、医生、病区、床位)
- *
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "ComprehensiveCatalogueDto - 医院综合目录",description = "医院综合目录查询")
+@ApiModel(value = "ComprehensiveCatalogueDto - 医院综合目录", description = "医院综合目录查询")
 public class ComprehensiveCatalogueDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
@@ -51,6 +52,9 @@ public class ComprehensiveCatalogueDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "病区")
     @JSONField(name = "病区")
     private String inpatientWard;
+
+    @ApiModelProperty(notes = "医生信息", hidden = true)
+    private DoctorDto doctorDto;
 
     @Override
     public String createJSONObject() {

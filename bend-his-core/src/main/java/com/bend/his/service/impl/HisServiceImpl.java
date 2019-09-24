@@ -8,16 +8,24 @@ import com.bend.his.common.request.QueryRequest;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.config.HISPublicWSClient;
 import com.bend.his.config.HISWSClient;
+import com.bend.his.constant.DirectoryTypeEnum;
 import com.bend.his.constant.IConstant;
 import com.bend.his.exception.HisException;
 import com.bend.his.service.HisService;
 import com.bend.his.wsdl.HISInterfaceResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 
 @Service("hisService")
 @Slf4j
@@ -34,7 +42,7 @@ public class HisServiceImpl implements HisService {
 
 
     @Override
-    public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException{
+    public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
 //        String tradeCode = "100";
 //        inputJson.put("厂商编号", "510303001");
@@ -61,7 +69,7 @@ public class HisServiceImpl implements HisService {
         /**/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray array =  JSON.parseArray(queryResultMsg);
+            JSONArray array = JSON.parseArray(queryResultMsg);
             AuthenticationDto dto = JSON.parseObject(array.getString(0), AuthenticationDto.class);
             queryResult.setData(dto);
             return queryResult;
@@ -99,7 +107,12 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
         queryRequest.setInputParameter(comprehensiveCatalogueDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
@@ -116,6 +129,104 @@ public class HisServiceImpl implements HisService {
             queryResult.setData(comprehensiveCatalogueDtoList);
         }
         return queryResult;
+    }
+
+    /**
+     * 1、返回综合目录数据
+     * 2、筛选出指定医生数据
+     * 3、封装指定医生其他信息
+     *
+     * @param comprehensiveCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    @Override
+    public QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByDoctorInfo(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
+        queryRequest.setInputParameter(comprehensiveCatalogueDto.createJSONObject());
+
+        String doctorName = comprehensiveCatalogueDto.getDirectoryName();//指定医生的名字
+        String directoryType = comprehensiveCatalogueDto.getDirectoryType();//数据类型[0科室、1医生、2病区、3床位]
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        //
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            //筛选出指定医生数据
+            List<ComprehensiveCatalogueDto> doctorList = catalogueDtoList.stream().
+                    filter(s -> doctorName.equals(s.getDirectoryName())).collect(Collectors.toList());
+            //去重字符串list.stream().distinct()
+            //对象去重
+            doctorList = doctorList.stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(ComprehensiveCatalogueDto::getDirectoryCode))), ArrayList::new));
+
+            //查询医生数据,处理备注[目录类型1： 返回医生所在科室的编码;目录类型3： 返回床位所在的病区编码.]
+            if (DirectoryTypeEnum.DOCTOR.getValue().equals(directoryType)){
+                if (!CollectionUtils.isEmpty(doctorList)){
+                    for (int i = 0 ; i < doctorList.size() ; i ++){
+                        ComprehensiveCatalogueDto dto = doctorList.get(i);
+                        String doctorName2 = dto.getDirectoryName(); //医生姓名
+                        String doctorId = dto.getDirectoryCode();//医生ID
+                        String departmentId = dto.getRemark();//备注--科室ID
+                        String departmentName = this.getSectionName(comprehensiveCatalogueDto,departmentId); //科室名称
+
+                        DoctorDto doctorDto = new DoctorDto();
+                        doctorDto.setDoctorId(doctorId);
+                        doctorDto.setDoctorName(doctorName2);
+                        doctorDto.setDepartmentId(departmentId);
+                        doctorDto.setDepartmentName(departmentName);
+
+                        dto.setDoctorDto(doctorDto);
+                    }
+                }
+            }
+            queryResult.setData(doctorList);
+        }
+        return queryResult;
+    }
+
+    /**
+     *
+     * @param comprehensiveCatalogueDto
+     * @param departmentId
+     * @return
+     * @throws HisException
+     */
+    private String getSectionName(ComprehensiveCatalogueDto comprehensiveCatalogueDto, String departmentId) throws HisException {
+        //查询科室
+        comprehensiveCatalogueDto.setDirectoryType(DirectoryTypeEnum.SECTION.getValue());
+
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
+        queryRequest.setInputParameter(comprehensiveCatalogueDto.createJSONObject());
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        List<ComprehensiveCatalogueDto> departmentList = new ArrayList<>();
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<ComprehensiveCatalogueDto> comprehensiveCatalogueList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            //科室编码唯一,返回一个
+            departmentList = comprehensiveCatalogueList.stream().
+                    filter(comprehensiveCatalogue -> departmentId.equals(comprehensiveCatalogue.getDirectoryCode())).
+                    collect(Collectors.toList());
+        }
+        return departmentList.get(0).getDirectoryName();
     }
 
     @Override
@@ -357,9 +468,8 @@ public class HisServiceImpl implements HisService {
     }
 
 
-
     @Override
-    public QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionDetail( HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
+    public QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionDetail(HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(hospitalOrganizationDto.getTradeCode());
         queryRequest.setInputParameter(hospitalOrganizationDto.createJSONObject());
@@ -384,7 +494,7 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionList( HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
+    public QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionList(HospitalOrganizationDto hospitalOrganizationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(hospitalOrganizationDto.getTradeCode());
         queryRequest.setInputParameter(hospitalOrganizationDto.createJSONObject());
@@ -544,10 +654,10 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(registrationDto.getTradeCode());
         //"缴费方式列表": "[{\"PaymentID\":\"支付方式ID\",\"OrgAccID\":\"账户ID\",\"Fee\",\"金额\"}]"
         List<PayAccountBO> paymentList = registrationDto.getPaymentList();
-        String paymentListStr ="";
+        String paymentListStr = "";
         StringBuilder sbs = new StringBuilder();
         sbs.append("[");
-        for (PayAccountBO payAccountBO:paymentList){
+        for (PayAccountBO payAccountBO : paymentList) {
             String orgAccID = payAccountBO.getOrgAccID();
             String paymentId = payAccountBO.getPaymentId();
             String fee = payAccountBO.getFee();
@@ -667,10 +777,10 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
         List<PayAccountBO> paymentList = outpatientPaymentDto.getPaymentList();
-        String paymentListStr ="";
+        String paymentListStr = "";
         StringBuilder sbs = new StringBuilder();
         sbs.append("[");
-        for (PayAccountBO payAccountBO:paymentList){
+        for (PayAccountBO payAccountBO : paymentList) {
             String orgAccID = payAccountBO.getOrgAccID();
             String paymentId = payAccountBO.getPaymentId();
             String fee = payAccountBO.getFee();
@@ -733,7 +843,7 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<ExpenseBillDto>> getHISOutpatientBillDetail(ExpenseBillDto expenseBillDto)  throws HisException {
+    public QueryResult<List<ExpenseBillDto>> getHISOutpatientBillDetail(ExpenseBillDto expenseBillDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(expenseBillDto.getTradeCode());
         queryRequest.setInputParameter(expenseBillDto.createJSONObject());
@@ -821,17 +931,17 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(prepaymentDto.getTradeCode());
 
         List<PayAccountBO> paymentList = prepaymentDto.getPaymentList();
-        String paymentListStr ="";
+        String paymentListStr = "";
         StringBuilder sbs = new StringBuilder();
         sbs.append("[");
-        for (PayAccountBO payAccountBO:paymentList){
+        for (PayAccountBO payAccountBO : paymentList) {
             String orgAccID = payAccountBO.getOrgAccID();
             String paymentId = payAccountBO.getPaymentId();
             String fee = payAccountBO.getFee();
             sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
                     .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
                     .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
-                    /*.append(",")*/;
+            /*.append(",")*/;
         }
         sbs.append("]");
         paymentListStr = sbs.toString();
