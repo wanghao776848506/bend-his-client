@@ -17,6 +17,7 @@ import com.bend.his.wsdl.HISInterfaceResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -602,10 +603,10 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<RegistrationTemplateDto>> getHISHospitalRegistrationTemplateList(RegistrationTemplateDto hospitalRegistrationTemplateDto) throws HisException {
+    public QueryResult<List<RegistrationTemplateDto>> getHISHospitalRegistrationTemplateList(RegistrationTemplateDto templateDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(hospitalRegistrationTemplateDto.getTradeCode());
-        queryRequest.setInputParameter(hospitalRegistrationTemplateDto.createJSONObject());
+        queryRequest.setTradeCode(templateDto.getTradeCode());
+        queryRequest.setInputParameter(templateDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
@@ -620,6 +621,7 @@ public class HisServiceImpl implements HisService {
             for (int i = 0; i < jsonArray.size(); i++) {
                 String jsonArrayString = jsonArray.getString(i);
                 RegistrationTemplateDto registrationTemplateDto = JSON.parseObject(jsonArrayString, RegistrationTemplateDto.class);
+                registrationTemplateDto.setOrganizationCode(templateDto.getOrganizationCode());
                 registrationTemplateDtoList.add(registrationTemplateDto);
             }
             queryResult.setData(registrationTemplateDtoList);
@@ -654,39 +656,57 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto,
-                                                                        List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException {
+    public List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException {
         //所有科室
         List<HospitalDepartmentDto> departmentAllList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(registrationTemplateDtoList)) {
             for (RegistrationTemplateDto registrationTemplate : registrationTemplateDtoList) {
-                registrationTemplate.setOrganizationCode(registrationTemplateDto.getOrganizationCode());
                 //查询挂号模板下的科室列表
                 List<HospitalDepartmentDto> departmentList = this.getHISRegistrationDepartmentList(registrationTemplate);
                 if (!CollectionUtils.isEmpty(departmentList)) {
-                    registrationTemplate.setHospitalDepartmentDtoList(departmentList);
                     departmentAllList.addAll(departmentList);
                 }
             }
         }
-        return departmentAllList;
+        //科室名称筛选
+        String departmentName = hospitalDepartmentDto.getDepartmentName();
+        if (!StringUtils.isEmpty(departmentName)) {
+            List<HospitalDepartmentDto> list = departmentAllList.stream().filter(s -> s.getDepartmentName().contains(departmentName)).collect(Collectors.toList());
+            if (!CollectionUtils.isEmpty(list)) {
+                departmentAllList = list;
+            }
+        }
+        //相同元素分组
+        return mergeMapValues(departmentAllList);
     }
 
-    @Deprecated
-    private static <E> List<E> getDuplicateElements(List<E> list) {
-        return list.stream()                              // list 对应的 Stream
-                .collect(Collectors.toMap(e -> e, e -> 1, Integer::sum)) // 获得元素出现频率的 Map，键为元素，值为元素出现的次数
-                .entrySet().stream()                   // 所有 entry 对应的 Stream
-                .filter(entry -> entry.getValue() > 1) // 过滤出元素出现次数大于 1 的 entry
-                .map(entry -> entry.getKey())          // 获得 entry 的键（重复元素）对应的 Stream
-                .collect(Collectors.toList());         // 转化为 List
+    //元素分组
+    private List<HospitalDepartmentDto> mergeMapValues(List<HospitalDepartmentDto> departmentAllList) {
+        Map<String, List<HospitalDepartmentDto>> listMap = departmentAllList.stream().collect(Collectors.groupingBy(HospitalDepartmentDto::getDepartmentId));
+        //System.out.println(JSON.toJSONString(listMap));
+        //把map的value重组,放入新的list中
+        List<HospitalDepartmentDto> newList = new ArrayList<>();
+        listMap.forEach((k, v) -> {
+            HospitalDepartmentDto hospitalDepartmentDto = v.get(0);
+            hospitalDepartmentDto.setRegistrationTemplateDto(null);
+            List<RegistrationTemplateDto> tmpList = new ArrayList<>();
+            for (int i = 0; i < v.size(); i++) {
+                tmpList.add(v.get(i).getRegistrationTemplateDto());
+            }
+            hospitalDepartmentDto.setRegistrationTemplateList(tmpList);
+            newList.add(hospitalDepartmentDto);
+
+        });
+        //newList.stream().forEach(System.out::println);
+
+        return newList;
     }
 
-    private List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto) throws HisException {
+    private List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplate) throws HisException {
 
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(TradeCode.TRADE_30_2);//查询挂号模板下科室
-        queryRequest.setInputParameter(registrationTemplateDto.createJSONObject());
+        queryRequest.setInputParameter(registrationTemplate.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
@@ -703,8 +723,8 @@ public class HisServiceImpl implements HisService {
             for (int i = 0; i < jsonArray.size(); i++) {
                 String jsonArrayString = jsonArray.getString(i);
                 HospitalDepartmentDto departmentDto = JSON.parseObject(jsonArrayString, HospitalDepartmentDto.class);
-//                //设置挂号模板ID(当前的)
-                departmentDto.setTemplateId(registrationTemplateDto.getTemplateId());
+                //设置挂号模板(当前的)
+                departmentDto.setRegistrationTemplateDto(registrationTemplate);
                 departmentDtoList.add(departmentDto);
             }
         }

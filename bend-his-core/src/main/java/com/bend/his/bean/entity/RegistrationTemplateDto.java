@@ -37,9 +37,6 @@ public class RegistrationTemplateDto extends AbstractBaseEntity{
     @JSONField(name = "挂号金额")
     private String registrationAmount;
 
-    @ApiModelProperty(notes = "科室")
-    private List<HospitalDepartmentDto> hospitalDepartmentDtoList;
-
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();

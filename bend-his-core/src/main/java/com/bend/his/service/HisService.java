@@ -192,14 +192,15 @@ public interface HisService {
      */
     QueryResult<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException;
 
+
     /**
-     *
-     * @param registrationTemplateDto
-     * @param registrationTemplateDtoList
+     * 查所有科室下挂号模板--可以科室查询
+     * @param hospitalDepartmentDto  --科室名称
+     * @param registrationTemplateDtoList --挂号模板列表
      * @return
      * @throws HisException
      */
-    List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
+    List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
 
 
     /**

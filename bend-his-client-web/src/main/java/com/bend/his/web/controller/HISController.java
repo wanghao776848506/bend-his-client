@@ -410,22 +410,36 @@ public class HISController {
     }
 
     /**
-     * 查询挂号模板下所有科室
+     * 查询科室下--挂号模板列表
+     *
+     * @param hospitalDepartmentDto 科室
+     * @return
+     * @throws HisException
      */
+    @ApiOperation(value = "查询科室下--挂号模板列表", position = 18, notes = "查询科室下挂号模板")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "departmentName", value = "科室名称[模糊查询]"),
     })
-    @PostMapping("his/hospital/registration/template/list/2")
-    public ResponseEntity<List<HospitalDepartmentDto>> getHISRegistrationDepartmentList(@RequestBody RegistrationTemplateDto registrationTemplateDto) throws HisException {
+    @PostMapping("his/hospital/section/registration/template/list")
+    public ResponseEntity<List<HospitalDepartmentDto>> getHISRegistrationDepartmentList(@RequestBody HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
+        RegistrationTemplateDto registrationTemplateDto = new RegistrationTemplateDto();
+        //挂号模板信息查询
+        registrationTemplateDto.setTradeCode(hospitalDepartmentDto.getTradeCode());
+        registrationTemplateDto.setAuthCode(hospitalDepartmentDto.getAuthCode());
+        registrationTemplateDto.setOrganizationCode(hospitalDepartmentDto.getOrganizationCode());
+        //返回所有挂号模板列表
         QueryResult<List<RegistrationTemplateDto>> listQueryResult = hisService.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
         List<RegistrationTemplateDto> registrationTemplateDtoList = listQueryResult.getData();
         if (Objects.isNull(registrationTemplateDtoList)) {
             throw new HisException(listQueryResult.getMsg());
         }
-        //挂号模板下所有科室
-        List<HospitalDepartmentDto> registrationDepartmentList = hisService.getHISRegistrationDepartmentList(registrationTemplateDto, registrationTemplateDtoList);
+
+        //所有科室下挂号模板--可以科室查询
+        List<HospitalDepartmentDto> registrationDepartmentList = hisService.getHISDepartmentRegistrationTemplateList(hospitalDepartmentDto, registrationTemplateDtoList);
+
         return ResponseEntity.ok(registrationDepartmentList);
     }
 
