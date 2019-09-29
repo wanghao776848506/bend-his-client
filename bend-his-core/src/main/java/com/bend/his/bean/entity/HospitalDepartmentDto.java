@@ -36,6 +36,10 @@ public class HospitalDepartmentDto extends AbstractBaseEntity {
     @JSONField(name = "科室名称")
     private String departmentName;
 
+    @ApiModelProperty(notes = "目录类型[0科室、1医生、2病区、3床位]")
+    //@JSONField(name = "目录类型") //数据库存储需要
+    private String directoryType;
+
     @ApiModelProperty(notes = "挂号模板列表")
     private List<RegistrationTemplateDto> registrationTemplateList;
 

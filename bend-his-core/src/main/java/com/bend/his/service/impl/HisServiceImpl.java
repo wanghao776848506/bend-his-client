@@ -51,40 +51,40 @@ public class HisServiceImpl implements HisService {
         return JSON.parseObject(hisInterfaceResponse.getHISInterfaceResult(), QueryResult.class);
     }
 
+
     @Override
     public QueryResult<AuthenticationDto> getHISAuth(AuthenticationDto authenticationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(authenticationDto.getTradeCode());
         queryRequest.setInputParameter(authenticationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = null;
+        HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         } catch (HisException e) {
             throw new HisException("Request failed or timeout.");
         }
+
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        /**/
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray array = JSON.parseArray(queryResultMsg);
-            AuthenticationDto dto = JSON.parseObject(array.getString(0), AuthenticationDto.class);
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            AuthenticationDto dto = jsonArray.getObject(0, AuthenticationDto.class);
             queryResult.setData(dto);
-            return queryResult;
-        } else {
-            throw new HisException("登陆失败!");
         }
-
+        return queryResult;
     }
 
     @Override
     public QueryResult<PublicAuthDto> getHISPublicAuth(PublicAuthDto publicAuthDto) throws HisException {
+
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(publicAuthDto.getTradeCode());
         queryRequest.setInputParameter(publicAuthDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = null;
+        HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
         } catch (HisException e) {
@@ -92,10 +92,14 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        /**/
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            PublicAuthDto dto = JSON.parseObject(queryResultMsg, PublicAuthDto.class);
+            //PublicAuthDto dto = JSON.parseObject(queryResultMsg, PublicAuthDto.class);
+
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            PublicAuthDto dto = jsonArray.getObject(0, PublicAuthDto.class);
+
             queryResult.setData(dto);
         }
         return queryResult;
@@ -114,18 +118,12 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<ComprehensiveCatalogueDto> comprehensiveCatalogueDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                ComprehensiveCatalogueDto catalogueDto = JSON.parseObject(jsonArrayString, ComprehensiveCatalogueDto.class);
-                comprehensiveCatalogueDtoList.add(catalogueDto);
-            }
-            queryResult.setData(comprehensiveCatalogueDtoList);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            queryResult.setData(catalogueDtoList);
         }
         return queryResult;
     }
@@ -143,7 +141,8 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
         queryRequest.setInputParameter(comprehensiveCatalogueDto.createJSONObject());
         String departmentName = comprehensiveCatalogueDto.getDirectoryName();
-        HISInterfaceResponse hisInterfaceResponse = null;
+
+        HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         } catch (HisException e) {
@@ -151,6 +150,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
@@ -182,7 +182,7 @@ public class HisServiceImpl implements HisService {
         String doctorName = comprehensiveCatalogueDto.getDirectoryName();//指定医生的名字
         String directoryType = comprehensiveCatalogueDto.getDirectoryType();//数据类型[0科室、1医生、2病区、3床位]
 
-        HISInterfaceResponse hisInterfaceResponse = null;
+        HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         } catch (HisException e) {
@@ -190,7 +190,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        //
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
@@ -228,6 +228,8 @@ public class HisServiceImpl implements HisService {
     }
 
     /**
+     * 科室名称
+     *
      * @param comprehensiveCatalogueDto
      * @param departmentId
      * @return
@@ -266,23 +268,23 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(hospitalThreeCatalogueDto.getTradeCode());
         queryRequest.setInputParameter(hospitalThreeCatalogueDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            //TODO 接口请求成功或失败逻辑处理
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = jsonArray.toJavaList(HospitalThreeCatalogueDto.class);
+            queryResult.setData(hospitalThreeCatalogueDtoList);
         }
-        String queryResultMsg = queryResult.getMsg();
-        JSONArray jsonArray = JSON.parseArray(queryResultMsg);
 
-        List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = new ArrayList<>();
-
-        for (int i = 0; i < jsonArray.size(); i++) {
-            String jsonArrayString = jsonArray.getString(i);
-            HospitalThreeCatalogueDto threeCatalogueDto = JSON.parseObject(jsonArrayString, HospitalThreeCatalogueDto.class);
-            hospitalThreeCatalogueDtoList.add(threeCatalogueDto);
-        }
-        queryResult.setData(hospitalThreeCatalogueDtoList);
         return queryResult;
     }
 
@@ -292,23 +294,21 @@ public class HisServiceImpl implements HisService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(hospitalThreeCatalogueDto.getTradeCode());
         queryRequest.setInputParameter(hospitalThreeCatalogueDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalThreeCatalogueDto threeCatalogueDto = JSON.parseObject(jsonArrayString, HospitalThreeCatalogueDto.class);
-                hospitalThreeCatalogueDtoList.add(threeCatalogueDto);
-            }
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = jsonArray.toJavaList(HospitalThreeCatalogueDto.class);
             queryResult.setData(hospitalThreeCatalogueDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
 
         return queryResult;
@@ -320,23 +320,22 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(icd10Dto.getTradeCode());
         queryRequest.setInputParameter(icd10Dto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<ICD10Dto> icd10DtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                ICD10Dto icd10 = JSON.parseObject(jsonArrayString, ICD10Dto.class);
-                icd10DtoList.add(icd10);
-            }
+            List<ICD10Dto> icd10DtoList = jsonArray.toJavaList(ICD10Dto.class);
             queryResult.setData(icd10DtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -347,23 +346,20 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(icd10Dto.getTradeCode());
         queryRequest.setInputParameter(icd10Dto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<ICD10Dto> icd10DtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                ICD10Dto icd10 = JSON.parseObject(jsonArrayString, ICD10Dto.class);
-                icd10DtoList.add(icd10);
-            }
+            List<ICD10Dto> icd10DtoList = jsonArray.toJavaList(ICD10Dto.class);
             queryResult.setData(icd10DtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -374,20 +370,20 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(inpatientDto.getTradeCode());
         queryRequest.setInputParameter(inpatientDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<InpatientDto> inpatientDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                InpatientDto inpatient = JSON.parseObject(jsonArrayString, InpatientDto.class);
-                inpatientDtoList.add(inpatient);
-            }
+            List<InpatientDto> inpatientDtoList = jsonArray.toJavaList(InpatientDto.class);
             queryResult.setData(inpatientDtoList);
         } else {
             throw new HisException("Request failed or timeout.");
@@ -401,26 +397,24 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientDto.getTradeCode());
         queryRequest.setInputParameter(outpatientDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<OutpatientDto> outpatientDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                OutpatientDto outpatient = JSON.parseObject(jsonArrayString, OutpatientDto.class);
-                outpatientDtoList.add(outpatient);
-            }
+            List<OutpatientDto> outpatientDtoList = jsonArray.toJavaList(OutpatientDto.class);
             queryResult.setData(outpatientDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
+
 
     @Override
     public QueryResult<List<HospitalizationSettlementDto>> getHISHospitalizationSettlement(HospitalizationSettlementDto hospitalizationSettlementDto) throws HisException {
@@ -428,23 +422,20 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalizationSettlementDto.getTradeCode());
         queryRequest.setInputParameter(hospitalizationSettlementDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalizationSettlementDto> hospitalizationSettlementDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalizationSettlementDto hospitalizationSettlement = JSON.parseObject(jsonArrayString, HospitalizationSettlementDto.class);
-                hospitalizationSettlementDtoList.add(hospitalizationSettlement);
-            }
+            List<HospitalizationSettlementDto> hospitalizationSettlementDtoList = jsonArray.toJavaList(HospitalizationSettlementDto.class);
             queryResult.setData(hospitalizationSettlementDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -642,14 +633,7 @@ public class HisServiceImpl implements HisService {
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalDepartmentDto> hospitalDepartmentDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalDepartmentDto hospitalDepartment = JSON.parseObject(jsonArrayString, HospitalDepartmentDto.class);
-                hospitalDepartmentDtoList.add(hospitalDepartment);
-            }
+            List<HospitalDepartmentDto> hospitalDepartmentDtoList = jsonArray.toJavaList(HospitalDepartmentDto.class);
             queryResult.setData(hospitalDepartmentDtoList);
         }
         return queryResult;
@@ -676,6 +660,15 @@ public class HisServiceImpl implements HisService {
                 departmentAllList = list;
             }
         }
+        //科室ID精确查找
+        String departmentId = hospitalDepartmentDto.getDepartmentId();
+        if (!StringUtils.isEmpty(departmentId)) {
+            List<HospitalDepartmentDto> list = departmentAllList.stream().filter(s -> departmentId.equals(s.getDepartmentId())).collect(Collectors.toList());
+            if (!CollectionUtils.isEmpty(list)) {
+                departmentAllList = list;
+            }
+        }
+
         //相同元素分组
         return mergeMapValues(departmentAllList);
     }

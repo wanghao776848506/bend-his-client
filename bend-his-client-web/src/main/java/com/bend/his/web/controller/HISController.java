@@ -421,6 +421,7 @@ public class HISController {
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
             @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "departmentId", value = "科室ID"),
             @ApiImplicitParam(name = "departmentName", value = "科室名称[模糊查询]"),
     })
     @PostMapping("his/hospital/section/registration/template/list")
