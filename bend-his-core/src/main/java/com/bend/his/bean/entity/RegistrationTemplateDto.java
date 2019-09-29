@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  *
  *  挂号模板
@@ -35,12 +37,15 @@ public class RegistrationTemplateDto extends AbstractBaseEntity{
     @JSONField(name = "挂号金额")
     private String registrationAmount;
 
+    @ApiModelProperty(notes = "科室")
+    private List<HospitalDepartmentDto> hospitalDepartmentDtoList;
 
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
         inputJson.put("机构编码", this.getOrganizationCode());
+        inputJson.put("模板ID", this.getTemplateId());// add 09-28
         return inputJson.toJSONString();
     }
 }

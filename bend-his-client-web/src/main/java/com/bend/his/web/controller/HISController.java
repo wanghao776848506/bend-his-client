@@ -410,6 +410,27 @@ public class HISController {
     }
 
     /**
+     * 查询挂号模板下所有科室
+     */
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
+            @ApiImplicitParam(name = "authCode", value = "验证码"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+    })
+    @PostMapping("his/hospital/registration/template/list/2")
+    public ResponseEntity<List<HospitalDepartmentDto>> getHISRegistrationDepartmentList(@RequestBody RegistrationTemplateDto registrationTemplateDto) throws HisException {
+        QueryResult<List<RegistrationTemplateDto>> listQueryResult = hisService.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
+        List<RegistrationTemplateDto> registrationTemplateDtoList = listQueryResult.getData();
+        if (Objects.isNull(registrationTemplateDtoList)) {
+            throw new HisException(listQueryResult.getMsg());
+        }
+        //挂号模板下所有科室
+        List<HospitalDepartmentDto> registrationDepartmentList = hisService.getHISRegistrationDepartmentList(registrationTemplateDto, registrationTemplateDtoList);
+        return ResponseEntity.ok(registrationDepartmentList);
+    }
+
+
+    /**
      * 查询科室下医生
      *
      * @param doctorDto
@@ -434,6 +455,7 @@ public class HISController {
 
     /**
      * 备注[目录类型1： 返回医生所在科室的编码;目录类型3： 返回床位所在的病区编码.]
+     *
      * @param comprehensiveCatalogueDto
      * @return
      * @throws HisException

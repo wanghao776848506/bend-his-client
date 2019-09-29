@@ -10,6 +10,7 @@ import com.bend.his.config.HISPublicWSClient;
 import com.bend.his.config.HISWSClient;
 import com.bend.his.constant.DirectoryTypeEnum;
 import com.bend.his.constant.IConstant;
+import com.bend.his.constant.TradeCode;
 import com.bend.his.exception.HisException;
 import com.bend.his.service.HisService;
 import com.bend.his.wsdl.HISInterfaceResponse;
@@ -18,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
@@ -132,6 +130,40 @@ public class HisServiceImpl implements HisService {
     }
 
     /**
+     * 目录名称（科室、医生、病区、床位）查询
+     *
+     * @param comprehensiveCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    @Override
+    public QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByName(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
+        queryRequest.setInputParameter(comprehensiveCatalogueDto.createJSONObject());
+        String departmentName = comprehensiveCatalogueDto.getDirectoryName();
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            //筛选出指定科室数据
+            List<ComprehensiveCatalogueDto> departmentList = catalogueDtoList.stream().filter(s -> departmentName.equals(s.getDirectoryName())).collect(Collectors.toList());
+
+            queryResult.setData(departmentList);
+        }
+        return queryResult;
+    }
+
+
+    /**
      * 1、返回综合目录数据
      * 2、筛选出指定医生数据
      * 3、封装指定医生其他信息
@@ -170,14 +202,14 @@ public class HisServiceImpl implements HisService {
             doctorList = doctorList.stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(ComprehensiveCatalogueDto::getDirectoryCode))), ArrayList::new));
 
             //查询医生数据,处理备注[目录类型1： 返回医生所在科室的编码;目录类型3： 返回床位所在的病区编码.]
-            if (DirectoryTypeEnum.DOCTOR.getValue().equals(directoryType)){
-                if (!CollectionUtils.isEmpty(doctorList)){
-                    for (int i = 0 ; i < doctorList.size() ; i ++){
+            if (DirectoryTypeEnum.DOCTOR.getValue().equals(directoryType)) {
+                if (!CollectionUtils.isEmpty(doctorList)) {
+                    for (int i = 0; i < doctorList.size(); i++) {
                         ComprehensiveCatalogueDto dto = doctorList.get(i);
                         String doctorName2 = dto.getDirectoryName(); //医生姓名
                         String doctorId = dto.getDirectoryCode();//医生ID
                         String departmentId = dto.getRemark();//备注--科室ID
-                        String departmentName = this.getSectionName(comprehensiveCatalogueDto,departmentId); //科室名称
+                        String departmentName = this.getSectionName(comprehensiveCatalogueDto, departmentId); //科室名称
 
                         DoctorDto doctorDto = new DoctorDto();
                         doctorDto.setDoctorId(doctorId);
@@ -195,7 +227,6 @@ public class HisServiceImpl implements HisService {
     }
 
     /**
-     *
      * @param comprehensiveCatalogueDto
      * @param departmentId
      * @return
@@ -623,12 +654,75 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
+    public List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto,
+                                                                        List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException {
+        //所有科室
+        List<HospitalDepartmentDto> departmentAllList = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(registrationTemplateDtoList)) {
+            for (RegistrationTemplateDto registrationTemplate : registrationTemplateDtoList) {
+                registrationTemplate.setOrganizationCode(registrationTemplateDto.getOrganizationCode());
+                //查询挂号模板下的科室列表
+                List<HospitalDepartmentDto> departmentList = this.getHISRegistrationDepartmentList(registrationTemplate);
+                if (!CollectionUtils.isEmpty(departmentList)) {
+                    registrationTemplate.setHospitalDepartmentDtoList(departmentList);
+                    departmentAllList.addAll(departmentList);
+                }
+            }
+        }
+        return departmentAllList;
+    }
+
+    @Deprecated
+    private static <E> List<E> getDuplicateElements(List<E> list) {
+        return list.stream()                              // list 对应的 Stream
+                .collect(Collectors.toMap(e -> e, e -> 1, Integer::sum)) // 获得元素出现频率的 Map，键为元素，值为元素出现的次数
+                .entrySet().stream()                   // 所有 entry 对应的 Stream
+                .filter(entry -> entry.getValue() > 1) // 过滤出元素出现次数大于 1 的 entry
+                .map(entry -> entry.getKey())          // 获得 entry 的键（重复元素）对应的 Stream
+                .collect(Collectors.toList());         // 转化为 List
+    }
+
+    private List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto) throws HisException {
+
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(TradeCode.TRADE_30_2);//查询挂号模板下科室
+        queryRequest.setInputParameter(registrationTemplateDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        List<HospitalDepartmentDto> departmentDtoList = new ArrayList<>();
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            for (int i = 0; i < jsonArray.size(); i++) {
+                String jsonArrayString = jsonArray.getString(i);
+                HospitalDepartmentDto departmentDto = JSON.parseObject(jsonArrayString, HospitalDepartmentDto.class);
+//                //设置挂号模板ID(当前的)
+                departmentDto.setTemplateId(registrationTemplateDto.getTemplateId());
+                departmentDtoList.add(departmentDto);
+            }
+        }
+        return departmentDtoList;
+    }
+
+    @Override
     public QueryResult<List<DoctorDto>> getHISDepartmentDoctorList(DoctorDto doctorDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(doctorDto.getTradeCode());
         queryRequest.setInputParameter(doctorDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -672,7 +766,12 @@ public class HisServiceImpl implements HisService {
 
         queryRequest.setInputParameter(registrationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_FAILURE_CODE.equals(queryResult.getResult())) {

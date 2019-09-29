@@ -51,15 +51,23 @@
 
     <profiles>
         <profile>
+            <id>main</id>
+            <properties>
+                <!-- 部署环境(对应配置文件版本) -->
+                <env>main</env>
+                <maven.test.skip>false</maven.test.skip>
+            </properties>
+            <!-- 设置默认环境 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
             <!-- 本地开发环境 -->
             <id>dev</id>
             <properties>
                 <profiles.active>dev</profiles.active>
             </properties>
-            <activation>
-                <!-- 设置默认激活这个配置 -->
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <!-- 发布环境 -->

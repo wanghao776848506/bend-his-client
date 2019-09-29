@@ -24,7 +24,6 @@ public interface HisService {
     QueryResult<AuthenticationDto> getHISAuth(AuthenticationDto authenticationDto) throws HisException;
 
     /**
-     *
      * @param publicAuthDto
      * @return
      * @throws HisException
@@ -40,7 +39,15 @@ public interface HisService {
     QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
 
     /**
+     * 目录名称（科室、医生、病区、床位）查询
      *
+     * @param comprehensiveCatalogueDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByName(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
+
+    /**
      * @param comprehensiveCatalogueDto
      * @return
      * @throws HisException
@@ -184,6 +191,16 @@ public interface HisService {
      * @throws HisException
      */
     QueryResult<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException;
+
+    /**
+     *
+     * @param registrationTemplateDto
+     * @param registrationTemplateDtoList
+     * @return
+     * @throws HisException
+     */
+    List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplateDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
+
 
     /**
      * No.19 : 30-3:查询科室下医生:此接口用于获取HIS科室下医生
