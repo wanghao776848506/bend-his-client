@@ -18,8 +18,12 @@
     <properties>
         <java.version>1.8</java.version>
         <dockerfile-maven-version>1.4.12</dockerfile-maven-version>
-        <!--<docker.registry>172.17.24.141:5001</docker.registry>-->
-        <docker.image.prefix>web</docker.image.prefix>
+        <!--阿里云仓库地址-->
+        <docker.repository.url>registry.cn-beijing.aliyuncs.com</docker.repository.url>
+        <!--阿里云仓库命名空间-->
+        <docker.repository.namespace>chunmiao</docker.repository.namespace>
+        <!--登陆仓库的账号密码 仓库账号密码在maven settings.xml配置-->
+        <docker.repository.serverId>docker-images-my</docker.repository.serverId>
     </properties>
 
     <dependencies>
@@ -90,20 +94,22 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!--docker的maven插件-->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>0.4.13</version>
+                <version>1.1.1</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <!--<dockerHost>http://192.168.198.128:2375</dockerHost>-->
-                    <!--<dockerHost>http://192.168.198.129:2375</dockerHost>-->
-                    <dockerHost>http://47.93.216.252:2375</dockerHost>
-                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <forceTags>true</forceTags>
+                    <pushImage>true</pushImage>
                     <buildArgs>
                         <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
+                    <imageName>
+                        ${docker.repository.url}/${docker.repository.namespace}/${project.artifactId}:${project.version}
+                    </imageName>
+                    <serverId>${docker.repository.serverId}</serverId>
+                    <registryUrl>${docker.repository.url}</registryUrl>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
