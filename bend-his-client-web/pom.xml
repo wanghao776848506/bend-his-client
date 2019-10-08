@@ -15,19 +15,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Releases</name>
-            <url>http://nexus.liudebin.cn/nexus/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Snapshot</name>
-            <url>http://nexus.liudebin.cn/nexus/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <properties>
         <java.version>1.8</java.version>
         <docker.image.prefix>web</docker.image.prefix>
