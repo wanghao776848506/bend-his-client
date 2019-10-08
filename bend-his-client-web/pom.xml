@@ -89,7 +89,7 @@
                 <configuration>
                     <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
                     <imageTags>
-                        <imageTag>${project.version}</imageTag>
+                        <!--<imageTag>${project.version}</imageTag>-->
                         <imageTag>latest</imageTag>
                     </imageTags>
                     <!-- optionally overwrite tags every time image is built with docker:build -->
