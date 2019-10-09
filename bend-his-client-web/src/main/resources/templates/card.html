@@ -1,10 +1,3064 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>读卡页面</title>
+    <title>单独刷卡界面</title>
+
+
+
+
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <meta http-equiv="expires" content="0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8; IE=9; IE=10" />
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/base/ta-icon-all.css" />
+    <link rel="stylesheet" type="text/css" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/base/ta-item-all.css" />
+
+    <link rel="stylesheet" type="text/css" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/2015/ta-theme-base.css" />
+    <link rel="stylesheet" type="text/css" id="linkskin" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/2015/blue/ta-theme.css" />
+    <script type="text/javascript">
+        function setCookie(name, value) {
+            var exp = new Date();
+            exp.setTime(exp.getTime() + 365*30*24*60*60*1000);
+            document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+        }
+
+        function getCookie(cookieName) {
+            var strCookie = document.cookie;
+            var arrCookie = strCookie.split("; ");
+            for(var i = 0; i < arrCookie.length; i++){
+                var arr = arrCookie[i].split("=");
+                if(cookieName == arr[0]){
+                    return arr[1];
+                }
+            }
+            return "";
+        }
+        function fnChangeSkin(obj){
+            var thisskin = getCookie("nowskin");
+            if (obj == null) {
+                thisskin=(thisskin == undefined||thisskin=="")?"blue":thisskin;
+                linkskin.href = "http://11.21.1.42:8080/ybsp/ta/resource/themes/2015/"+thisskin+"/ta-theme.css";
+            } else {
+                linkskin.href = "http://11.21.1.42:8080/ybsp/ta/resource/themes/2015/"+obj.id+"/ta-theme.css";
+                setCookie("nowskin",obj.id);
+            }
+        }
+        fnChangeSkin(null);
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/base/zTreeStyle/zTreeStyle.css" />
+    <link rel="stylesheet" type="text/css" href="http://11.21.1.42:8080/ybsp/ta/resource/themes/base/zTreeStyle/zTreeIcons.css" />
+    <script>
+        var Base = {globvar:{}};
+        Base.globvar.contextPath = "/ybsp";
+        Base.globvar.basePath = "http://11.21.1.42:8080/ybsp/";
+        Base.globvar.developMode = true;
+        Base.globvar.pageSize = 200;
+        Base.globvar.cols_360 = null;
+        Base.globvar.columnsWidthsOverView = false;
+        Base.globvar.indexStyle="default"=="mini"?"default":"default";
+    </script>
+    <script src="http://11.21.1.42:8080/ybsp/ta/resource/external/plugin/ta-core-all/require.js" type="text/javascript"></script>
+    <script src="http://11.21.1.42:8080/ybsp/ta/resource/external/plugin/ta-core-all/jquery-1.11.0.min.js" type="text/javascript"></script>
+    <script src="http://11.21.1.42:8080/ybsp/ta/resource/external/plugin/main.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        <!--
+        //针对现有body.ready改造为requirejs所能使用的
+        $.fn.ready_t = $.fn.ready;
+        $.fn.ready = function(fn){
+            $.fn.ready_t(
+                function(){
+                    require(['domReady'], function (domReady) {
+                        domReady(function () {
+                            require(["taLayout","hint-tip"], function(){
+                                fn();
+                            });
+                        });
+                    });
+                }
+            );
+        }
+        //-->
+    </script>
+
+    <script src="http://11.21.1.42:8080/ybsp/ybsp/ybcommon/js/ybcommon.js" type="text/javascript"></script>
+
+
+
+    <script src="http://11.21.1.42:8080/ybsp/ybsp/ybcommon/js/ybcommon.js" type="text/javascript"></script>
+
+
+
+
+
+
+
+    <OBJECT id=sicard classid="clsid:598DB085-7B0D-4D52-A713-72BB894A1DE2" width="0" height="0">
+    </OBJECT>
+
+    <script type="text/javascript">
+        function fn_uf4004(is_flag) {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //获取密码键盘输入密码
+                commad = 4004;
+                result = sicard.Runs(commad, is_flag);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    mm = fn_ParseXML(rdata, 'DATA');
+                }
+                return mm;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //写本地卡
+        function fn_uf6001(is_pin) {
+            var result;
+            var Data;
+            var commad;
+            var is_pin;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //
+                commad = 4001;
+                Data = fn_ParseXML('PASS', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                //本地写卡
+                commad = 6001;
+                //本地卡格式
+                Data = "<DATA><YKA065>00000010</YKA065><YKA131>00000020</YKA131><YKA130>00000100</YKA130></DATA>";
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    var a = sicard.get_errmsg();
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                return 0;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //写异地卡
+        function fn_uf7001(is_pin, date) {
+            var result;
+            var Data;
+            var commad;
+            var is_pin;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //
+                commad = 4001;
+                Data = fn_ParseXML('PASS', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                //本地写卡
+                commad = 7001;
+                //穿入串格式
+                Data = "<DATA><AAD032>2</AAD032><AKA030>9</AKA030><YKA065>12345678</YKA065>"
+                    + "<YKA131>00000100</YKA131><YKA130>00000100</YKA130><AAE036>20170822152346</AAE036></DATA>";
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    var a = sicard.get_errmsg();
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                return 0;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //设备号
+        function fn_uf1001() {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbh = fn_ParseXML(rdata, 'DATA');
+                    sbh = fn_ParseXML1('sbjzxxid', sbh);
+                }
+                return sbh;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //发卡地区
+        function fn_uf2004() {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //发卡地区代码
+                commad = 2004;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var ksbm = fn_Node(rdata, 'C01');
+                    var dqdm = ksbm.substring(0, 4);
+                }
+                return dqdm;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //个人pin码校验
+        function fn_uf4001(is_pin, is_flag) {
+            var result;
+            var Data;
+            var commad;
+            debugger;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //
+                commad = 4001;
+                Data = fn_ParseXML('pass', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                return 0;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //个人pin码修改
+        function fn_uf4002(is_old, is_new) {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //
+                commad = 4002;
+                Data = fn_ParseXML('OLD', is_old);
+                Data = Data + fn_ParseXML('NEW', is_new);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                return 0;
+
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //个人pin码解锁重置
+        function fn_uf4003() {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //
+                commad = 4003;
+                Data = fn_ParseXML('PASS', '111222');
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                return 0;
+
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //读取读卡器终端设备信息
+        function fn_uf2003() {
+            var result;
+            var Data;
+            var commad;
+            var r_ret;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+
+                //读卡
+                commad = 2003;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    r_ret = fn_ParseXML(rdata, 'DATA');
+                }
+                return r_ret;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //写设备信息
+        function fn_uf8001(as_data) {
+            var result;
+            var Data;
+            var commad;
+            var r_ret;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                alert(as_data);
+                //读卡
+                commad = 8001;
+                Data = '<DATA>' + as_data + '</DATA>';
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                return result;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+        //写设备信息
+        function fn_uf8002() {
+            var result;
+            var Data;
+            var commad;
+            var r_ret;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+
+                //读卡
+                commad = 8002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    r_ret = fn_ParseXML(rdata, 'DATA');
+                }
+                return r_ret;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+
+        //读取社会保障号
+        function fn_GetSiCardNo() {
+            var result;
+            var Data;
+            var commad;
+            var aaz501,pasm;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //20161025 psamno 读取PSAM卡信息，由发行机构标识2位，PSAM序列号20位，PSAM版本号2位，密钥卡类型2位，保留数据4位组成
+                commad = 2000;
+                result = sicard.Runs(commad, "");
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    pasm = fn_Node(rdata, 'DATA');
+                }
+                //读卡号
+                commad = 2001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    sbkh = fn_Node(rdata, 'DATA');
+                }
+                return sbkh;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+
+
+        //写卡(更新指定信息)
+        function fn_uf30011(is_old, is_data) {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //
+                commad = 7001;
+                Data = is_data
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg() + Data);
+                    return -1;
+                }
+                return 0;
+
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //解析xml
+        function fn_NodeXML(prm_XML, prm_Marker) {
+            alert(prm_XML)
+            alert(prm_Marker)
+            if (!prm_XML) {
+                return "";
+            }
+            if (!prm_Marker) {
+                return "";
+            }
+            var parser = new DOMParser();
+            var xmlDoc = parser.parseFromString(prm_XML, "text/xml");
+            //提取数据
+            prm_Marker = prm_Marker.toLowerCase();
+            var countrys = xmlDoc.getElementsByTagName(prm_Marker);
+            return countrys[0].textContent;
+        }
+        //构造xml
+        function fn_ParseXML(prm_Marker, prm_Value) {
+            if (!prm_Value) {
+                return "";
+            }
+            if (!prm_Marker) {
+                return "";
+            }
+            prm_Marker = prm_Marker.toUpperCase();
+            var prm_XML = '<' + prm_Marker + '>' + prm_Value + '</' + prm_Marker + '>';
+            return prm_XML;
+        }
+        //构造xml1
+        function fn_ParseXML1(prm_Marker, prm_Value) {
+            if (!prm_Value) {
+                return "";
+            }
+            if (!prm_Marker) {
+                return "";
+            }
+            prm_Marker = prm_Marker.toLowerCase();
+            var prm_XML = '<' + prm_Marker + '>' + prm_Value + '</' + prm_Marker + '>';
+            return prm_XML;
+        }
+        //解析data
+        function fn_Node(prm_XML, prm_Marker) {
+            if (!prm_XML) {
+                return "";
+            }
+            if (!prm_Marker) {
+                return "";
+            }
+            var output = prm_XML.substring(prm_XML.indexOf('<' + prm_Marker + '>') + prm_Marker.length + 2, prm_XML.indexOf('</' + prm_Marker + '>'));
+            return output;
+        }
+
+        //读取卡信息
+        function fn_uf2005(card) {
+            var result;
+            var Data;
+            var commad;
+            var aaz501;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+                //获取持卡人信息
+                commad = 2005;
+                Data = fn_NodeXML('PASS', card);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    r_ret = fn_ParseXML(rdata, 'DATA');
+                }
+                return r_ret;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //读取卡信息
+        function fn_uf2006(is_pin, card, is_flag) {
+            var result;
+            var Data;
+            var commad;
+            var aaz501;
+            var out;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //密码验证
+                commad = 4001;
+                Data = fn_ParseXML('pass', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {//是否提示密码错误
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                //获取持卡人信息
+                commad = 2005;
+                Data = fn_ParseXML('PASS', card);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    //sbkh = fn_Node(rdata,'C01');
+                    var xm = fn_Node(rdata, 'C02');
+                    xm = fn_ParseXML1('aac003', xm);
+                    out = xm
+                }
+                //社会保障号码
+                commad = 2002;
+                result = sicard.Runs(commad, '');
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbhm = fn_Node(rdata, 'DATA');
+                    sbhm = fn_ParseXML1('aac002', sbhm);
+                    out += sbhm;
+                }
+                //获取发卡基本数据文件
+                commad = 2004;
+                Data = fn_ParseXML('PASS', card);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbm = fn_Node(rdata, 'C01');
+                    var fkrq = fn_Node(rdata, 'C05');
+                    var fpjg = fn_Node(rdata, 'C04');
+                    sbm = fn_ParseXML1('aaz501', sbm);
+                    fkrq = fn_ParseXML1('aaz503', fkrq);
+                    fpjg = fn_ParseXML1('baa008', fpjg);
+                    out += sbm + fkrq;
+                }
+                //psam卡号
+                commad = 2000;
+                result = sicard.Runs(commad, '');
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var pasm = fn_Node(rdata, 'DATA');
+                    pasm = fn_ParseXML1('psam',pasm);
+                    out += pasm;
+                }
+                return out;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+            }
+        }
+
+        //读取卡信息
+        function fn_uf2006yd(card) {
+            var result;
+            var Data;
+            var commad;
+            var aaz501;
+            var out;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var fwxx = fn_Node(rdata, 'DATA');
+                    fwxx = fn_ParseXML1('aaz502', fwxx);
+                    out = fwxx;
+                }
+                //获取持卡人信息
+                commad = 2005;
+                Data = fn_ParseXML('PASS', card);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    //sbkh = fn_Node(rdata,'C01');
+                    var xm = fn_Node(rdata, 'C02');
+                    var xb = fn_Node(rdata, 'C04');
+                    var mz = fn_Node(rdata, 'C05');
+                    var csd = fn_Node(rdata, 'C06');
+                    var csrq = fn_Node(rdata, 'C07');
+
+                    //sbkh= fn_ParseXML('akc020',sbkh);
+                    xm = fn_ParseXML1('aac003', xm);
+                    xb = fn_ParseXML1('aac004', xb);
+                    mz = fn_ParseXML1('aac005', mz);
+                    csd = fn_ParseXML1('aac010', csd);
+                    csrq = fn_ParseXML1('aac006', csrq);
+                    out += xm + xb + mz + csd + csrq
+                }
+                //读卡号
+                commad = 2001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbkh = fn_Node(rdata, 'DATA');
+                    var sbkh1 = fn_ParseXML1('akc020', sbkh);
+                    var sbkh2 = fn_ParseXML1('aaz500', sbkh);
+                    out += sbkh1 + sbkh2;
+                }
+                //社会保障号码
+                commad = 2002;
+                result = sicard.Runs(commad, '');
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbhm = fn_Node(rdata, 'DATA');
+                    sbhm = fn_ParseXML1('aac002', sbhm);
+                    out += sbhm;
+                }
+                //发卡地区代码
+                commad = 2004;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var ksbm = fn_Node(rdata, 'C01');
+                    var dqdm = ksbm.substring(0, 6);
+                    dqdm = fn_ParseXML1('aab301', dqdm);
+                    out += dqdm;
+                }
+                //获取发卡基本数据文件
+                commad = 2004;
+                Data = fn_ParseXML('PASS', card);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var sbm = fn_Node(rdata, 'C01');
+                    var klb = fn_Node(rdata, 'C02');
+                    var gfbb = fn_Node(rdata, 'C03');
+                    var fkjgdm = fn_Node(rdata, 'C04');
+                    var fkrq = fn_Node(rdata, 'C05');
+                    var kyxq = fn_Node(rdata, 'C06');
+                    sbm = fn_ParseXML1('aaz501', sbm);
+                    klb = fn_ParseXML1('aaz507', klb);
+                    gfbb = fn_ParseXML1('aaz508', gfbb);
+                    fkjgdm = fn_ParseXML1('yaa404 ', fkjgdm);
+                    fkrq = fn_ParseXML1('aaz503', fkrq);
+                    kyxq = fn_ParseXML1('aaz505', kyxq);
+                    out += sbm + klb + gfbb + fkjgdm + fkrq + kyxq;
+                }
+
+                //终端机编号
+                commad = 2003;
+                result = sicard.Runs(commad, '');
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var zdjbh = fn_Node(rdata, 'DATA');
+                    zdjbh = fn_ParseXML1('bkb005', zdjbh);
+                    out += zdjbh;
+                }
+                //psam卡号
+                commad = 2000;
+                result = sicard.Runs(commad, '');
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                } else {
+                    var rdata;
+                    rdata = sicard.get_rdata();
+                    var pasm = fn_Node(rdata, 'DATA');
+                    pasm = fn_ParseXML1('psam', pasm);
+                    out += pasm;
+                }
+                //社保卡中医疗保险类型代码
+//    commad = 2007; 
+//    result = sicard.Runs(commad,'<DF04><EF01></EF01></DF04>');
+                //   if(result!=0){
+// 	     alert(sicard.get_errmsg());
+// 	     return -1;
+// 	  }else
+//     { 
+//       var rdata;
+                //      rdata = sicard.get_rdata();
+//       bxdm = fn_Node(rdata,'C01');       
+                //      bxdm= fn_ParseXML1('aae140',bxdm);
+                //      out += bxdm;
+//     }
+                return out;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+            }
+        }
+        //密码验证
+        function fn_uf2008() {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    //alert(Data);
+                    alert(sicard.get_errmsg());
+                    return -1;
+                }
+                //
+                commad = 4001;
+                Data = fn_NodeXML('PASS', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                return 0;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+        //写入数据（本地）
+        function fn_uf3001(is_old, is_data) {
+            var result;
+            var Data;
+            var commad;
+            try {
+                //打开读卡器
+                commad = 1001;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //卡复位
+                commad = 1000;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return result;
+                }
+                //密码验证
+                commad = 4001;
+                Data = fn_NodeXML('PASS', is_pin);
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                //写卡
+                commad = 7001;
+                Data = "<DATA><AAD032>2</AAD032><AKA030>' + as_aka030 + '</AKA030>' "
+                    + "<YKA065>' + ls_yka065 + '</YKA065>' "
+                    + "<YKA131>' + ls_yka131 + '</YKA131><YKA130>' + ls_yka130 + '</YKA130>' "
+                    + "<AAE036>' + ls_time + '</AAE036></DATA>'";
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    if (is_flag == '1') {
+                        alert(sicard.get_errmsg());
+                    }
+                    return -1;
+                }
+                return 0;
+            }
+            catch (e) {
+                alert(e.message);
+            }
+            finally {
+                //关闭读卡器
+                commad = 1002;
+                result = sicard.Runs(commad, Data);
+                if (result != 0) {
+                    alert(sicard.get_errmsg());
+                    return;
+                }
+            }
+        }
+    </script>
+
+
+
+    <div class="DIV-OCX" style="DISPLAY:none">
+        <OBJECT ID="SCCARDOcx" CLASSID="CLSID:D9532F10-603B-4BF7-87AE-F4130EF43553" width="0" height="0">
+        </OBJECT>
+    </div>
+    <script type="text/javascript">
+
+        /**
+         * 持卡类型
+         */
+        var type = 1;
+
+        /**
+         * 读卡业务类型
+         */
+        var BussinessType_01 = "01";
+
+        /**
+         * 密码重置业务类型
+         */
+        var BussinessType_02 = "02";
+
+        /**
+         * 写卡业务类型
+         */
+        var BussinessType_04 = "04";
+
+        /**
+         * 消费交易业务类型
+         */
+        var BussinessType_07 = "07";
+
+        /**
+         * 外部认证
+         */
+        var serviceFlag_244 = "244";
+
+        /**
+         * 安全认证
+         */
+        var serviceFlag_245 = "245";
+
+        /**
+         * 内部认证
+         */
+        var serviceFlag_246 = "246";
+
+        /**
+         * 读取卡基本信息
+         * //省内省外区分  省内校验pin码  省外不校验
+         * //-2201无PSAM卡时,走省上加密码机流程 lz20170720
+         if String(ai_code)='-2201' or String(ai_code)='-2202' or String(ai_code)='-2203' or String(ai_code)='-27272' or String(ai_code)='-24' then
+         */
+        function readCardBas() {
+            var returnvar,basedate,basedates,result;
+            /* 读取基本信息：iReadCardBa */
+            returnvar = SCCARDOcx.iReadCardBas(type);
+            if (returnvar != 0) { // 不成功
+                /* 判断是否是需加密的错误情况 */
+                if (!isErrorJM(returnvar)) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+
+                /* 第一步： 获取认证数据*/
+                returnvar = SCCARDOcx.iReadCardBas_HSM_Step1(type);
+                if ("0" != returnvar) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                var sfbs = basedate.split("|")[2]; // 算法标识
+                /* 第二步：加密认证 */
+                var param = {};
+                param["dto['keyword']"] = basedate;
+                param["dto['aab301']"] = basedate.split("|")[0];
+                param["dto['zdbm']"] = basedate.split("|")[8]; // 终端编码
+                param["dto.typemode"] = "241";
+                param["dto.aac002"] = "";
+                param["dto.aaz500"] = "";
+                param["dto.aae013"] = "";
+                param["dto.aaa027"] = ""; // 读卡业务类型
+                param["dto['BussinessType']"] = BussinessType_01; // 读卡业务类型
+                param["dto.his_code"] = Base.getValue("orgID");
+                param["dto.yb_code"] = Base.getValue("yb_code");
+                param["dto.aae140"] = "03";
+                var json = Base.getJson(Base.globvar.contextPath + "/ybCommon/ybCommonAction!cardManage.do", param);
+                var code = json.appcode;
+                if ("1" != code) {
+                    var message = json.appmsg;
+                    Base.alert(message, "warn");
+                    return result;
+                }
+                var inst = json.inst;
+                if ("03" != sfbs) {
+                    //3代卡要去掉最后一位的|
+                    //inst = inst.substring(0,inst.length - 1)
+                    inst = inst + "|";
+                }
+                /* 第三步：读卡 */
+                returnvar = SCCARDOcx.iReadCardBas_HSM_Step2(inst);
+                if ("0" != returnvar) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+            }
+            basedate = SCCARDOcx.pOutInfo;
+            basedates = basedate.split("|");
+            result = basedates;
+            return result;
+        }
+
+
+        /**
+         * 通用读卡
+         * cardInfo: json格式
+         * cardInfo.aab301; // 行政区划
+         * cardInfo.aac002; // 社会保障号码
+         * cardInfo.aaz500; // 卡号
+         * cardInfo.aaz501; // 卡识别码
+         * cardInfo.aac003  // 姓名
+         * cardInfo.aaz507; // 卡复位信息
+         * cardInfo.zdbm;   // 终端编码
+         * fileAddr:文件地址(String)  格式："3F00EF06|08|09|4E|0A|0B|0C|0D|$"
+         */
+        function readCard(cardInfo, fileAddr) {
+            var returnvar,basedate,basedates,result;
+            /* 参数校验 */
+            if (fileAddr == "" || fileAddr == null || fileAddr == undefined ) {
+                Base.alert("获取文件地址失败!", "warn");
+                return result;
+            }
+            if (cardInfo == "" || cardInfo == null || cardInfo == undefined) {
+                Base.alert("获取卡基本信息失败!", "warn");
+                return result;
+            }
+            /* 通用读卡 */
+            var cardInfoBas = cardInfo.aaz501+"|"+cardInfo.aaz500+"|";
+            returnvar = SCCARDOcx.iReadCard(type, 2, cardInfoBas, fileAddr);
+            if (returnvar != 0) { // 不成功
+                /* 判断是否是需加密的错误情况 */
+                if (!isErrorJM(returnvar)) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+                /* 第一步：基于加密机的通用读卡 */
+                returnvar = SCCARDOcx.iReadCard_HSM_Step1(type, cardInfoBas, fileAddr);
+                if (returnvar != 0) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                basedates = basedate.split("|");
+                /* 第二步：外部认证 */
+                var param = {};
+                param["dto['BussinessType']"] = BussinessType_01;	// 读卡业务类型
+                param["dto['serviceFlag']"] = serviceFlag_244;	// 外部部认证
+                param["dto['aab301']"] = cardInfo.aab301; 	// 行政区划
+                param["dto['aac002']"] = cardInfo.aac002; 	// 社会保障号码
+                param["dto['aaz500']"] = cardInfo.aaz500; 	// 卡号
+                param["dto['aaz501']"] = cardInfo.aaz501; 	// 卡识别码
+                param["dto['aac003']"] = cardInfo.aac003;  	// 姓名
+                param["dto['aaz507']"] = cardInfo.aaz507; 	// 卡复位信息
+                param["dto['zdbm']"] = cardInfo.zdbm; 	// 终端编码
+                param["dto['sfbs']"] = basedates[0];    // 算法标识
+                param["dto['mydz']"] = basedates[1];    // 密钥地址
+                param["dto['sjs1']"] = basedates[2];    // 随机数：分散因子
+                param["dto['sjs2']"] = basedates[3];    // 随机数：鉴别所需原始信息
+                json = Base.getJson("cardManageAction!toWebService.do",param);
+                code = json.fieldData.code;
+                if ("1" != code) {
+                    var message = json.fieldData.message;
+                    Base.alert(message, "warn");
+                    return result;
+                }
+                inst = json.fieldData.inst;
+
+                /* 第三步：基于加密机的通用读卡  */
+                returnvar = SCCARDOcx.iReadCard_HSM_Step2(inst);
+                if ("0" != returnvar) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+            }
+            basedate = SCCARDOcx.pOutInfo;
+            basedate = basedate.split("|");
+            result = basedate;
+            return result;
+        }
+
+        /**
+         * 通用写卡
+         * cardInfo: json格式
+         * cardInfo.aab301; // 行政区划
+         * cardInfo.aac002; // 社会保障号码
+         * cardInfo.aaz500; // 卡号
+         * cardInfo.aaz501; // 卡识别码
+         * cardInfo.aac003  // 姓名
+         * cardInfo.aaz507; // 卡复位信息
+         * cardInfo.zdbm;   // 终端编码
+         * fileAddr:文件地址(String)   格式："3F00EF06|08|09|4E|0A|0B|0C|0D|$"
+         * writeData: 写卡数据(String) 格式："3F00EF06|08|09|4E|0A|0B|0C|0D|$"
+         */
+        function writeCard(cardInfo, fileAddr, writeData) {
+            var returnvar,basedate,basedates;
+            /* 参数校验 */
+            if (fileAddr == "" || fileAddr == null || fileAddr == undefined ) {
+                Base.alert("获取文件地址失败!", "warn");
+                return false;
+            }
+            if (writeData == "" || writeData == null || writeData == undefined) {
+                Base.alert("获取写卡数据失败!", "warn");
+                return false;
+            }
+            if (cardInfo == "" || cardInfo == null || cardInfo == undefined) {
+                Base.alert("获取卡基本信息失败!", "warn");
+                return false;
+            }
+
+            var cardInfoBas = cardInfo.aaz501+"|"+cardInfo.aaz500+"|";
+            /* 通用写卡 */
+            returnvar = SCCARDOcx.iWriteCard(type, cardInfoBas, fileAddr, writeData);
+            if (returnvar != 0) {
+                /* 判断是否是需加密的错误情况 */
+                if (!isErrorJM(returnvar)) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return false;
+                }
+                /* 第一步：基于加密机的通用写卡 */
+                returnvar = SCCARDOcx.iWriteCard_HSM_Step1(type, cardInfoBas, fileAddr);
+                if ("0" != returnvar) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return false;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                basedates = basedate.split("|");
+                /* 第二步：外部认证 */
+                var param = {};
+                param["dto['BussinessType']"] = BussinessType_04;	// 写卡业务类型
+                param["dto['serviceFlag']"] = serviceFlag_244;	// 外部部认证
+                param["dto['aab301']"] = cardInfo.aab301; 	// 行政区划
+                param["dto['aac002']"] = cardInfo.aac002; 	// 社会保障号码
+                param["dto['aaz500']"] = cardInfo.aaz500; 	// 卡号
+                param["dto['aaz501']"] = cardInfo.aaz501; 	// 卡识别码
+                param["dto['aac003']"] = cardInfo.aac003;  	// 姓名
+                param["dto['aaz507']"] = cardInfo.aaz507; 	// 卡复位信息
+                param["dto['zdbm']"] = cardInfo.zdbm; 	// 终端编码
+                param["dto['sfbs']"] = basedates[0];    // 算法标识
+                param["dto['mydz']"] = basedates[1];    // 密钥地址
+                param["dto['sjs1']"] = basedates[2];    // 随机数：分散因子
+                param["dto['sjs2']"] = basedates[3];    // 随机数：鉴别所需原始信息
+                var json = Base.getJson("cardManageAction!toWebService.do",param);
+                var code = json.fieldData.code;
+                if ("1" != code) {
+                    var message = json.fieldData.message;
+                    Base.alert(message, "warn");
+                    return false;
+                }
+                inst = json.fieldData.inst;
+                /* 第三步：基于加密机的通用写卡  */
+                returnvar = SCCARDOcx.iWriteCard_HSM_Step2(inst, writeData);
+                if ("0" != returnvar) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
+         * 密码校验
+         */
+        function verifyPIN() {
+            var returnvar = SCCARDOcx.iVerifyPIN(type);
+            if (returnvar != 0) {
+                Base.alert(getErrorMsg(returnvar), "warn");
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * 修改密码
+         */
+        function changePIN() {
+            var returnvar = SCCARDOcx.iChangePIN(type);
+            if (returnvar != 0) {
+                Base.alert(getErrorMsg(returnvar), "warn");
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * 密码重置
+         * cardInfo:json格式
+         * cardInfo.aab301; // 行政区划
+         * cardInfo.aac002; // 社会保障号码
+         * cardInfo.aaz500; // 卡号
+         * cardInfo.aaz501; // 卡识别码
+         * cardInfo.aac003  // 姓名
+         * cardInfo.aaz507; // 卡复位信息
+         * cardInfo.zdbm;   // 终端编码
+         */
+        function reloadPIN(cardInfo) {
+            var returnvar,basedate,basedates,json,code,inst;
+            if (cardInfo == "" || cardInfo == null || cardInfo == undefined) {
+                Base.alert("请先读取卡信息", "warn");
+                return false;
+            }
+            returnvar = SCCARDOcx.iReloadPIN(type, cardInfo.aaz501+"|"+cardInfo.aaz500+"|");
+            if (returnvar != 0) { // 不成功
+                /* 判断是否是需加密的错误情况 */
+                if (!isErrorJM(returnvar)) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return false;
+                }
+
+                /* 第一步：获取外部认证数据源 */
+                returnvar = SCCARDOcx.iReloadPIN_HSM_Step1(type, cardInfo.aaz501+"|"+cardInfo.aaz500+"|");
+                if (returnvar != 0) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return false;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                basedates = basedate.split("|");
+
+                /* 第二步：外部认证 */
+                var param = {};
+                param["dto['BussinessType']"] = BussinessType_02;     // 密码重置业务类型
+                param["dto['serviceFlag']"] = serviceFlag_244;      // 外部部认证
+                param["dto['aab301']"] = cardInfo.aab301; // 行政区划
+                param["dto['aac002']"] = cardInfo.aac002; // 社会保障号码
+                param["dto['aaz500']"] = cardInfo.aaz500; // 卡号
+                param["dto['aaz501']"] = cardInfo.aaz501; // 卡识别码
+                param["dto['aac003']"] = cardInfo.aac003  // 姓名
+                param["dto['aaz507']"] = cardInfo.aaz507; // 卡复位信息
+                param["dto['zdbm']"] = cardInfo.zdbm; 	  // 终端编码
+                param["dto['sfbs']"] = basedates[0];      // 算法标识
+                param["dto['mydz']"] = basedates[1];      // 密钥地址
+                param["dto['sjs1']"] = basedates[2];      // 随机数：分散因子
+                param["dto['sjs2']"] = basedates[3];      // 随机数：鉴别所需原始信息
+                json = Base.getJson("cardManageAction!toWebService.do",param);
+                code = json.fieldData.code;
+                if ("1" != code) {
+                    var message = json.fieldData.message;
+                    Base.alert(message, "warn");
+                    return false;
+                }
+                inst = json.fieldData.inst;
+
+                /* 第三步：获取安全认证数据源 */
+                returnvar = SCCARDOcx.iReloadPIN_HSM_Step2(inst);
+                if (returnvar != 0) {
+                    var message= getErrorMsg(returnvar);
+                    Base.alert(message, "warn");
+                    return false;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                basedates = basedate.split("|");
+
+                /* 第四步：安全认证 */
+                param["dto['sfbs']"] = basedates[0]; // 算法标识
+                param["dto['mydz']"] = basedates[1]; // 密钥地址
+                param["dto['sjs1']"] = basedates[2]; // 随机数：过程因子
+                param["dto['sjs2']"] = basedates[3]+"|"+basedates[4]; // 随机数：APDU命令明文数据
+                param["dto['serviceFlag']"] = serviceFlag_245;    // 安全认证
+                if (basedates[4].length > 8) {
+                    Base.alert("密码位数暂时不支持超过8位!", "warn");
+                    return false;
+                }
+                if (basedates[0] == "03") { // 国密算法
+                    var sj = getSJ(basedates[4]);
+                    param["dto['sjs2']"] = sj;    // 国密随机数： 密码位数+密码
+                }
+                json = Base.getJson("cardManageAction!toWebService.do",param);
+                code = json.fieldData.code;
+                if("1" != code){
+                    var message = json.fieldData.message;
+                    Base.alert(message, "warn");
+                    return false;
+                }
+                inst = json.fieldData.inst;
+                if (basedates[0] == "03") { // 国密算法
+                    inst = basedates[3]+json.fieldData.inst;
+                }
+
+                /* 第五步：密码重置 */
+                returnvar = SCCARDOcx.iReloadPIN_HSM_Step3(inst);
+                if (returnvar != 0) {
+                    var message = getErrorMsg(returnvar);
+                    Base.alert(message, "warn");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /**
+         * 消费交易
+         * cardInfo:json格式
+         * cardInfo.aab301; // 行政区划
+         * cardInfo.aac002; // 社会保障号码
+         * cardInfo.aaz500; // 卡号
+         * cardInfo.aaz501; // 卡识别码
+         * cardInfo.aac003  // 姓名
+         * cardInfo.aaz507; // 卡复位信息
+         * cardInfo.zdbm;   // 终端编码
+         * payInfo: 消费信息     //"0.1|0.2|20151118185001|"
+         */
+        function doDebit(cardInfo, payInfo) {
+            var returnvar,basedate,basedates,result;
+            if (cardInfo == "" || cardInfo == null || cardInfo == undefined) {
+                Base.alert("获取卡基本信息失败", "warn");
+                return result;
+            }
+            if (payInfo == "" || payInfo == null || payInfo == undefined) {
+                Base.alert("获取消费信息失败", "warn");
+                return result;
+            }
+            returnvar = SCCARDOcx.iDoDebit(type, cardInfo.aaz501+"|"+cardInfo.aaz500+"|", payInfo);
+            if (returnvar != 0) { // 不成功
+                /* 判断是否是需加密的错误情况 */
+                if (!isErrorJM(returnvar)) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+                /*第一步：获取安全认证数据源*/
+                returnvar = SCCARDOcx.iDoDebit_HSM_Step1(type, cardInfo.aaz501+"|"+cardInfo.aaz500+"|", payInfo);
+                if (returnvar != 0) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+                basedate = SCCARDOcx.pOutInfo;
+                basedates = basedate.split("|");
+                /* 第二步：安全报文认证 */
+                var param = {};
+                param["dto['BussinessType']"] = BussinessType_07;     // 医疗消费业务类型
+                param["dto['serviceFlag']"] = serviceFlag_245;      // 安全报文认证
+                param["dto['aab301']"] = cardInfo.aab301; // 行政区划
+                param["dto['aac002']"] = cardInfo.aac002; // 社会保障号码
+                param["dto['aaz500']"] = cardInfo.aaz500; // 卡号
+                param["dto['aaz501']"] = cardInfo.aaz501; // 卡识别码
+                param["dto['aac003']"] = cardInfo.aac003  // 姓名
+                param["dto['aaz507']"] = cardInfo.aaz507; // 卡复位信息
+                param["dto['zdbm']"] = cardInfo.zdbm; 	// 终端编码
+                param["dto['sfbs']"] = basedates[0];      // 算法标识
+                param["dto['mydz']"] = basedates[1];      // 密钥地址
+                param["dto['sjs1']"] = basedates[2]+basedates[3]+basedates[3];      // 随机数：分散因子
+                param["dto['sjs2']"] = "00000000"+basedates[4]+basedates[5]+basedates[6]+basedates[7];      // 随机数：鉴别所需原始信息
+                json = Base.getJson("cardManageAction!toWebService.do",param);
+                code = json.fieldData.code;
+                if ("1" != code) {
+                    var message = json.fieldData.message;
+                    Base.alert(message, "warn");
+                    return result;
+                }
+                inst = json.fieldData.inst;
+                inst = "0000"+basedates[3]+"|"+basedates[7]+"|"+inst+"|";
+                /* 第三步：基于加密机的消费交易*/
+                returnvar = SCCARDOcx.iDoDebit_HSM_Step2(inst);
+                if (returnvar != 0) {
+                    Base.alert(getErrorMsg(returnvar), "warn");
+                    return result;
+                }
+            }
+            basedate = SCCARDOcx.pOutInfo;
+            basedates = basedate.split("|");
+            result = basedates;
+            return result;
+        }
+
+        /**
+         * 读取消费交易
+         */
+        function readDebitRecord() {
+            var returnvar,basedate,basedates,result;
+            returnvar = SCCARDOcx.iReadDebitRecord(type);
+            if (returnvar != 0) {
+                Base.alert(getErrorMsg(returnvar), "warn");
+                return result;
+            }
+            basedate = SCCARDOcx.pOutInfo;
+            basedates = basedate.split("|");
+            result = basedates;
+            return result;
+        }
+
+        /**
+         * 获取密码随机数
+         */
+        function getSJ(pass) {
+            var sj = "";  // 国密随机数： 密码位数+密码
+            var mmLength = pass.length; // 密码长度
+            if (mmLength%2 > 0) {
+                sj = "0" + (parseInt(mmLength/2)+1) + pass + "F";
+            } else {
+                sj = "0" + parseInt(mmLength/2) + pass;
+            }
+            var sjLength = sj.length; // 随机数长度
+            if (sjLength < 16) {
+                if ((16 - sjLength) == 2) {
+                    sj = sj + "80";
+                } else {
+                    var bw = ""; // 补位数
+                    for (var i = 0; i < (14 - sjLength); i++) {
+                        bw = bw + "0";
+                    }
+                    sj = sj + "80" + bw;
+                }
+            }
+            return sj;
+        }
+
+        /**
+         * 是否是需加密的错误
+         * flag:错误代码
+         */
+        function isErrorJM(flag){
+            if (flag == "" || flag == null || flag == undefined) {
+                return false;
+            }
+            if (flag == "-2201" || flag == "无PSAM卡") {
+                return true;
+            }
+            if (flag == "-2202" || flag == "算法不支持") {
+                return true;
+            }
+            if (flag == "-2203" || flag == "无RKSSSE密钥") {
+                return true;
+            }
+            if (flag == "-27272" || flag == "未找到密钥") {
+                return true;
+            }
+            if (flag == "-24" || flag == "密钥级别不够") {
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * 根据错误代码获取错误描述
+         * flag:错误代码
+         */
+        function getErrorMsg(flag){
+            var errmsg="";
+            switch(flag){
+                case -1:
+                    errmsg = flag+":卡类型不正确";
+                    break;
+                case -2:
+                    errmsg = flag+":无卡";
+                    break;
+                case -3:
+                    errmsg = flag+":有卡未上电";
+                    break;
+                case -4:
+                    errmsg = flag+":卡无应答";
+                    break;
+                case -5:
+                    errmsg = flag+":加载动态库错误";
+                    break;
+                case -11:
+                    errmsg = flag+":读卡器连接错误";
+                    break;
+                case -12:
+                    errmsg = flag+":未建立连接";
+                    break;
+                case -13:
+                    errmsg = flag+":(动态库)不支持该命令";
+                    break;
+                case -14:
+                    errmsg = flag+":(发给动态库的)命令参数错误";
+                    break;
+                case -15:
+                    errmsg = flag+":信息校验出错";
+                    break;
+                case -20:
+                    errmsg = flag+":卡识别码格式错误";
+                    break;
+                case -21:
+                    errmsg = flag+":内部认证失败（用户卡不合法）";
+                    break;
+                case -22:
+                    errmsg = flag+":传入数据与卡内不符";
+                    break;
+                case -23:
+                    errmsg = flag+":传入数据不合法";
+                    break;
+                case -24:
+                    errmsg = flag+":PSAM卡密钥级别不够";
+                    break;
+                case -31:
+                    errmsg = flag+":用户取消密码输入";
+                    break;
+                case -32:
+                    errmsg = flag+":密码输入操作超时";
+                    break;
+                case -33:
+                    errmsg = flag+":输入密码长度错误";
+                    break;
+                case -34:
+                    errmsg = flag+":两次输入密码不一致";
+                    break;
+                case -35:
+                    errmsg = flag+":初始密码不能交易";
+                    break;
+                case -36:
+                    errmsg = flag+":不能改为初始密码";
+                    break;
+                case -41:
+                    errmsg = flag+":运算数据含非法字符";
+                    break;
+                case -42:
+                    errmsg = flag+":运算数据长度错误";
+                    break;
+                case -51:
+                    errmsg = flag+":PIN校验失败";
+                    break;
+                case -52:
+                    errmsg = flag+":PIN锁定";
+                    break;
+                case -2201:
+                    errmsg = flag+":无PSAM卡";
+                    break;
+                case -2202:
+                    errmsg = flag+":PSAM卡算法不支持（即PSAM卡内没有SSF33算法或SM4算法）";
+                    break;
+                case -2203:
+                    errmsg = flag+":PSAM卡内没有RKssse密钥（3.0卡读个人基本信息需要RKssse密钥外部认证）";
+                    break;
+                case -2204:
+                    errmsg = flag+":不需要加密机认证";
+                    break;
+                case -25536:
+                    errmsg = flag+":外部认证失败";
+                    break;
+                case -25537:
+                    errmsg = flag+":外部认证失败";
+                    break;
+                case -25538:
+                    errmsg = flag+":外部认证失败";
+                    break;
+                case -26368:
+                    errmsg = flag+":Lc/Le不正确";
+                    break;
+                case -26881:
+                    errmsg = flag+":命令不接受（无效状态）";
+                    break;
+                case -27009:
+                    errmsg = flag+":命令与文件结构不相符，当前文件非所需文件";
+                    break;
+                case -27010:
+                    errmsg = flag+":不满足安全条件";
+                    break;
+                case -27011:
+                    errmsg = flag+":密钥锁定（算法锁定）鉴别方法锁定";
+                    break;
+                case -27012:
+                    errmsg = flag+"：引用数据无效、随机数无效";
+                    break;
+                case -27013:
+                    errmsg = flag+":不满足使用条件、应用被锁定、应用未选择、余额上溢";
+                    break;
+                case -27016:
+                    errmsg = flag+":安全报文数据项不正确、MAC不正确";
+                    break;
+                case -27264:
+                    errmsg = flag+":数据域参数不正确";
+                    break;
+                case -27265:
+                    errmsg = flag+":不支持该功能、卡中无MF、卡被锁定、应用锁定";
+                    break;
+                case -27266:
+                    errmsg = flag+"：未找到文件、文件标识相重、SFI不正确";
+                    break;
+                case -27267:
+                    errmsg = flag+":未找到记录";
+                    break;
+                case -27272:
+                    errmsg = flag+":未找到引用数据、未找到密钥";
+                    break;
+                case -37634:
+                    errmsg = flag+":MAC无效";
+                    break;
+                case -37635:
+                    errmsg = flag+"：应用已被永久锁定、卡片锁定";
+                    break;
+                case -37891:
+                    errmsg = flag+":PSAM卡不支持消费交易";
+                    break;
+                case -37894:
+                    errmsg = flag+":所需MAC(或/和TAC)不可用";
+                    break;
+                default:
+                    errmsg = flag+":未知错误";
+                    break;
+            }
+            return errmsg;
+        }
+    </script>
 </head>
-<body>
-<h1>哈哈哈哈</h1>
+<body class="no-scrollbar">
+<div id="pageloading">
+    <div class="pageloading" ></div>
+    <div class="pageloading-text">
+
+        加载中。。。
+    </div>
+</div>
+<div
+        id="field"
+
+        layout="column"
+
+        cols="2"
+
+>
+    <div
+            class="tafieldset_163"
+    >
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:100.0%;'>
+            <div
+
+                    class="fielddiv fieldgroupdiv radiogroup"
+
+                    id="klx"
+
+                    span="2"
+
+                    style="margin-left:200px;"
+
+                    layout="column" cols="2"
+
+            >
+
+                <div class='ez-fl ez-negmx'
+
+                     style='width:25.0%;'>
+                    <div
+                            id="shbzk_radioDiv"
+
+                            style="white-space:nowrap;"
+
+                            class="fielddiv ta_pw_radio ta-radio-uncheck"
+
+                            span="0.5"
+
+                            _onClick="fnOnClick()"
+
+                    >
+                        <input
+
+                                id="shbzk"
+
+                                type="radio"
+
+                                value="1"
+
+                                name="dto['klx']"
+
+                                checked="true"
+
+                                style="display:none;"
+                        >
+                        <label
+
+                        >
+                            社会保障卡</label>
+                    </div>
+                </div>
+
+
+                <div class='ez-fl ez-negmx'
+
+                     style='width:50.0%;'>
+                    <div
+                            id="lskh_radioDiv"
+
+                            style="white-space:nowrap;"
+
+                            class="fielddiv ta_pw_radio ta-radio-uncheck"
+
+                            span="1"
+
+                            _onClick="fnOnClick()"
+
+                    >
+                        <input
+
+                                id="lskh"
+
+                                type="radio"
+
+                                value="2"
+
+                                name="dto['klx']"
+
+                                style="display:none;"
+                        >
+                        <label
+
+                        >
+                            录入身份证号</label>
+                    </div>
+                </div>
+
+
+                <div style="clear:both"></div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:80.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    span="1.6"
+
+            >
+                <label
+                        for="card"
+                        class="fieldLabel"
+
+                >
+                    社会保障卡卡号</label>
+                <div class="fielddiv2 readonly"
+
+                >
+                    <input type="text"
+
+                           id="card"
+
+                           name="dto['card']"
+
+                           readOnly="true"
+
+                           class="textinput readonly"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:80.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    span="1.6"
+
+            >
+                <label
+                        for="key"
+                        class="fieldLabel"
+
+                >
+                    密码</label>
+                <div class="fielddiv2 readonly"
+
+                >
+                    <input type="password"
+
+                           id="key"
+
+                           name="dto['key']"
+
+                           readOnly="true"
+
+                           class="textinput readonly"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <label
+                        for="flag"
+                        class="fieldLabel"
+
+                >
+                    判断标志1成功 -1失败</label>
+                <div class="fielddiv2"
+
+                >
+                    <input type="text"
+
+                           id="flag"
+
+                           name="dto['flag']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <label
+                        for="json"
+                        class="fieldLabel"
+
+                >
+                    个人信息</label>
+                <div class="fielddiv2"
+
+                >
+                    <input type="text"
+
+                           id="json"
+
+                           name="dto['json']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <label
+                        for="cardInfo"
+                        class="fieldLabel"
+
+                >
+                    卡基本信息</label>
+                <div class="fielddiv2"
+
+                >
+                    <input type="text"
+
+                           id="cardInfo"
+
+                           name="dto['cardInfo']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <label
+                        for="yblb"
+                        class="fieldLabel"
+
+                >
+                    地区</label>
+                <div class="fielddiv2"
+
+                >
+                    <input type="text"
+
+                           id="yblb"
+
+                           name="dto['yblb']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <label
+                        for="interface_id"
+                        class="fieldLabel"
+
+                >
+                    HIS调用医保交易动作产生的唯一ID</label>
+                <div class="fielddiv2"
+
+                >
+                    <input type="text"
+
+                           id="interface_id"
+
+                           name="dto['interface_id']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="yb_code"
+
+                           name="dto['yb_code']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="empID"
+
+                           name="dto['empID']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="bsCode"
+
+                           name="dto['bsCode']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="orgID"
+
+                           name="dto['orgID']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="bid"
+
+                           name="dto['bid']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="akc020"
+
+                           name="dto['akc020']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="cardtype"
+
+                           name="dto['cardtype']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="psam"
+
+                           name="dto['psam']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="ipurl"
+
+                           name="dto['ipurl']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="baa008"
+
+                           name="dto['baa008']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:50.0%;'>
+            <div
+
+                    class="fielddiv fielddiv_163"
+
+                    style="display:none;"
+
+            >
+                <div class="fielddiv2"
+
+                     style="margin-left:0px;"
+
+                >
+                    <input type="text"
+
+                           id="atr"
+
+                           name="dto['atr']"
+
+                           class="textinput"
+
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <div class='ez-fl ez-negmx'
+
+             style='width:100.0%;'>
+            <div id="tagrid_1464420507"
+                 class="grid  "
+
+                 span="2"
+
+                 layout="column"
+
+                 cols="2"
+
+            >
+
+                <div class='ez-fl ez-negmx'
+
+                     style='width:75.0%;'>
+                    <div
+
+                            id="tabuttonlayout_2087821808"
+
+                            class="button-panel center"
+
+                            span="1.5"
+
+                    >
+
+                        <button id="btn_dk"
+                                class="sexybutton_163"
+
+                                type="button"
+
+                                onClick="fnReadCard()"
+                        >
+
+<span class="button_span "
+>
+读卡</span>
+                        </button>
+
+                        <button id="btn_sfyz"
+                                class="sexybutton_163"
+
+                                type="button"
+
+                                onClick="fn_sfyz()"
+                        >
+
+<span class="button_span "
+>
+身份验证</span>
+                        </button>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <div class='ez-fl ez-negmx'
+
+                     style='width:25.0%;'>
+
+                    <div id="dtk_chkboxDiv"
+
+                         style="white-space:nowrap;"
+
+
+                         span="0.5"
+
+
+
+
+                         class="fielddiv ta_pw_chkbox ta-chk-uncheck"
+
+                    >
+                        <input
+                                id="dtk"
+                                type="checkbox"
+
+                                value="on"
+
+                                name="dto['dtk']"
+
+
+
+                                style="display:none;"
+                        />
+                        <label
+
+                                class="ta-chk-mc"
+                        >
+
+                            旧读卡器
+
+                        </label>
+                    </div>
+
+
+                </div>
+
+
+
+                <div style="clear:both"></div>
+            </div>
+        </div>
+
+
+        <div style="clear:both"></div>
+    </div>
+</div>
+
+<div><a id="cgxx" style="color:red;font-size:14px"></a></div>
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").taLayout();
+        var dtk = Base.getValue("dtk");//on表示旧动态库 否则表示新动态库
+        fnCheckYbkj(dtk);
+    });
+    //通过标志选择动态库读卡
+    function fnReadCard() {
+        var dtk = Base.getValue("dtk");
+        if (dtk != "on") {  //新动态库
+            fn_GetSiCardNew();
+        } else {		//旧动态库
+            Base.setEnable('key');
+            Base.setEnable('btn_sfyz');
+            fn_GetSiCard();
+        }
+    }
+    //通过标志选择动态库身份识别
+    function fn_sfyz() {
+        $('#cgxx1').text("");
+        var dtk = Base.getValue("dtk");
+        var card = Base.getValue("card");
+        if(fnIsEmpty(card)){
+            $('#cgxx').text("请重新读卡或录入身份证号!");
+            return;
+        }
+        if (dtk != "on") {  //新动态库
+            fnCardNew();
+        } else {		//旧动态库
+            fnCard();
+        }
+    }
+
+    //2代读卡器 读取社保卡号
+    function fn_GetSiCard() {
+        var card = Base.getValue("card");
+        var lskh = Base.getValue("lskh");//手工录入身份证号，不进行读卡
+        if (lskh != "on") {//社保卡
+            if (card == "") {
+                var psam = fn_GetSiCardNo();//读取读取PSAM卡信息 由发行机构标识2位，PSAM序列号20位，PSAM版本号2位，密钥卡类型2位，保留数据4位组成
+                if (!fnIsEmpty(psam )) {
+                    var str_psam = psam.split("|");
+                    var ls_kh, ls_c500;
+                    for (var i in str_psam) {
+                        if (i == 8) {//js=8 8个|
+                            ls_kh = str_psam[i];
+                        }
+                        if (i == 9) {// if js=8 9个|
+                            ls_c500 = str_psam[i];
+                        }
+                    }
+                    if (ls_c500 == "0") {//跨省的  读卡内部认证
+                        Base.setValue("key", "c500");
+                        Base.setValue("psam", psam);
+                        Base.setDisabled('key');
+                        Base.setValue("card", ls_kh);
+                    } else {
+                        Base.setValue("card", psam);
+                        Base.setEnable("key");
+                        Base.focus("key");
+                    }
+                    Base.setEnable("btn_sfyz");
+                }else{
+                    $('#cgxx1').text("读卡失败！");
+                    Base.setDisabled("btn_sfyz");
+                }
+            }
+        }
+    }
+    //读取社保卡号（新）
+    function fn_GetSiCardNew() {
+        var card = Base.getValue("card");
+        var lskh = Base.getValue("klx");//手工录入身份证号，不进行读卡
+        if (lskh == "1") {//社保卡
+            //Base.setDisabled("btn_sfyz");
+            //"511900|513701199710301616|A30429572|511900D156000005A3042957677762D0|李睿|008148424286535119002D2F94|2.0|20151201|20251201|000000000000||"
+            //发卡地区行政区划代码（卡识别码前6位）、社会保障号码、卡号、卡识别码、姓名、卡复位信息（仅取历史字节）、规范版本、发卡日期、卡有效期、终端机编号、终端设备号
+            var kjbxx = readCardBas();//读取卡信息
+            if (!fnIsEmpty(kjbxx )) {
+                var param = {};
+                //param["dto['aac002']"] = kjbxx[0];//发卡地区行政区划代码 1
+                param["dto['aac002']"] = kjbxx[1];//身份证号
+                param["dto['akc020']"] = kjbxx[2];//社保卡号
+                param["dto['baa008']"] = kjbxx[3].substring(0,6);//卡识别码
+                param["dto['aac003']"] = kjbxx[4];//姓名
+                param["dto['atr']"] = kjbxx[5];//卡复位信息
+                param["dto['aaz501']"] = kjbxx[3];//卡识别码
+                param["dto['aaz503']"] = kjbxx[7];//发卡日期
+                //param["dto['aaz505']"] = kjbxx[8];//卡有效期
+                // param["dto['bkb005']"] = kjbxx[9];//终端机编号
+                // param["dto['bkb006']"] = kjbxx[10];//终端设备号
+                param["dto['psam']"] = kjbxx[9];//PSAM卡号
+                Base.submit("", "outDepartAction!toJson.do", param);
+                Base.setValue("card",  kjbxx[2]);
+                //Base.setEnable("key");
+                //Base.focus("key");
+                Base.setDisabled('key');
+                setTimeout("verifyPIN1();", 500);
+            }else{
+                $('#cgxx').text("读卡失败！");
+                Base.setDisabled("btn_sfyz");
+            }
+        }
+    }
+    //密码验证
+    function verifyPIN1() {
+        var yblb = Base.getValue("yblb");
+        if (yblb != "yd") {
+            var sfsb = verifyPIN();//密码校验
+            if (sfsb != true) {
+                Base.setDisabled("btn_sfyz");
+                return;
+            } else {
+                Base.setEnable("btn_sfyz");
+                $('#cgxx').text("密码校验成功!");
+            }
+        }
+    }
+    //关闭页面
+    function fnClose() {
+        parent.Base.closeWindow('sfyzjsp');
+    }
+    //手动输入卡号
+    function fnOnClick() {
+        var klx = Base.getValue("klx");
+        Base.setValue("card","");
+        Base.setValue("key","");
+        if (klx == "1") {//读卡
+            Base.setDisabled('card');
+            Base.setEnable('key,btn_dk');
+        } else {
+            Base.setEnable('card,btn_sfyz');
+            Base.setDisabled('key,btn_dk');
+        }
+    }
+    //身份识别(旧)
+    function fnCard() {
+        var card = Base.getValue("card");
+        var is_pin = Base.getValue("key");
+        var klx = Base.getValue("klx");
+        var his_code = Base.getValue("orgID");
+        var yb_code = Base.getValue("yb_code");
+        if (klx == "1" && is_pin != "c500") {
+            if(fnIsEmpty(is_pin)){
+                $('#cgxx1').text("请输入密码！");
+                Base.setEnable('key');
+                return;
+            }
+            //验证密码 luo_card.uf_checkpwd(ls_pwd,ref li_code,ref ls_errmsg)
+            //fn_uf4001();
+        }
+        var kzxml = "<jhbz>0</jhbz><ip></ip>";
+        var is_flag = "1";
+        if (klx == "1") {//读卡
+            var akc020 = fn_ParseXML1('akc020', card);//卡号
+            var cardtype = fn_ParseXML1('cardtype', klx);//卡类型
+            var akc149 = fn_ParseXML1("akc149", is_pin);//原密码
+            var aae140 = fn_ParseXML1("aae140", "03");//aae140 险种
+
+            var sbkxx = fn_uf2006(is_pin, card, "1");//密码验证 查询信息
+            if (sbkxx != -1) {
+                sbkxx += kzxml + akc020 + cardtype + akc149 + aae140;
+                Base.submit("field", "outDepartAction!feeCancelSys.do", {
+                    "dto.his_code": his_code,
+                    "dto.yb_code": yb_code,
+                    "dto.xml": sbkxx,
+                    "dto.type": "ddsk",
+                    "dto.ipurl":Base.getValue("ipurl")
+                }, null, null, function (data) {
+                    $('#cgxx').text("身份验证成功，请关闭页面进行下一步操作！");
+                });
+            }
+        } else {//身份证
+            var aae140 = fn_ParseXML1("aae140", "10");//aae140 险种
+            var akc020 = fn_ParseXML1('akc020', card);//卡号
+            var cardtype = fn_ParseXML1('cardtype', klx);//卡类型
+            kzxml = kzxml + akc020 + aae140 + cardtype;
+            Base.submit("field", "outDepartAction!feeCancelSys.do", {
+                "dto.his_code": his_code,
+                "dto.yb_code": yb_code,
+                "dto.xml": kzxml,
+                "dto.type": "ddsk",
+                "dto.ipurl":Base.getValue("ipurl")
+            }, null, null, function (data) {
+                $('#cgxx').text("身份验证成功，请关闭页面进行下一步操作！");
+            });
+        }
+    }
+
+    //身份识别(新)
+    function fnCardNew() {
+        var card = Base.getValue("card");
+        if(fnIsEmpty(card)){
+            $('#cgxx').text("卡号为空不能身份识别！");
+            return;
+        }
+        var is_pin = Base.getValue("key");
+        var klx = Base.getValue("klx");
+        var his_code = Base.getValue("orgID");
+        var yb_code = Base.getValue("yb_code");
+        var kzxml = "<jhbz>0</jhbz><ip></ip>";
+        if (klx == "1") {//读卡 密码验证 组装需要的xml
+            var akc020 = fn_ParseXML1('akc020', card);//卡号
+            var cardtype = fn_ParseXML1('cardtype', klx);//卡类型
+            var akc149 = fn_ParseXML1("akc149", is_pin);//原密码
+            var aae140 = fn_ParseXML1("aae140", "03");//aae140 险种
+            var cardInfo = Base.getValue("cardInfo");
+            cardInfo = eval("(" + cardInfo + ")");
+            var aac002 = fn_ParseXML1('aac002', cardInfo.aac002);//身份证号
+            //akc020 = fn_ParseXML1('akc020', cardInfo.akc020);//社保卡号
+            var baa008 = fn_ParseXML1('baa008', cardInfo.baa008);//卡识别码
+            var aac003 = fn_ParseXML1('aac003', cardInfo.aac003);//姓名
+            var atr = fn_ParseXML1('atr', cardInfo.atr);//卡复位信息
+            var aaz501 = fn_ParseXML1('aaz501', cardInfo.aaz501);//卡识别码
+            var aaz503 = fn_ParseXML1('aaz503', cardInfo.aaz503);//发卡日期
+            if("000000000000" == cardInfo.psam){
+                var psam = "<psam></psam>";
+            }else{
+                var psam = fn_ParseXML1('psam', cardInfo.psam);
+            }
+            kzxml = kzxml + akc020 + cardtype + akc149 + aae140 + aac002 + baa008 + aac003 + atr + aaz501 + aaz503 + psam;
+            Base.submit("field", "outDepartAction!feeCancelSys.do", {
+                "dto.his_code": his_code,
+                "dto.yb_code": yb_code,
+                "dto.type": "ddsk",
+                "dto.xml": kzxml,
+                "dto.ipurl":Base.getValue("ipurl")
+            }, null, null, function (data) {
+                $('#cgxx').text("身份验证成功，请关闭页面进行下一步操作！");
+            });
+        } else {//身份证
+            var aae140 = fn_ParseXML1("aae140", "10");//aae140 险种
+            var akc020 = fn_ParseXML1('akc020', card);//卡号
+            var cardtype = fn_ParseXML1('cardtype', klx);//卡类型
+            kzxml = kzxml + akc020 + aae140 + cardtype;
+            Base.submit("field", "outDepartAction!feeCancelSys.do", {
+                "dto.his_code": his_code,
+                "dto.yb_code": yb_code,
+                "dto.type": "ddsk",
+                "dto.xml": kzxml,
+                "dto.ipurl":Base.getValue("ipurl")
+            }, null, null, function (data) {
+                $('#cgxx').text("身份验证成功，请关闭页面进行下一步操作！");
+            });
+        }
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    _noClose = false;
+    $(function(){
+        $(document).keydown(function(e) {
+            // 屏蔽回退键盘
+            var target = e.srcElement || e.target;
+            if ((e.keyCode == 8) && target && ((target.type != "text"
+                && target.type != "textarea" && !$(target).attr("contenteditable")
+                && target.type != "password") ||target.readOnly || target.disabled)) {
+                e.keyCode = 0;
+                e.cancelBubble = true;
+                e.returnValue = false;
+
+                // e.stopPropagation works in Firefox.
+                if (e.stopPropagation) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            }
+            var isie = (document.all) ? true : false;
+            var key;
+            var srcobj;
+            if (isie) {
+                key = e.keyCode;
+                srcobj = e.srcElement;
+            } else {
+                key = e.which;
+                srcobj = e.target;
+            }
+            if (srcobj == null)srcobj = e.target;
+            if (key == null) key = e.which;
+            if (key == 13 && srcobj.type != 'button' && srcobj.type != 'submit'
+                && srcobj.type != 'reset' && srcobj.type != 'textarea'
+                && srcobj.type != '') {
+                var el = Base._getNextFormField(srcobj.id);
+                if(el){
+                    Base.focus(el.id);
+                    //时间组件已默认选中,如果再在这里选中,会出现闪动问题,20130628,liys修改
+                    if($(el).hasClass("Wdate")){
+                    }else if (el.type == "text")
+                        el.select();
+                }
+                return false;
+            }
+
+        }).click(function(event){
+            if(!_noClose){
+                try{
+                    top._fnCloseMenu();
+                }
+                catch(e){
+                    sendMsgToFrame("function","_fnCloseMenu");
+                }
+            }
+        });
+        function sendMsgToFrame(type, msg, args){
+            try {
+                var o = {};
+                o.type = type;
+                o.msg = msg;
+                o.args = args || [];
+                o = Ta.util.obj2string(o);
+                window.top.postMessage(o, "*");
+            }
+            catch (e) {
+            }
+        }
+        setTimeout(function(){
+
+            $("#pageloading").remove();
+        },1);
+
+
+    });
+
+</script>
