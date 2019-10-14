@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "PairCodeBO - 对码详细", description = "对码详细")
 public class PairCodeBO {
 
-    @ApiModelProperty(notes = "基卫目录编码")
+    @ApiModelProperty(notes = "基卫目录编码[05 交易中返回的‘目录编码’]")
     @JSONField(name = "基卫目录编码")
     private String basicDirectoryCode;
 
-    @ApiModelProperty(notes = "社保目录类别")
+    @ApiModelProperty(notes = "社保目录类别[1：药品，3：耗材，4：诊疗]")
     @JSONField(name = "社保目录类别")
     private String insuranceCatalogDirectory;
 

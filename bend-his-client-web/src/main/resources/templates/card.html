@@ -147,7 +147,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -205,7 +205,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -264,7 +264,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -297,7 +297,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -346,7 +346,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -394,7 +394,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -441,7 +441,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -487,7 +487,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -530,7 +530,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -569,7 +569,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -612,7 +612,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -672,7 +672,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -700,7 +700,7 @@
                 }
                 //
                 commad = 7001;
-                Data = is_data
+                Data = is_data;
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg() + Data);
@@ -718,14 +718,14 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
         //解析xml
         function fn_NodeXML(prm_XML, prm_Marker) {
-            alert(prm_XML)
-            alert(prm_Marker)
+            alert(prm_XML);
+            alert(prm_Marker);
             if (!prm_XML) {
                 return "";
             }
@@ -819,7 +819,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -1149,7 +1149,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -1207,7 +1207,7 @@
                 result = sicard.Runs(commad, Data);
                 if (result != 0) {
                     alert(sicard.get_errmsg());
-                    return;
+
                 }
             }
         }
@@ -1549,7 +1549,7 @@
                 param["dto['aac002']"] = cardInfo.aac002; // 社会保障号码
                 param["dto['aaz500']"] = cardInfo.aaz500; // 卡号
                 param["dto['aaz501']"] = cardInfo.aaz501; // 卡识别码
-                param["dto['aac003']"] = cardInfo.aac003  // 姓名
+                param["dto['aac003']"] = cardInfo.aac003;  // 姓名
                 param["dto['aaz507']"] = cardInfo.aaz507; // 卡复位信息
                 param["dto['zdbm']"] = cardInfo.zdbm; 	  // 终端编码
                 param["dto['sfbs']"] = basedates[0];      // 算法标识
@@ -1657,7 +1657,7 @@
                 param["dto['aac002']"] = cardInfo.aac002; // 社会保障号码
                 param["dto['aaz500']"] = cardInfo.aaz500; // 卡号
                 param["dto['aaz501']"] = cardInfo.aaz501; // 卡识别码
-                param["dto['aac003']"] = cardInfo.aac003  // 姓名
+                param["dto['aac003']"] = cardInfo.aac003;  // 姓名
                 param["dto['aaz507']"] = cardInfo.aaz507; // 卡复位信息
                 param["dto['zdbm']"] = cardInfo.zdbm; 	// 终端编码
                 param["dto['sfbs']"] = basedates[0];      // 算法标识
@@ -2839,7 +2839,7 @@
             var sfsb = verifyPIN();//密码校验
             if (sfsb != true) {
                 Base.setDisabled("btn_sfyz");
-                return;
+
             } else {
                 Base.setEnable("btn_sfyz");
                 $('#cgxx').text("密码校验成功!");
