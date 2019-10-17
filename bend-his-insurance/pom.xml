@@ -18,5 +18,6 @@
         <module>bend-his-insurance-api</module>
         <module>bend-his-insurance-impl</module>
         <module>bend-his-insurance-application</module>
+        <module>bend-his-insurance-dll</module>
     </modules>
 </project>
