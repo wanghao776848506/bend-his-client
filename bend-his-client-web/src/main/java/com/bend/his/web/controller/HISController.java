@@ -974,7 +974,7 @@ public class HISController {
             @ApiImplicitParam(name = "status", value = "状态,默认为活动"),
             @ApiImplicitParam(name = "idCardNo", value = "居民身份证"),
             @ApiImplicitParam(name = "personId", value = "居民ID"),
-            @ApiImplicitParam(name = "fileCode", value = "档案号"),
+            @ApiImplicitParam(name = "personCode", value = "档案号"),
             @ApiImplicitParam(name = "personType", value = "居民类型[01 一般人群,02 慢病疾病人群,03 老年人,04 0-6岁儿童,05 孕产妇]"),
             @ApiImplicitParam(name = "typeValue", value = "居民类型值"),
             @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
