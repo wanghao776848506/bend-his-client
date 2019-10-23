@@ -60,7 +60,7 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     private String pageIndex;
 
     /*response data*/
-    @ApiModelProperty(notes = "居民ID")
+    @ApiModelProperty(notes = "居民ID-返回值")
     @JSONField(name = "ID")
     private String id;
 
