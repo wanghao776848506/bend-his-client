@@ -395,11 +395,27 @@ public interface HisService {
     /**
      * No.60 70:查询居民接口:接口说明用于查询居民信息
      *
-     * @param residentInfoDto
+     * @param residentBaseInfoDto
      * @return
      * @throws HisException
      */
-    QueryResult<List<ResidentInfoDto>> getResidentList(ResidentInfoDto residentInfoDto) throws HisException;
+    QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException;
+
+    /**
+     *
+     * @param personalHealthCheckupDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException;
+
+    /**
+     *
+     * @param residentHealthFileDto
+     * @return
+     * @throws HisException
+     */
+    QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException;
 
     /**
      * No.62	102 PACS检查项目查询:此接口用于获取HIS系统中PACS检查项目

@@ -1366,10 +1366,10 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<List<ResidentInfoDto>> getResidentList(ResidentInfoDto residentInfoDto) throws HisException {
+    public QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(residentInfoDto.getTradeCode());
-        queryRequest.setInputParameter(residentInfoDto.createJSONObject());
+        queryRequest.setTradeCode(residentBaseInfoDto.getTradeCode());
+        queryRequest.setInputParameter(residentBaseInfoDto.createJSONObject());
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
@@ -1383,14 +1383,57 @@ public class HisServiceImpl implements HisService {
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<ResidentBaseInfoDto> residentBaseInfoDtoList = jsonArray.toJavaList(ResidentBaseInfoDto.class);
+            queryResult.setData(residentBaseInfoDtoList);
+        }
+        return queryResult;
+    }
 
-            List<ResidentInfoDto> residentInfoDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                ResidentInfoDto resident = JSON.parseObject(jsonArrayString, ResidentInfoDto.class);
-                residentInfoDtoList.add(resident);
-            }
-            queryResult.setData(residentInfoDtoList);
+    @Override
+    public QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(personalHealthCheckupDto.getTradeCode());
+        queryRequest.setInputParameter(personalHealthCheckupDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+            List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = jsonArray.toJavaList(PersonalHealthCheckupDto.class);
+            queryResult.setData(personalHealthCheckupDtoList);
+        }
+        return queryResult;
+    }
+
+    @Override
+    public QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException {
+        QueryRequest queryRequest = QueryRequest.newBuilder().build();
+        queryRequest.setTradeCode(residentHealthFileDto.getTradeCode());
+        queryRequest.setInputParameter(residentHealthFileDto.createJSONObject());
+
+        HISInterfaceResponse hisInterfaceResponse = null;
+        try {
+            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
+        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
+        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+
+        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
+            String queryResultMsg = queryResult.getMsg();
+            ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg,ResidentHealthFileDto.class);
+//            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
+//            List<ResidentHealthFileDto> residentHealthFileDtoList = jsonArray.toJavaList(ResidentHealthFileDto.class);
+            queryResult.setData(residentHealthFile);
         }
         return queryResult;
     }

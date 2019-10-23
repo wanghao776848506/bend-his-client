@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "ResidentInfoDto - 居民健康档案", description = "居民健康档案")
-public class ResidentInfoDto extends AbstractBaseEntity {
+@ApiModel(value = "ResidentBaseInfoDto - 居民健康档案", description = "居民健康档案")
+public class ResidentBaseInfoDto extends AbstractBaseEntity {
     /*request params*/
     @ApiModelProperty(notes = "验证码/产品验证码")
     @JSONField(name = "ProductCode")
@@ -38,9 +38,9 @@ public class ResidentInfoDto extends AbstractBaseEntity {
     @JSONField(name = "PERSONID")
     private String personId;
 
-    @ApiModelProperty(notes = "档案号")
+    @ApiModelProperty(notes = "档案号/人员健康档案编号")
     @JSONField(name = "CODE")
-    private String fileCode;
+    private String personCode;
 
     @ApiModelProperty(notes = "居民类型[01 一般人群,02 慢病疾病人群,03 老年人,04 0-6岁儿童,05 孕产妇]")
     @JSONField(name = "PERSONTYPE")
@@ -119,7 +119,7 @@ public class ResidentInfoDto extends AbstractBaseEntity {
         inputJson.put("Status", this.getStatus());
         inputJson.put("PERSONID", this.getPersonId());
         inputJson.put("IDCARD", this.getIdCardNo());
-        inputJson.put("CODE", this.getFileCode());
+        inputJson.put("CODE", this.getPersonCode());
         inputJson.put("PERSONTYPE", this.getPersonType());
         inputJson.put("TYPEVALUE", this.getTypeValue());
         inputJson.put("PageSize", this.getPageSize());

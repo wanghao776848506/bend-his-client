@@ -946,10 +946,23 @@ public class HISController {
     }
 
     /**
+     * 55-10 查询居民健康档案封面信息(通过ID查)
+     */
+    @PostMapping("his/personal/cover/info")
+    @Deprecated
+    public ResponseEntity<List<ResidentBaseInfoDto>> getResidentCover(@RequestBody ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
+        QueryResult<List<ResidentBaseInfoDto>> result = hisService.getResidentList(residentBaseInfoDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
      * http://47.111.29.88:11004/publicdoc/index.php?s=/phisif&page_id=53
      * 55-11 查询居民健康档案基本信息(综合查询)
      *
-     * @param residentInfoDto
+     * @param residentBaseInfoDto
      * @return
      * @throws HisException
      */
@@ -968,14 +981,60 @@ public class HISController {
             @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)"),
     })
     @PostMapping("his/personal/resident/info")
-    public ResponseEntity<List<ResidentInfoDto>> getResidentList(@RequestBody ResidentInfoDto residentInfoDto) throws HisException {
-        QueryResult<List<ResidentInfoDto>> result = hisService.getResidentList(residentInfoDto);
+    public ResponseEntity<List<ResidentBaseInfoDto>> getResidentList(@RequestBody ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
+        QueryResult<List<ResidentBaseInfoDto>> result = hisService.getResidentList(residentBaseInfoDto);
         if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
     }
 
+    /**
+     * 56-1 查询个人健康体检记录列表(通过 接口55-11 返回居民ID ==>> personId)
+     */
+    @ApiOperation(value = "56-1 查询个人健康体检记录列表(personId)", position = 43, notes = "查询个人健康体检记录列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_1),
+            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "personId", value = "居民ID"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构ID/编码"),
+            @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
+            @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)")
+    })
+    @PostMapping("his/personal/health/checkup/list")
+    public ResponseEntity<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(@RequestBody PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
+        QueryResult<List<PersonalHealthCheckupDto>> result = hisService.getPersonalHealthCheckupRecordList(personalHealthCheckupDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+    /**
+     * 56-4 查询个人健康体检记录列表 (通过 接口56-1 返回 OLDPEOPLEID ==>> 随访id)
+     */
+
+    @ApiOperation(value = "56-4 查询个人健康体检记录列表(随访id) ", position = 44, notes = "查询个人健康体检记录列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_4),
+            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "mtId", value = "随访ID")
+    })
+    @PostMapping("his/personal/health/file")
+    public ResponseEntity<ResidentHealthFileDto> getResidentHealthFile(@RequestBody ResidentHealthFileDto residentHealthFileDto) throws HisException {
+        QueryResult<ResidentHealthFileDto> result = hisService.getResidentHealthFile(residentHealthFileDto);
+        if (Objects.isNull(result.getData())) {
+            throw new HisException(result.getMsg());
+        }
+        return ResponseEntity.ok(result.getData());
+    }
+
+
+    /**
+     * @param pacsItemDto
+     * @return
+     * @throws HisException
+     */
     @ApiOperation(value = "102 PACS检查项目查询", position = 43, notes = "此接口用于获取HIS系统中PACS检查项目")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_102),

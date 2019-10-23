@@ -52,6 +52,8 @@ public final class TradeCode {
     public static final String TRADE_70 = "70";         //查询居民接口
     public static final String TRADE_102 = "102";       //PACS检查项目查询
     public static final String TRADE_55_11 = "55-11";  //查询居民健康档案基本信息
+    public static final String TRADE_56_1  = "56-1";   //查询个人健康体检记录列表
+    public static final String TRADE_56_4  = "56-4";   //查询个人健康体检记录列表
 
 
 
