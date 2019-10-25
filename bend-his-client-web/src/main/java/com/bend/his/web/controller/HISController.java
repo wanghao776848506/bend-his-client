@@ -48,21 +48,6 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    @ApiOperation(value = "01 登录验证[公卫]", position = 2, notes = "此接口用于医院用户登录或医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
-            @ApiImplicitParam(name = "userName", value = "账号名/用户名", defaultValue = "bdzwsylhy"),
-            @ApiImplicitParam(name = "password", value = "密码", defaultValue = "123"),
-            @ApiImplicitParam(name = "productCode", value = "产品验证码")
-    })
-    @PostMapping("his/public/auth")
-    public ResponseEntity<PublicAuthDto> getHISPublicAuth(@RequestBody PublicAuthDto publicAuthDto) throws HisException {
-        QueryResult<PublicAuthDto> result = hisService.getHISPublicAuth(publicAuthDto);
-        if (Objects.isNull(result.getData())) {
-            throw new HisException(result.getMsg());
-        }
-        return ResponseEntity.ok(result.getData());
-    }
 
     /**
      * 03 医院综合目录查询
@@ -669,7 +654,6 @@ public class HISController {
     public ResponseEntity<List<InpatientDto>> getHISHospitalizationRecordList(@RequestBody InpatientDto inpatientDto) throws HisException {
         QueryResult<List<InpatientDto>> result = hisService.getHISInpatientRecordList(inpatientDto);
         if (Objects.isNull(result.getData())) {
-            System.out.println("do ....");
             throw new HisException(result.getMsg());
         }
         return ResponseEntity.ok(result.getData());
@@ -945,89 +929,6 @@ public class HISController {
         return ResponseEntity.ok(result.getData());
     }
 
-    /**
-     * 55-10 查询居民健康档案封面信息(通过ID查)
-     */
-    @PostMapping("his/personal/cover/info")
-    @Deprecated
-    public ResponseEntity<List<ResidentBaseInfoDto>> getResidentCover(@RequestBody ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
-        QueryResult<List<ResidentBaseInfoDto>> result = hisService.getResidentList(residentBaseInfoDto);
-        if (Objects.isNull(result.getData())) {
-            throw new HisException(result.getMsg());
-        }
-        return ResponseEntity.ok(result.getData());
-    }
-
-    /**
-     * http://47.111.29.88:11004/publicdoc/index.php?s=/phisif&page_id=53
-     * 55-11 查询居民健康档案基本信息(综合查询)
-     *
-     * @param residentBaseInfoDto
-     * @return
-     * @throws HisException
-     */
-    @ApiOperation(value = "55-11 查询居民健康档案基本信息(综合查询)", position = 42, notes = "查询居民健康档案基本信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_55_11),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
-            @ApiImplicitParam(name = "name", value = "居民姓名"),
-            @ApiImplicitParam(name = "status", value = "状态,默认为活动"),
-            @ApiImplicitParam(name = "idCardNo", value = "居民身份证"),
-            @ApiImplicitParam(name = "personId", value = "居民ID"),
-            @ApiImplicitParam(name = "personCode", value = "档案号"),
-            @ApiImplicitParam(name = "personType", value = "居民类型[01 一般人群,02 慢病疾病人群,03 老年人,04 0-6岁儿童,05 孕产妇]"),
-            @ApiImplicitParam(name = "typeValue", value = "居民类型值"),
-            @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
-            @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)"),
-    })
-    @PostMapping("his/personal/resident/info")
-    public ResponseEntity<List<ResidentBaseInfoDto>> getResidentList(@RequestBody ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
-        QueryResult<List<ResidentBaseInfoDto>> result = hisService.getResidentList(residentBaseInfoDto);
-        if (Objects.isNull(result.getData())) {
-            throw new HisException(result.getMsg());
-        }
-        return ResponseEntity.ok(result.getData());
-    }
-
-    /**
-     * 56-1 查询个人健康体检记录列表(通过 接口55-11 返回居民ID ==>> personId)
-     */
-    @ApiOperation(value = "56-1 查询个人健康体检记录列表(personId)", position = 43, notes = "查询个人健康体检记录列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_1),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
-            @ApiImplicitParam(name = "personId", value = "居民ID"),
-            @ApiImplicitParam(name = "organizationCode", value = "机构ID/编码"),
-            @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
-            @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)")
-    })
-    @PostMapping("his/personal/health/checkup/list")
-    public ResponseEntity<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(@RequestBody PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
-        QueryResult<List<PersonalHealthCheckupDto>> result = hisService.getPersonalHealthCheckupRecordList(personalHealthCheckupDto);
-        if (Objects.isNull(result.getData())) {
-            throw new HisException(result.getMsg());
-        }
-        return ResponseEntity.ok(result.getData());
-    }
-
-    /**
-     * 56-4 查询个人健康体检记录列表 (通过 接口56-1 返回 OLDPEOPLEID ==>> 随访id)
-     */
-
-    @ApiOperation(value = "56-4 查询个人健康体检记录列表(随访id) ", position = 44, notes = "查询个人健康体检记录列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_4),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
-            @ApiImplicitParam(name = "mtId", value = "随访ID")
-    })
-    @PostMapping("his/personal/health/file")
-    public ResponseEntity<ResidentHealthFileDto> getResidentHealthFile(@RequestBody ResidentHealthFileDto residentHealthFileDto) throws HisException {
-        QueryResult<ResidentHealthFileDto> result = hisService.getResidentHealthFile(residentHealthFileDto);
-        if (Objects.isNull(result.getData())) {
-            throw new HisException(result.getMsg());
-        }
-        return ResponseEntity.ok(result.getData());
-    }
 
 
     /**

@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "ResidentHealthFileDto - 居民健康档案", description = "居民健康档案")
+@ApiModel(value = "ResidentHealthFileDto - 居民个人健康体检记录", description = "居民个人健康体检记录")
 public class ResidentHealthFileDto extends AbstractBaseEntity {
     /*request params*/
     @ApiModelProperty(notes = "验证码/产品验证码")
@@ -78,15 +78,15 @@ public class ResidentHealthFileDto extends AbstractBaseEntity {
     @JSONField(name = "scaleScore")
     private List<ScaleScoreBO> scaleScore;
 
-    @ApiModelProperty(notes = "")
+    @ApiModelProperty(notes = "扩展信息1")
     @JSONField(name = "ans1")
     private Object ans1;
 
-    @ApiModelProperty(notes = "")
+    @ApiModelProperty(notes = "扩展信息2")
     @JSONField(name = "ans2")
     private Object ans2;
 
-    @ApiModelProperty(notes = "")
+    @ApiModelProperty(notes = "扩展信息3")
     @JSONField(name = "ans3")
     private Object ans3;
 

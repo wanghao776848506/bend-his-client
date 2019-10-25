@@ -31,7 +31,7 @@ public class PublicAuthDto extends AbstractBaseEntity {
     private String productCode;
 
     /*response data*/
-    @ApiModelProperty(notes = "职员的PersonID")
+    @ApiModelProperty(notes = "职员的PersonID/用户ID")
     @JSONField(name = "UserId")
     private String userId;
 
@@ -51,14 +51,9 @@ public class PublicAuthDto extends AbstractBaseEntity {
     @JSONField(name = "RegionCodeList")
     private List<String> regionCodeList;
 
-/*    @ApiModelProperty(notes = "账号名/用户名/职员姓名")
-    @JSONField(name = "UserName")
-    private String userName;
-
-    @ApiModelProperty(notes = "产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;*/
-
+    @ApiModelProperty(notes = "医务人员ID")
+    @JSONField(name = "EmployeeID")
+    private String employeeID;
 
     @Override
     public String createJSONObject() {

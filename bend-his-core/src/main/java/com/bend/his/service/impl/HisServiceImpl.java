@@ -181,6 +181,7 @@ public class HisServiceImpl implements HisService {
 
         String doctorName = comprehensiveCatalogueDto.getDirectoryName();//指定医生的名字
         String directoryType = comprehensiveCatalogueDto.getDirectoryType();//数据类型[0科室、1医生、2病区、3床位]
+        String organizationCode = comprehensiveCatalogueDto.getOrganizationCode();//机构编码
 
         HISInterfaceResponse hisInterfaceResponse;
         try {
@@ -193,11 +194,14 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<ComprehensiveCatalogueDto> catalogueDtoList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = JSON.parseArray(queryResultMsg, ComprehensiveCatalogueDto.class);
+            List<ComprehensiveCatalogueDto> doctorList;
             //筛选出指定医生数据
-            List<ComprehensiveCatalogueDto> doctorList = catalogueDtoList.stream().
-                    filter(s -> doctorName.equals(s.getDirectoryName())).collect(Collectors.toList());
+            if (!StringUtils.isEmpty(doctorName)) {
+                doctorList = catalogueDtoList.stream().filter(s -> doctorName.equals(s.getDirectoryName())).collect(Collectors.toList());
+            } else {
+                doctorList = catalogueDtoList;
+            }
             //去重字符串list.stream().distinct()
             //对象去重
             doctorList = doctorList.stream().collect(collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(ComprehensiveCatalogueDto::getDirectoryCode))), ArrayList::new));
@@ -1365,6 +1369,7 @@ public class HisServiceImpl implements HisService {
         return queryResult;
     }
 
+    @Deprecated
     @Override
     public QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
@@ -1389,6 +1394,7 @@ public class HisServiceImpl implements HisService {
         return queryResult;
     }
 
+    @Deprecated
     @Override
     public QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
@@ -1413,6 +1419,7 @@ public class HisServiceImpl implements HisService {
         return queryResult;
     }
 
+    @Deprecated
     @Override
     public QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
@@ -1430,7 +1437,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg,ResidentHealthFileDto.class);
+            ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg, ResidentHealthFileDto.class);
 //            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
 //            List<ResidentHealthFileDto> residentHealthFileDtoList = jsonArray.toJavaList(ResidentHealthFileDto.class);
             queryResult.setData(residentHealthFile);

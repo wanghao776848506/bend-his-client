@@ -54,6 +54,11 @@ public final class TradeCode {
     public static final String TRADE_55_11 = "55-11";  //查询居民健康档案基本信息
     public static final String TRADE_56_1  = "56-1";   //查询个人健康体检记录列表
     public static final String TRADE_56_4  = "56-4";   //查询个人健康体检记录列表
+    public static final String TRADE_56_6  = "56-6";   //查询个人健康体检记录日期
+    public static final String TRADE_56_8  = "56-8";   //老年人体检查询
+    public static final String TRADE_48_1  = "48-1";   //注册接口产品(公卫)
+    public static final String TRADE_48_2  = "48-2";   //获取所在机构信息(公卫)
+    public static final String TRADE_48_3  = "48-3";   //获取自定义字典(公卫)
 
 
 

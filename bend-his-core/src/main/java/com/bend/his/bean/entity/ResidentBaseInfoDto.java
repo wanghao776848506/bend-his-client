@@ -8,6 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/* 返回值
+
+
+"REGION_NAME": "",
+"ORGID": "机构ID",
+"ORGNAME": "机构名称",
+*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,10 +41,6 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     @JSONField(name = "IDCARD")
     private String idCardNo;
 
-    @ApiModelProperty(notes = "居民ID")
-    @JSONField(name = "PERSONID")
-    private String personId;
-
     @ApiModelProperty(notes = "档案号/人员健康档案编号")
     @JSONField(name = "CODE")
     private String personCode;
@@ -50,7 +53,6 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     @JSONField(name = "TYPEVALUE")
     private String typeValue;
 
-
     @ApiModelProperty(notes = "分页大小(1~100)")
     @JSONField(name = "PageSize")
     private String pageSize;
@@ -60,7 +62,7 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     private String pageIndex;
 
     /*response data*/
-    @ApiModelProperty(notes = "居民ID-返回值")
+    @ApiModelProperty(notes = "居民ID -> 接口返回值")
     @JSONField(name = "ID")
     private String id;
 
@@ -76,16 +78,6 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     @JSONField(name = "SEX")
     private String sex;
 
-    /*@ApiModelProperty(notes = "居民姓名")
-    @JSONField(name = "NAME")
-    private String name;
-    @ApiModelProperty(notes = "居民身份证")
-    @JSONField(name = "IDCARD")
-    private String idCardNo;
-    @ApiModelProperty(notes = "档案号")
-    @JSONField(name = "CODE")
-    private String fileCode;
-    */
     @ApiModelProperty(notes = "家庭ID")
     @JSONField(name = "FAMILYID")
     private String familyId;
@@ -110,14 +102,25 @@ public class ResidentBaseInfoDto extends AbstractBaseEntity {
     @JSONField(name = "HRSTATUS")
     private String hrStatus;
 
+    @ApiModelProperty(notes = "区划地址")
+    @JSONField(name = "REGION_NAME")
+    private String regionName;
+
+    @ApiModelProperty(notes = "机构ID/机构编码")
+    @JSONField(name = "ORGID")
+    private String organizationCode;
+
+    @ApiModelProperty(notes = "机构名称")
+    @JSONField(name = "ORGNAME")
+    private String orgName;
 
     @Override
     public String createJSONObject() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("RegionCode", this.getRegionCode());
         inputJson.put("NAME", this.getName());
         inputJson.put("Status", this.getStatus());
-        inputJson.put("PERSONID", this.getPersonId());
         inputJson.put("IDCARD", this.getIdCardNo());
         inputJson.put("CODE", this.getPersonCode());
         inputJson.put("PERSONTYPE", this.getPersonType());

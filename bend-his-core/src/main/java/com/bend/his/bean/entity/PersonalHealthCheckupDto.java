@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 56-1 查询个人健康体检记录列表
+ *
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -39,9 +43,9 @@ public class PersonalHealthCheckupDto extends AbstractBaseEntity {
     @JSONField(name = "PERSONID")
     private String id;
 
-    @ApiModelProperty(notes = "老年人随访记录ID")
+    @ApiModelProperty(notes = "随访ID/老年人随访记录ID")
     @JSONField(name = "OLDPEOPLEID")
-    private String oldPeopleId;
+    private String mtId;
 
     @ApiModelProperty(notes = "随访日期")
     @JSONField(name = "FOLLOW_UP_DATE")

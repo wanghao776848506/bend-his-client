@@ -399,6 +399,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
+    @Deprecated
     QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException;
 
     /**
@@ -407,6 +408,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
+    @Deprecated
     QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException;
 
     /**
@@ -415,6 +417,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
+    @Deprecated
     QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException;
 
     /**
