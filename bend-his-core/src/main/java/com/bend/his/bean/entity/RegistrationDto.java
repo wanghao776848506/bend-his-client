@@ -89,11 +89,14 @@ public class RegistrationDto extends AbstractBaseEntity {
     @JSONField(name = "结束日期")
     private String endTime;
 
-
-    /*response data*/
     @ApiModelProperty(notes = "挂号ID")
     @JSONField(name = "挂号ID")
     private String registrationId;
+
+    /*response data*/
+    @ApiModelProperty(notes = "ID/挂号ID--返回值")
+    @JSONField(name = "ID")
+    private String id;
 
     @ApiModelProperty(notes = "挂号CODE")
     @JSONField(name = "CODE")
