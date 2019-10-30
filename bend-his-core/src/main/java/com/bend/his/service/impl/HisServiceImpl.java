@@ -121,8 +121,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<ComprehensiveCatalogueDto> catalogueDtoList = jsonArray.toJavaList(ComprehensiveCatalogueDto.class);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = JSON.parseArray(queryResultMsg,ComprehensiveCatalogueDto.class);
             queryResult.setData(catalogueDtoList);
         }
         return queryResult;
@@ -386,11 +385,8 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<InpatientDto> inpatientDtoList = jsonArray.toJavaList(InpatientDto.class);
+            List<InpatientDto> inpatientDtoList = JSON.parseArray(queryResultMsg, InpatientDto.class);
             queryResult.setData(inpatientDtoList);
-        } else {
-            throw new HisException("Request failed or timeout.");
         }
         return queryResult;
     }
@@ -412,8 +408,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<OutpatientDto> outpatientDtoList = jsonArray.toJavaList(OutpatientDto.class);
+            List<OutpatientDto> outpatientDtoList = JSON.parseArray(queryResultMsg, OutpatientDto.class);
             queryResult.setData(outpatientDtoList);
         }
         return queryResult;
@@ -437,8 +432,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<HospitalizationSettlementDto> hospitalizationSettlementDtoList = jsonArray.toJavaList(HospitalizationSettlementDto.class);
+            List<HospitalizationSettlementDto> hospitalizationSettlementDtoList = JSON.parseArray(queryResultMsg, HospitalizationSettlementDto.class);
             queryResult.setData(hospitalizationSettlementDtoList);
         }
         return queryResult;
@@ -450,20 +444,17 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalizationFeeDto.getTradeCode());
         queryRequest.setInputParameter(hospitalizationFeeDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalizationFeeDto> hospitalizationFeeDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalizationFeeDto hospitalizationFee = JSON.parseObject(jsonArrayString, HospitalizationFeeDto.class);
-                hospitalizationFeeDtoList.add(hospitalizationFee);
-            }
+            List<HospitalizationFeeDto> hospitalizationFeeDtoList = JSON.parseArray(queryResultMsg, HospitalizationFeeDto.class);
             queryResult.setData(hospitalizationFeeDtoList);
         }
         return queryResult;
@@ -475,20 +466,17 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(outpatientFeeDto.getTradeCode());
         queryRequest.setInputParameter(outpatientFeeDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<OutpatientFeeDto> outpatientFeeDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                OutpatientFeeDto outpatientFee = JSON.parseObject(jsonArrayString, OutpatientFeeDto.class);
-                outpatientFeeDtoList.add(outpatientFee);
-            }
+            List<OutpatientFeeDto> outpatientFeeDtoList = JSON.parseArray(queryResultMsg, OutpatientFeeDto.class);
             queryResult.setData(outpatientFeeDtoList);
         }
         return queryResult;
@@ -501,20 +489,17 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalOrganizationDto.getTradeCode());
         queryRequest.setInputParameter(hospitalOrganizationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalOrganizationDto> hospitalOrganizationDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalOrganizationDto hospitalInstitution = JSON.parseObject(jsonArrayString, HospitalOrganizationDto.class);
-                hospitalOrganizationDtoList.add(hospitalInstitution);
-            }
+            List<HospitalOrganizationDto> hospitalOrganizationDtoList = JSON.parseArray(queryResultMsg, HospitalOrganizationDto.class);
             queryResult.setData(hospitalOrganizationDtoList);
         }
         return queryResult;
@@ -526,20 +511,17 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalOrganizationDto.getTradeCode());
         queryRequest.setInputParameter(hospitalOrganizationDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalOrganizationDto> hospitalOrganizationDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalOrganizationDto hospitalInstitution = JSON.parseObject(jsonArrayString, HospitalOrganizationDto.class);
-                hospitalOrganizationDtoList.add(hospitalInstitution);
-            }
+            List<HospitalOrganizationDto> hospitalOrganizationDtoList = JSON.parseArray(queryResultMsg, HospitalOrganizationDto.class);
             queryResult.setData(hospitalOrganizationDtoList);
         }
         return queryResult;
@@ -551,21 +533,18 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalPaymentDto.getTradeCode());
         queryRequest.setInputParameter(hospitalPaymentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<HospitalPaymentDto> hospitalPaymentDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                HospitalPaymentDto hospitalPayment = JSON.parseObject(jsonArrayString, HospitalPaymentDto.class);
-                hospitalPaymentDtoList.add(hospitalPayment);
-            }
+            List<HospitalPaymentDto> hospitalPaymentDtoList = JSON.parseArray(queryResultMsg, HospitalPaymentDto.class);
             queryResult.setData(hospitalPaymentDtoList);
         }
         return queryResult;
@@ -577,21 +556,18 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(registrationFeeTypeDto.getTradeCode());
         queryRequest.setInputParameter(registrationFeeTypeDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<RegistrationFeeTypeDto> registrationFeeTypeDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                RegistrationFeeTypeDto patientRegistration = JSON.parseObject(jsonArrayString, RegistrationFeeTypeDto.class);
-                registrationFeeTypeDtoList.add(patientRegistration);
-            }
+            List<RegistrationFeeTypeDto> registrationFeeTypeDtoList = JSON.parseArray(queryResultMsg, RegistrationFeeTypeDto.class);
             queryResult.setData(registrationFeeTypeDtoList);
         }
         return queryResult;
@@ -603,7 +579,12 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(templateDto.getTradeCode());
         queryRequest.setInputParameter(templateDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
@@ -630,14 +611,18 @@ public class HisServiceImpl implements HisService {
         queryRequest.setTradeCode(hospitalDepartmentDto.getTradeCode());
         queryRequest.setInputParameter(hospitalDepartmentDto.createJSONObject());
 
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        HISInterfaceResponse hisInterfaceResponse;
+        try {
+            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
+        } catch (HisException e) {
+            throw new HisException("Request failed or timeout.");
+        }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<HospitalDepartmentDto> hospitalDepartmentDtoList = jsonArray.toJavaList(HospitalDepartmentDto.class);
+            List<HospitalDepartmentDto> hospitalDepartmentDtoList = JSON.parseArray(queryResultMsg, HospitalDepartmentDto.class);
             queryResult.setData(hospitalDepartmentDtoList);
         }
         return queryResult;
@@ -745,15 +730,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<DoctorDto> doctorDtoList = new ArrayList<>();
-
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                DoctorDto doctor = JSON.parseObject(jsonArrayString, DoctorDto.class);
-                doctorDtoList.add(doctor);
-            }
+            List<DoctorDto> doctorDtoList = JSON.parseArray(queryResultMsg, DoctorDto.class);
             queryResult.setData(doctorDtoList);
         }
         return queryResult;
@@ -796,14 +773,7 @@ public class HisServiceImpl implements HisService {
         }
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<RegistrationDto> registrationDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                RegistrationDto registration = JSON.parseObject(jsonArrayString, RegistrationDto.class);
-                registrationDtoList.add(registration);
-            }
+            List<RegistrationDto> registrationDtoList = JSON.parseArray(queryResultMsg, RegistrationDto.class);
             queryResult.setData(registrationDtoList);
         }
         return queryResult;
@@ -845,14 +815,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<RegistrationDto> registrationDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                RegistrationDto registration = JSON.parseObject(jsonArrayString, RegistrationDto.class);
-                registrationDtoList.add(registration);
-            }
+            List<RegistrationDto> registrationDtoList = JSON.parseArray(queryResultMsg, RegistrationDto.class);
             queryResult.setData(registrationDtoList);
         }
         return queryResult;
@@ -875,14 +838,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<OutpatientExpensesBillDto> outpatientExpensesBillDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                OutpatientExpensesBillDto outpatientExpensesBill = JSON.parseObject(jsonArrayString, OutpatientExpensesBillDto.class);
-                outpatientExpensesBillDtoList.add(outpatientExpensesBill);
-            }
+            List<OutpatientExpensesBillDto> outpatientExpensesBillDtoList = JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
             queryResult.setData(outpatientExpensesBillDtoList);
         }
         return queryResult;
@@ -945,14 +901,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<OutpatientPaymentDto> outpatientPaymentDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                OutpatientPaymentDto outpatientPayment = JSON.parseObject(jsonArrayString, OutpatientPaymentDto.class);
-                outpatientPaymentDtoList.add(outpatientPayment);
-            }
+            List<OutpatientPaymentDto> outpatientPaymentDtoList = JSON.parseArray(queryResultMsg, OutpatientPaymentDto.class);
             queryResult.setData(outpatientPaymentDtoList);
         }
         return queryResult;
@@ -975,14 +924,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<ExpenseBillDto> expenseBillDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                ExpenseBillDto expenseBill = JSON.parseObject(jsonArrayString, ExpenseBillDto.class);
-                expenseBillDtoList.add(expenseBill);
-            }
+            List<ExpenseBillDto> expenseBillDtoList = JSON.parseArray(queryResultMsg, ExpenseBillDto.class);
             queryResult.setData(expenseBillDtoList);
         }
         return queryResult;
@@ -1028,14 +970,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<InpatientDto> inpatientDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                InpatientDto inpatient = JSON.parseObject(jsonArrayString, InpatientDto.class);
-                inpatientDtoList.add(inpatient);
-            }
+            List<InpatientDto> inpatientDtoList = JSON.parseArray(queryResultMsg, InpatientDto.class);
             queryResult.setData(inpatientDtoList);
         }
         return queryResult;
@@ -1099,14 +1034,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<PrepaymentDto> prepaymentDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                PrepaymentDto prepayment = JSON.parseObject(jsonArrayString, PrepaymentDto.class);
-                prepaymentDtoList.add(prepayment);
-            }
+            List<PrepaymentDto> prepaymentDtoList = JSON.parseArray(queryResultMsg, PrepaymentDto.class);
             queryResult.setData(prepaymentDtoList);
         }
         return queryResult;
@@ -1129,14 +1057,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<DailyBillDto> dailyBillDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                DailyBillDto dailyBill = JSON.parseObject(jsonArrayString, DailyBillDto.class);
-                dailyBillDtoList.add(dailyBill);
-            }
+            List<DailyBillDto> dailyBillDtoList = JSON.parseArray(queryResultMsg, DailyBillDto.class);
             queryResult.setData(dailyBillDtoList);
         }
         return queryResult;
@@ -1182,14 +1103,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<InspectionApplyFormDto> inspectionApplyFormDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                InspectionApplyFormDto inspectionApplyForm = JSON.parseObject(jsonArrayString, InspectionApplyFormDto.class);
-                inspectionApplyFormDtoList.add(inspectionApplyForm);
-            }
+            List<InspectionApplyFormDto> inspectionApplyFormDtoList = JSON.parseArray(queryResultMsg, InspectionApplyFormDto.class);
             queryResult.setData(inspectionApplyFormDtoList);
         }
         return queryResult;
@@ -1212,14 +1126,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<DoctorScheduleDto> doctorScheduleDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                DoctorScheduleDto doctorSchedule = JSON.parseObject(jsonArrayString, DoctorScheduleDto.class);
-                doctorScheduleDtoList.add(doctorSchedule);
-            }
+            List<DoctorScheduleDto> doctorScheduleDtoList = JSON.parseArray(queryResultMsg, DoctorScheduleDto.class);
             queryResult.setData(doctorScheduleDtoList);
         }
         return queryResult;
@@ -1242,14 +1149,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<MedicalOrderDto> medicalOrderDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                MedicalOrderDto medicalOrder = JSON.parseObject(jsonArrayString, MedicalOrderDto.class);
-                medicalOrderDtoList.add(medicalOrder);
-            }
+            List<MedicalOrderDto> medicalOrderDtoList = JSON.parseArray(queryResultMsg, MedicalOrderDto.class);
             queryResult.setData(medicalOrderDtoList);
         }
         return queryResult;
@@ -1387,8 +1287,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<ResidentBaseInfoDto> residentBaseInfoDtoList = jsonArray.toJavaList(ResidentBaseInfoDto.class);
+            List<ResidentBaseInfoDto> residentBaseInfoDtoList = JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
             queryResult.setData(residentBaseInfoDtoList);
         }
         return queryResult;
@@ -1412,8 +1311,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = jsonArray.toJavaList(PersonalHealthCheckupDto.class);
+            List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
             queryResult.setData(personalHealthCheckupDtoList);
         }
         return queryResult;
@@ -1438,8 +1336,6 @@ public class HisServiceImpl implements HisService {
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg, ResidentHealthFileDto.class);
-//            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-//            List<ResidentHealthFileDto> residentHealthFileDtoList = jsonArray.toJavaList(ResidentHealthFileDto.class);
             queryResult.setData(residentHealthFile);
         }
         return queryResult;
@@ -1462,14 +1358,7 @@ public class HisServiceImpl implements HisService {
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-
-            List<PacsItemDto> pacsItemDtoList = new ArrayList<>();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                String jsonArrayString = jsonArray.getString(i);
-                PacsItemDto pacsItem = JSON.parseObject(jsonArrayString, PacsItemDto.class);
-                pacsItemDtoList.add(pacsItem);
-            }
+            List<PacsItemDto> pacsItemDtoList = JSON.parseArray(queryResultMsg, PacsItemDto.class);
             queryResult.setData(pacsItemDtoList);
         }
         return queryResult;
