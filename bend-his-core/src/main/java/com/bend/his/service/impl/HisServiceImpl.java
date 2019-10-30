@@ -283,8 +283,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = jsonArray.toJavaList(HospitalThreeCatalogueDto.class);
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg,HospitalThreeCatalogueDto.class);
             queryResult.setData(hospitalThreeCatalogueDtoList);
         }
 
@@ -309,8 +308,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = jsonArray.toJavaList(HospitalThreeCatalogueDto.class);
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg,HospitalThreeCatalogueDto.class);
             queryResult.setData(hospitalThreeCatalogueDtoList);
         }
 
@@ -336,8 +334,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<ICD10Dto> icd10DtoList = jsonArray.toJavaList(ICD10Dto.class);
+            List<ICD10Dto> icd10DtoList =  JSON.parseArray(queryResultMsg,ICD10Dto.class);
             queryResult.setData(icd10DtoList);
         }
         return queryResult;
@@ -360,8 +357,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            List<ICD10Dto> icd10DtoList = jsonArray.toJavaList(ICD10Dto.class);
+            List<ICD10Dto> icd10DtoList = JSON.parseArray(queryResultMsg,ICD10Dto.class);
             queryResult.setData(icd10DtoList);
         }
         return queryResult;
