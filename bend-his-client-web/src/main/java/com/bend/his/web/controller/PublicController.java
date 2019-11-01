@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Api(value = "公卫接口", description = "公卫接口", tags = {"公卫接口"})
@@ -141,12 +143,16 @@ public class PublicController {
             @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)")
     })
     @PostMapping("public/personal/health/checkup/list")
-    public ResponseEntity<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(@RequestBody PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
+    public ResponseEntity<Map<String,Object>> getPersonalHealthCheckupRecordList(@RequestBody PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
         QueryResult<List<PersonalHealthCheckupDto>> result = publicService.getPersonalHealthCheckupRecordList(personalHealthCheckupDto);
         if (Objects.isNull(result.getData())) {
             throw new HisException(result.getMsg());
         }
-        return ResponseEntity.ok(result.getData());
+        Map<String, Object> map = new HashMap<>();
+        map.put("total",result.getTotal());
+        map.put("data",result.getData());
+
+        return ResponseEntity.ok(map);
     }
 
     /**
