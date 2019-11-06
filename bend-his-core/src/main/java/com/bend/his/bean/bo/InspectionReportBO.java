@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -104,4 +106,8 @@ public class InspectionReportBO {
     @ApiModelProperty(notes = "诊断")
     @JSONField(name = "ASSESSMENT")
     private String assessment;
+
+    @ApiModelProperty(notes = "检查检验项目明细")
+    private List<InspectionReportItemBO> inspectionReportItemList;
+
 }

@@ -1089,7 +1089,7 @@ public class HisServiceImpl implements HisService {
                 if (null != inspectionReportItemBO) {
                     String idx = inspectionReportItemBO.getIdx();
                     List<InspectionReportItemBO> inspectionReportItemList = JSON.parseArray(idx, InspectionReportItemBO.class);
-                    inspectionReport.setInspectionReportItemList(inspectionReportItemList);
+                    inspectionReportBO.setInspectionReportItemList(inspectionReportItemList);
                 }
             }
             queryResult.setData(inspectionReport);
