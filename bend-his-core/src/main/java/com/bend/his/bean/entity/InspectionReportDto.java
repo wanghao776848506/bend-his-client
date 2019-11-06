@@ -3,11 +3,15 @@ package com.bend.his.bean.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.bend.his.bean.bo.InspectionReportBO;
+import com.bend.his.bean.bo.InspectionReportItemBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 检查检验报告/结果
@@ -32,13 +36,19 @@ public class InspectionReportDto extends AbstractBaseEntity {
     private String vmUserId;
     /*response data*/
 
-    @ApiModelProperty(notes = "患者信息、标本号、结论、结果等")
+    @ApiModelProperty(notes = "患者信息、标本号、结论、结果等", hidden = true)
     @JSONField(name = "perInfo")
     private String perInfo;
 
-    @ApiModelProperty(notes = "指标值、参考值等")
+    @ApiModelProperty(notes = "指标值、参考值等", hidden = true)
     @JSONField(name = "idx")
     private String idx;
+
+    @ApiModelProperty(notes = "检查检验报告")
+    private InspectionReportBO inspectionReportBO;
+
+    @ApiModelProperty(notes = "检查检验项目明细")
+    private List<InspectionReportItemBO> inspectionReportItemList;
 
     @Override
     public String createJSONObject() {

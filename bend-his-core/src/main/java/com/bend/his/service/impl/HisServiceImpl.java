@@ -2,6 +2,8 @@ package com.bend.his.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.bend.his.bean.bo.InspectionReportBO;
+import com.bend.his.bean.bo.InspectionReportItemBO;
 import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.*;
 import com.bend.his.common.request.QueryRequest;
@@ -121,7 +123,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            List<ComprehensiveCatalogueDto> catalogueDtoList = JSON.parseArray(queryResultMsg,ComprehensiveCatalogueDto.class);
+            List<ComprehensiveCatalogueDto> catalogueDtoList = JSON.parseArray(queryResultMsg, ComprehensiveCatalogueDto.class);
             queryResult.setData(catalogueDtoList);
         }
         return queryResult;
@@ -283,7 +285,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg,HospitalThreeCatalogueDto.class);
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg, HospitalThreeCatalogueDto.class);
             queryResult.setData(hospitalThreeCatalogueDtoList);
         }
 
@@ -308,7 +310,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg,HospitalThreeCatalogueDto.class);
+            List<HospitalThreeCatalogueDto> hospitalThreeCatalogueDtoList = JSON.parseArray(queryResultMsg, HospitalThreeCatalogueDto.class);
             queryResult.setData(hospitalThreeCatalogueDtoList);
         }
 
@@ -334,7 +336,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            List<ICD10Dto> icd10DtoList =  JSON.parseArray(queryResultMsg,ICD10Dto.class);
+            List<ICD10Dto> icd10DtoList = JSON.parseArray(queryResultMsg, ICD10Dto.class);
             queryResult.setData(icd10DtoList);
         }
         return queryResult;
@@ -357,7 +359,7 @@ public class HisServiceImpl implements HisService {
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
-            List<ICD10Dto> icd10DtoList = JSON.parseArray(queryResultMsg,ICD10Dto.class);
+            List<ICD10Dto> icd10DtoList = JSON.parseArray(queryResultMsg, ICD10Dto.class);
             queryResult.setData(icd10DtoList);
         }
         return queryResult;
@@ -1077,6 +1079,19 @@ public class HisServiceImpl implements HisService {
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             InspectionReportDto inspectionReport = JSON.parseObject(queryResultMsg, InspectionReportDto.class);
+            if (null != inspectionReport) {
+                String perInfo = inspectionReport.getPerInfo();
+                InspectionReportBO inspectionReportBO = JSON.parseObject(perInfo, InspectionReportBO.class);
+                inspectionReport.setInspectionReportBO(inspectionReportBO);
+                //
+                String reportIdx = inspectionReport.getIdx();
+                InspectionReportItemBO inspectionReportItemBO = JSON.parseObject(reportIdx, InspectionReportItemBO.class);
+                if (null != inspectionReportItemBO) {
+                    String idx = inspectionReportItemBO.getIdx();
+                    List<InspectionReportItemBO> inspectionReportItemList = JSON.parseArray(idx, InspectionReportItemBO.class);
+                    inspectionReport.setInspectionReportItemList(inspectionReportItemList);
+                }
+            }
             queryResult.setData(inspectionReport);
         }
         return queryResult;
