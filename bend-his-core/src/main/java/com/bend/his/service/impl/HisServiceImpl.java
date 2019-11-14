@@ -2,6 +2,7 @@ package com.bend.his.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.bend.his.bean.bo.ExpensesBillBO;
 import com.bend.his.bean.bo.InspectionReportBO;
 import com.bend.his.bean.bo.InspectionReportItemBO;
 import com.bend.his.bean.bo.PayAccountBO;
@@ -837,6 +838,13 @@ public class HisServiceImpl implements HisService {
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<OutpatientExpensesBillDto> outpatientExpensesBillDtoList = JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
+            if (!CollectionUtils.isEmpty(outpatientExpensesBillDtoList)){
+                for (OutpatientExpensesBillDto dto : outpatientExpensesBillDtoList){
+                    String prescriptionDetail = dto.getPrescriptionDetail();
+                    List<ExpensesBillBO> expensesBillBOList = JSON.parseArray(prescriptionDetail, ExpensesBillBO.class);
+                    dto.setExpensesBillList(expensesBillBOList);
+                }
+            }
             queryResult.setData(outpatientExpensesBillDtoList);
         }
         return queryResult;

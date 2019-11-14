@@ -2,6 +2,7 @@ package com.bend.his.bean.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.bend.his.bean.bo.ExpensesBillBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * 门诊费用清单查询
@@ -16,7 +18,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "OutpatientExpensesBillDto - 门诊费用清单",description = "门诊费用清单")
+@ApiModel(value = "OutpatientExpensesBillDto - 门诊费用清单", description = "门诊费用清单")
 public class OutpatientExpensesBillDto extends AbstractBaseEntity {
 
     @ApiModelProperty(notes = "挂号ID")
@@ -48,9 +50,15 @@ public class OutpatientExpensesBillDto extends AbstractBaseEntity {
     @JSONField(name = "OperDate")
     private String billTime;
 
-    @ApiModelProperty(notes = "清单明细/QdList/该处方的清单明细[列表]")
+    @ApiModelProperty(notes = "清单明细/QdList/该处方的清单明细[列表]", hidden = true)
     @JSONField(name = "QdList")
     private String prescriptionDetail;
+    /**
+     * 该处方的清单明细
+     */
+    @ApiModelProperty(notes = "清单明细/QdList/该处方的清单明细[列表]")
+    private List<ExpensesBillBO> expensesBillList;
+
 
     @Override
     public String createJSONObject() {
