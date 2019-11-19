@@ -687,7 +687,7 @@ public class HISController {
     }
 
 
-    @ApiOperation(value = "30-12 住院记录查询", position = 30, notes = "此接口用于获取HIS系统中预交记录")
+    @ApiOperation(value = "30-12 查询住院预交记录", position = 30, notes = "此接口用于获取HIS系统中预交记录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_12),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
