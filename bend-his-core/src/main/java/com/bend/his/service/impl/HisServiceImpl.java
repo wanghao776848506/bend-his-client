@@ -46,9 +46,9 @@ public class HisServiceImpl implements HisService {
     @Override
     public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
-//        String tradeCode = "100";
+        String tradeCode = "100";
 //        inputJson.put("厂商编号", "510303001");
-        queryRequest.setTradeCode(queryRequest.getTradeCode());
+        queryRequest.setTradeCode(tradeCode);
         queryRequest.setInputParameter(authenticationDto.createJSONObject());
         HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
         return JSON.parseObject(hisInterfaceResponse.getHISInterfaceResult(), QueryResult.class);

@@ -24,7 +24,21 @@ public class HISController {
 
     @Resource
     private HisService hisService;
-
+    /**
+     * 登录验证
+     *
+     * @return
+     * @throws HisException
+     */
+    @ApiOperation(value = "100 接口测试", position = 0, notes = "此接口用于检测接口客户端是否与HIS系统中心服务器相连通")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号")
+    })
+    @PostMapping("his/connector")
+    public ResponseEntity<String> getHISAuthConnector(@RequestBody AuthenticationDto authenticationDto) throws HisException {
+        QueryResult<AuthenticationDto> result = hisService.getHISAuthConnector(authenticationDto);
+        return ResponseEntity.ok(result.getMsg());
+    }
 
     /**
      * 登录验证
