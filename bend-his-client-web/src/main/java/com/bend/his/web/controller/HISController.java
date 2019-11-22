@@ -46,7 +46,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "01 登录验证", position = 1, notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
+    @ApiOperation(value = "01 登录验证(弃用，使用公卫的-01登录验证)", position = 1, notes = "此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
             @ApiImplicitParam(name = "memberName", value = "用户名"),
@@ -54,6 +54,7 @@ public class HISController {
             @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号")
     })
     @PostMapping("his/auth")
+    @Deprecated
     public ResponseEntity<AuthenticationDto> getHISAuth(@RequestBody AuthenticationDto authenticationDto) throws HisException {
         QueryResult<AuthenticationDto> result = hisService.getHISAuth(authenticationDto);
         if (Objects.isNull(result.getData())) {
