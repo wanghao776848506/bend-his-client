@@ -71,9 +71,9 @@
         </profile>
         <profile>
             <!-- 发布环境 -->
-            <id>online</id>
+            <id>prod</id>
             <properties>
-                <profiles.active>online</profiles.active>
+                <profiles.active>prod</profiles.active>
             </properties>
         </profile>
         <profile>
@@ -130,28 +130,21 @@
                 <includes>
                     <include>**/*</include>
                 </includes>
+                <!--打包时先排除掉三个文件夹-->
+                <excludes>
+                    <exclude>dev/*</exclude>
+                    <exclude>prod/*</exclude>
+                    <exclude>test/*</exclude>
+                </excludes>
                 <filtering>true</filtering>
             </resource>
             <!-- 根据env部署环境值，把对应环境的配置文件拷贝到classes目录 -->
             <resource>
-                <directory>src/main/${env}</directory>
+                <!--这里是关键！ 根据不同的环境，把对应文件夹里的配置文件打包-->
+                <directory>src/main/resources/${profiles.active}</directory>
                 <targetPath>${project.build.directory}/classes</targetPath>
                 <filtering>true</filtering>
             </resource>
-
-            <!--<resource>
-                <directory>src/main/resources/</directory>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>../</directory>
-                <targetPath>META-INF/</targetPath>
-                <filtering>false</filtering>
-                <includes>
-                    <include>NOTICE</include>
-                    <include>LICENSE</include>
-                </includes>
-            </resource>-->
         </resources>
         <plugins>
             <!-- tag::wsdl[] -->
