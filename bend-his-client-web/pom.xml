@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>bend-his-client</artifactId>
+        <groupId>com.bend.his</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
     <groupId>com.bend.his.web</groupId>
     <artifactId>bend-his-client-web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
     <name>bend-his-client-web</name>
     <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.7.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
+
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.bend.his</groupId>
+            <artifactId>bend-his-client</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -53,7 +58,7 @@
         <dependency>
             <groupId>com.bend.his</groupId>
             <artifactId>bend-his-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${revision}</version>
         </dependency>
 
         <!-- swagger -->
@@ -82,6 +87,15 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <!-- 打包 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -111,19 +125,6 @@
                     </resources>
                 </configuration>
             </plugin>
-            <!-- tag::plugin[] -->
-            <!-- <plugin>
-                 <groupId>com.spotify</groupId>
-                 <artifactId>dockerfile-maven-plugin</artifactId>
-                 <version>1.3.6</version>
-                 <configuration>
-                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
-                     <buildArgs>
-                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
-                     </buildArgs>
-                 </configuration>
-             </plugin>-->
-            <!-- end::plugin[] -->
         </plugins>
     </build>
 </project>

@@ -1,1 +1,0 @@
-dubboExceptionFilter=com.bend.common.framework.dubbo.DubboExceptionFilter
