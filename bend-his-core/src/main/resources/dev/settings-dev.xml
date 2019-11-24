@@ -3,83 +3,59 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
+    <localRepository>E:/mavenRepository/repository</localRepository>
     <pluginGroups>
         <pluginGroup>com.spotify</pluginGroup>
     </pluginGroups>
     <proxies>
     </proxies>
-
     <servers>
         <server>
-            <id>releases</id>
-            <username>admin</username>
-            <password>admin123</password>
-        </server>
-
-        <server>
-            <id>snapshots</id>
+            <id>nexus</id>
             <username>admin</username>
             <password>admin123</password>
         </server>
     </servers>
-
     <mirrors>
-
         <mirror>
             <id>nexus</id>
             <mirrorOf>*</mirrorOf>
+            <name>My Nexus Central</name>
             <url>http://nexus.liudebin.cn/nexus/repository/maven-public/</url>
         </mirror>
-        <mirror>
-            <id>aliyun-nexus</id>
-            <mirrorOf>central</mirrorOf>
-            <name>aliyun maven nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </mirror>
     </mirrors>
-
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>nexus</id>
+            <!--Enable snapshots for the built in central repo to direct -->
+            <!--all requests to nexus via the mirror -->
             <repositories>
                 <repository>
-                    <id>Nexus</id>
-                    <url>http://nexus.liudebin.cn/nexus/repository/maven-public/</url>
+                    <id>central</id>
+                    <url>http://central</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
                     </snapshots>
                 </repository>
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
-                    <id>Nexus</id>
-                    <url>http://nexus.liudebin.cn/nexus/repository/maven-public/</url>
+                    <id>central</id>
+                    <url>http://central</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
                     </snapshots>
                 </pluginRepository>
             </pluginRepositories>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-                <jdk>1.8</jdk>
-            </activation>
-            <properties>
-                <maven.compiler.source>1.8</maven.compiler.source>
-                <maven.compiler.target>1.8</maven.compiler.target>
-                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
-            </properties>
         </profile>
     </profiles>
     <activeProfiles>
-        <activeProfile>dev</activeProfile>
+        <activeProfile>nexus</activeProfile>
     </activeProfiles>
-
 </settings>
