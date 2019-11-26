@@ -5,4 +5,4 @@ spring:
 logging:
   file: ./logs/bend-his-client-web.log
   level:
-    com.bend.his.web: DEBUG
+    com.bend.his: DEBUG

@@ -9,16 +9,19 @@ import com.bend.his.constant.IConstant;
 import com.bend.his.exception.HisException;
 import com.bend.his.service.PublicService;
 import com.bend.his.wsdl.HISInterfaceResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 
 @Service("publicService")
-@Slf4j
 public class PublicServiceImpl implements PublicService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PublicServiceImpl.class);
+
     /**
      * for 公卫
      */
@@ -31,6 +34,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(publicAuthDto.getTradeCode());
         queryRequest.setInputParameter(publicAuthDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
         HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
@@ -39,6 +43,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        logger.debug("接口响应数据:{}", queryResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -53,6 +58,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(publicProductDto.getTradeCode());
         queryRequest.setInputParameter(publicProductDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
         HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
@@ -61,6 +67,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        logger.debug("接口响应数据:{}", queryResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -75,6 +82,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(publicAuthDto.getTradeCode());
         queryRequest.setInputParameter(publicAuthDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
         HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
@@ -83,6 +91,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        logger.debug("接口响应数据:{}", queryResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -97,6 +106,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(customDictDto.getTradeCode());
         queryRequest.setInputParameter(customDictDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
         HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
@@ -105,6 +115,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
+        logger.debug("接口响应数据:{}", queryResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -119,6 +130,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(residentBaseInfoDto.getTradeCode());
         queryRequest.setInputParameter(residentBaseInfoDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
 
         HISInterfaceResponse hisInterfaceResponse = null;
         try {
@@ -128,7 +140,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        logger.debug("接口响应数据:{}", queryResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<ResidentBaseInfoDto> residentBaseInfoDtoList = JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
@@ -142,6 +154,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(personalHealthCheckupDto.getTradeCode());
         queryRequest.setInputParameter(personalHealthCheckupDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
 
         HISInterfaceResponse hisInterfaceResponse;
         try {
@@ -151,7 +164,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        logger.debug("接口响应数据:{}", queryResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
@@ -166,6 +179,7 @@ public class PublicServiceImpl implements PublicService {
         queryRequest.setTradeCode(residentHealthFileDto.getTradeCode());
         queryRequest.setInputParameter(residentHealthFileDto.createJSONObject());
 
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
         HISInterfaceResponse hisInterfaceResponse;
         try {
             hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
@@ -174,7 +188,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        logger.debug("接口响应数据:{}", queryResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg, ResidentHealthFileDto.class);
@@ -188,6 +202,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(healthCheckupDateRecordDto.getTradeCode());
         queryRequest.setInputParameter(healthCheckupDateRecordDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
 
         HISInterfaceResponse hisInterfaceResponse;
         try {
@@ -197,7 +212,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        logger.debug("接口响应数据:{}", queryResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<HealthCheckupDateRecordDto> healthCheckupDateRecordDtoList = JSON.parseArray(queryResultMsg, HealthCheckupDateRecordDto.class);
@@ -211,6 +226,7 @@ public class PublicServiceImpl implements PublicService {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(oldHealthCheckupDto.getTradeCode());
         queryRequest.setInputParameter(oldHealthCheckupDto.createJSONObject());
+        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
 
         HISInterfaceResponse hisInterfaceResponse;
         try {
@@ -220,7 +236,7 @@ public class PublicServiceImpl implements PublicService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-
+        logger.debug("接口响应数据:{}", queryResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<OldHealthCheckupDto> healthCheckupDtoList = JSON.parseArray(queryResultMsg, OldHealthCheckupDto.class);

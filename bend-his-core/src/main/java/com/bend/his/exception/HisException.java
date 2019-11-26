@@ -1,6 +1,5 @@
 package com.bend.his.exception;
 
-import com.google.common.base.Joiner;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -65,7 +64,6 @@ public class HisException extends Exception {
   }
 
   private HisException(Builder builder) {
-    super(builder.buildErrorMsg());
     returnCode = builder.returnCode;
     returnMsg = builder.returnMsg;
     resultCode = builder.resultCode;
@@ -187,22 +185,6 @@ public class HisException extends Exception {
      */
     public HisException build() {
       return new HisException(this);
-    }
-
-    /**
-     * Build error msg string.
-     *
-     * @return the string
-     */
-    public String buildErrorMsg() {
-      return Joiner.on("，").skipNulls().join(
-        returnCode == null ? null : String.format("返回代码：[%s]", returnCode),
-        returnMsg == null ? null : String.format("返回信息：[%s]", returnMsg),
-        resultCode == null ? null : String.format("结果代码：[%s]", resultCode),
-        errCode == null ? null : String.format("错误代码：[%s]", errCode),
-        errCodeDes == null ? null : String.format("错误详情：[%s]", errCodeDes),
-        xmlString == null ? null : "返回的原始报文：\n" + xmlString
-      );
     }
   }
 }
