@@ -1,1 +1,8 @@
-logging.level.com.bend.his=debug
+spring:
+  application:
+    name: bend-his-client-web
+
+logging:
+  file: ./logs/bend-his-client-web.log
+  level:
+    com.bend.his.web: DEBUG
