@@ -71,7 +71,7 @@ public class HisServiceImpl implements HisService {
 
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -98,7 +98,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -126,7 +126,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -159,7 +159,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -202,7 +202,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -267,7 +267,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         List<ComprehensiveCatalogueDto> departmentList = new ArrayList<>();
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -296,7 +296,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -323,7 +323,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -350,7 +350,7 @@ public class HisServiceImpl implements HisService {
 
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
 
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
@@ -376,7 +376,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -402,7 +402,7 @@ public class HisServiceImpl implements HisService {
 
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -427,7 +427,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -453,7 +453,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -478,7 +478,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<HospitalizationFeeDto> hospitalizationFeeDtoList = JSON.parseArray(queryResultMsg, HospitalizationFeeDto.class);
@@ -502,7 +502,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<OutpatientFeeDto> outpatientFeeDtoList = JSON.parseArray(queryResultMsg, OutpatientFeeDto.class);
@@ -527,7 +527,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -552,7 +552,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<HospitalOrganizationDto> hospitalOrganizationDtoList = JSON.parseArray(queryResultMsg, HospitalOrganizationDto.class);
@@ -576,7 +576,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<HospitalPaymentDto> hospitalPaymentDtoList = JSON.parseArray(queryResultMsg, HospitalPaymentDto.class);
@@ -600,7 +600,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -625,7 +625,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
 
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -659,7 +659,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<HospitalDepartmentDto> hospitalDepartmentDtoList = JSON.parseArray(queryResultMsg, HospitalDepartmentDto.class);
@@ -739,7 +739,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         List<HospitalDepartmentDto> departmentDtoList = new ArrayList<>();
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
@@ -770,7 +770,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<DoctorDto> doctorDtoList = JSON.parseArray(queryResultMsg, DoctorDto.class);
@@ -812,7 +812,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_FAILURE_CODE.equals(queryResult.getResult())) {
             throw new HisException(queryResult.getMsg());
         }
@@ -838,7 +838,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("退号成功!");
         }
@@ -860,7 +860,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<RegistrationDto> registrationDtoList = JSON.parseArray(queryResultMsg, RegistrationDto.class);
@@ -884,7 +884,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<OutpatientExpensesBillDto> outpatientExpensesBillDtoList = JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
@@ -932,7 +932,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
@@ -956,7 +956,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<OutpatientPaymentDto> outpatientPaymentDtoList = JSON.parseArray(queryResultMsg, OutpatientPaymentDto.class);
@@ -980,7 +980,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<ExpenseBillDto> expenseBillDtoList = JSON.parseArray(queryResultMsg, ExpenseBillDto.class);
@@ -1004,7 +1004,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
@@ -1028,7 +1028,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<InpatientDto> inpatientDtoList = JSON.parseArray(queryResultMsg, InpatientDto.class);
@@ -1070,7 +1070,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             PrepaymentDto prepayment = JSON.parseObject(queryResultMsg, PrepaymentDto.class);
@@ -1094,7 +1094,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<PrepaymentDto> prepaymentDtoList = JSON.parseArray(queryResultMsg, PrepaymentDto.class);
@@ -1118,7 +1118,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<DailyBillDto> dailyBillDtoList = JSON.parseArray(queryResultMsg, DailyBillDto.class);
@@ -1142,7 +1142,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             InspectionReportDto inspectionReport = JSON.parseObject(queryResultMsg, InspectionReportDto.class);
@@ -1179,7 +1179,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<InspectionApplyFormDto> inspectionApplyFormDtoList = JSON.parseArray(queryResultMsg, InspectionApplyFormDto.class);
@@ -1203,7 +1203,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<DoctorScheduleDto> doctorScheduleDtoList = JSON.parseArray(queryResultMsg, DoctorScheduleDto.class);
@@ -1227,7 +1227,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<MedicalOrderDto> medicalOrderDtoList = JSON.parseArray(queryResultMsg, MedicalOrderDto.class);
@@ -1250,7 +1250,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("删除成功!");//返回的msg文本比较长
         }
@@ -1271,7 +1271,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("保存成功!");//返回的msg文本比较长
         }
@@ -1292,7 +1292,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("删除成功!");//返回的msg文本比较长
         }
@@ -1313,7 +1313,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("回写至基层系统成功!");//返回的msg文本比较长
         }
@@ -1334,7 +1334,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
         }
@@ -1355,7 +1355,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
         }
@@ -1378,7 +1378,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<ResidentBaseInfoDto> residentBaseInfoDtoList = JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
@@ -1403,7 +1403,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
@@ -1428,7 +1428,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg, ResidentHealthFileDto.class);
@@ -1452,7 +1452,7 @@ public class HisServiceImpl implements HisService {
         }
         String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
         QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", queryResult);
+        logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             String queryResultMsg = queryResult.getMsg();
             List<PacsItemDto> pacsItemDtoList = JSON.parseArray(queryResultMsg, PacsItemDto.class);
