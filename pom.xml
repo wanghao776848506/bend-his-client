@@ -147,6 +147,11 @@
                 <version>${lombok.version}</version>
                 <optional>true</optional>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.9</version>
+            </dependency>
             <!-- slf4j 依赖包 -->
             <dependency>
                 <groupId>log4j</groupId>

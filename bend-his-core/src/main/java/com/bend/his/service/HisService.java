@@ -23,12 +23,6 @@ public interface HisService {
      */
     QueryResult<AuthenticationDto> getHISAuth(AuthenticationDto authenticationDto) throws HisException;
 
-    /**
-     * @param publicAuthDto
-     * @return
-     * @throws HisException
-     */
-    QueryResult<PublicAuthDto> getHISPublicAuth(PublicAuthDto publicAuthDto) throws HisException;
 
     /**
      * No.3 03:医院综合目录查询(科室、医生、病区、床位):此接口用于获取HIS系统中科室、医师、病区、床位的基本信息
@@ -195,7 +189,8 @@ public interface HisService {
 
     /**
      * 查所有科室下挂号模板--可以科室查询
-     * @param hospitalDepartmentDto  --科室名称
+     *
+     * @param hospitalDepartmentDto       --科室名称
      * @param registrationTemplateDtoList --挂号模板列表
      * @return
      * @throws HisException
@@ -391,34 +386,6 @@ public interface HisService {
      * @throws HisException
      */
     QueryResult<String> saveMedicalInsuranceToHis(MedicalInsuranceDto medicalInsuranceDto) throws HisException;
-
-    /**
-     * No.60 70:查询居民接口:接口说明用于查询居民信息
-     *
-     * @param residentBaseInfoDto
-     * @return
-     * @throws HisException
-     */
-    @Deprecated
-    QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException;
-
-    /**
-     *
-     * @param personalHealthCheckupDto
-     * @return
-     * @throws HisException
-     */
-    @Deprecated
-    QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException;
-
-    /**
-     *
-     * @param residentHealthFileDto
-     * @return
-     * @throws HisException
-     */
-    @Deprecated
-    QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException;
 
     /**
      * No.62	102 PACS检查项目查询:此接口用于获取HIS系统中PACS检查项目

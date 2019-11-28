@@ -35,6 +35,10 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
         <!-- slf4j 依赖包 -->
         <dependency>
             <groupId>org.slf4j</groupId>

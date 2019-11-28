@@ -83,36 +83,6 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<PublicAuthDto> getHISPublicAuth(PublicAuthDto publicAuthDto) throws HisException {
-
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(publicAuthDto.getTradeCode());
-        queryRequest.setInputParameter(publicAuthDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse;
-        try {
-            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        /*ws服务请求成功验证*/
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            //PublicAuthDto dto = JSON.parseObject(queryResultMsg, PublicAuthDto.class);
-
-            JSONArray jsonArray = JSON.parseArray(queryResultMsg);
-            PublicAuthDto dto = jsonArray.getObject(0, PublicAuthDto.class);
-
-            queryResult.setData(dto);
-        }
-        return queryResult;
-    }
-
-    @Override
     public QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException {
         QueryRequest queryRequest = QueryRequest.newBuilder().build();
         queryRequest.setTradeCode(comprehensiveCatalogueDto.getTradeCode());
@@ -1358,81 +1328,6 @@ public class HisServiceImpl implements HisService {
         logger.debug("接口响应数据:{}", hisInterfaceResult);
         if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
             queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Deprecated
-    @Override
-    public QueryResult<List<ResidentBaseInfoDto>> getResidentList(ResidentBaseInfoDto residentBaseInfoDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(residentBaseInfoDto.getTradeCode());
-        queryRequest.setInputParameter(residentBaseInfoDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<ResidentBaseInfoDto> residentBaseInfoDtoList = JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
-            queryResult.setData(residentBaseInfoDtoList);
-        }
-        return queryResult;
-    }
-
-    @Deprecated
-    @Override
-    public QueryResult<List<PersonalHealthCheckupDto>> getPersonalHealthCheckupRecordList(PersonalHealthCheckupDto personalHealthCheckupDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(personalHealthCheckupDto.getTradeCode());
-        queryRequest.setInputParameter(personalHealthCheckupDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<PersonalHealthCheckupDto> personalHealthCheckupDtoList = JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
-            queryResult.setData(personalHealthCheckupDtoList);
-        }
-        return queryResult;
-    }
-
-    @Deprecated
-    @Override
-    public QueryResult<ResidentHealthFileDto> getResidentHealthFile(ResidentHealthFileDto residentHealthFileDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(residentHealthFileDto.getTradeCode());
-        queryRequest.setInputParameter(residentHealthFileDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hisPublicWSClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            ResidentHealthFileDto residentHealthFile = JSON.parseObject(queryResultMsg, ResidentHealthFileDto.class);
-            queryResult.setData(residentHealthFile);
         }
         return queryResult;
     }
