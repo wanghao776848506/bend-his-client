@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "ResidentHealthFileVo - 居民个人健康体检记录", description = "居民个人健康体检记录")
 public class ResidentHealthFileVo extends BaseEntity {
     /*request params*/
-    @ApiModelProperty(notes = "验证码/产品验证码")
+    @ApiModelProperty(notes = "验证码/产品验证码", required = true)
     @JSONField(name = "ProductCode")
     private String productCode;
 
-    @ApiModelProperty(notes = "随访ID")
+    @ApiModelProperty(notes = "随访ID", required = true)
     @JSONField(name = "MtID")
     private String mtId;
 
