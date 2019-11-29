@@ -5,13 +5,10 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "ResidentHealthFileVo - 居民个人健康体检记录", description = "居民个人健康体检记录")
 public class ResidentHealthFileVo extends BaseEntity {
     /*request params*/
@@ -22,7 +19,6 @@ public class ResidentHealthFileVo extends BaseEntity {
     @ApiModelProperty(notes = "随访ID", required = true)
     @JSONField(name = "MtID")
     private String mtId;
-
 
     @Override
     public String getInputParameter() {

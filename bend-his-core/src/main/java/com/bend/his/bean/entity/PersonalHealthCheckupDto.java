@@ -16,27 +16,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "PersonalHealthCheckupDto - 个人健康体检记录", description = "个人健康体检记录")
-public class PersonalHealthCheckupDto extends AbstractBaseEntity {
+public class PersonalHealthCheckupDto {
 
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
 
-    @ApiModelProperty(notes = "机构ID/机构编码")
-    @JSONField(name = "orgId")
-    private String organizationCode;
-
-    @ApiModelProperty(notes = "居民ID")
-    @JSONField(name = "PersonID")
-    private String personId;
-
-    @ApiModelProperty(notes = "分页大小(1~100)")
-    @JSONField(name = "PageSize")
-    private String pageSize;
-
-    @ApiModelProperty(notes = "分页索引(0~)")
-    @JSONField(name = "PageIndex")
-    private String pageIndex;
 
     /*response data*/
     @ApiModelProperty(notes = "个人ID")
@@ -110,15 +92,4 @@ public class PersonalHealthCheckupDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "当前行数")
     @JSONField(name = "R__N")
     private String rowNum;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
-        inputJson.put("PersonID", this.getPersonId());
-        inputJson.put("orgId", this.getOrganizationCode());
-        inputJson.put("PageSize", this.getPageSize());
-        inputJson.put("PageIndex", this.getPageIndex());
-        return inputJson.toJSONString();
-    }
 }

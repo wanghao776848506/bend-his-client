@@ -6,9 +6,7 @@ import com.bend.his.bean.entity.AbstractBaseEntity;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 56-8 老年人体检查询
@@ -46,9 +44,8 @@ import lombok.NoArgsConstructor;
  * "PERFECT": "是否完善 0:是 1:否 ",
  * "R__N": "行号"
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "OldHealthCheckupVo - 老年人体检查询", description = "老年人体检查询")
 public class OldHealthCheckupVo extends BaseEntity {
 

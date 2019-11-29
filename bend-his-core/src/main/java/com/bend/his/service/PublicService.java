@@ -3,6 +3,7 @@ package com.bend.his.service;
 import com.bend.his.bean.entity.*;
 import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
+import com.bend.his.common.PageResult;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.exception.HisException;
 
@@ -42,7 +43,7 @@ public interface PublicService {
      * @return 居民健康档案基本信息 : (综合查询)不同参数返回不同结果,
      * @throws HisException
      */
-    List<ResidentBaseInfoDto> getResidentHealthBaseInfoList(CommonPojo<ResidentBaseInfoVo> commonPojo) throws HisException;
+    PageResult<ResidentBaseInfoDto> getResidentHealthBaseInfoList(CommonPojo<ResidentBaseInfoVo> commonPojo) throws HisException;
 
     /**
      * 56-1 查询个人健康体检记录列表(接口55-11返回居民ID ==>> personId)
@@ -51,7 +52,7 @@ public interface PublicService {
      * @return 个人健康体检记录列表
      * @throws HisException
      */
-    List<PersonalHealthCheckupDto> getPersonalHealthCheckupRecordList(CommonPojo<PersonalHealthCheckupVo> commonPojo) throws HisException;
+    PageResult<PersonalHealthCheckupDto> getPersonalHealthCheckupRecordList(CommonPojo<PersonalHealthCheckupVo> commonPojo) throws HisException;
 
     /**
      * 56-4 查询个人健康体检记录列表 (通过 接口56-1 返回 mtId ==>> 随访id)

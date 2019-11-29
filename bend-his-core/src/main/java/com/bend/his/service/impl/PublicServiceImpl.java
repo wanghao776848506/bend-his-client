@@ -3,10 +3,7 @@ package com.bend.his.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.bend.his.bean.entity.*;
 import com.bend.his.bean.vo.*;
-import com.bend.his.common.CommonPojo;
-import com.bend.his.common.HISResult;
-import com.bend.his.common.HisException;
-import com.bend.his.common.ResponseFormat;
+import com.bend.his.common.*;
 import com.bend.his.config.HISPublicWSClient;
 import com.bend.his.constant.IConstant;
 import com.bend.his.service.PublicService;
@@ -52,7 +49,7 @@ public class PublicServiceImpl implements PublicService {
     }
 
     @Override
-    public List<ResidentBaseInfoDto> getResidentHealthBaseInfoList(CommonPojo<ResidentBaseInfoVo> commonPojo) throws HisException {
+    public PageResult<ResidentBaseInfoDto> getResidentHealthBaseInfoList(CommonPojo<ResidentBaseInfoVo> commonPojo) throws HisException {
         HISResult hisResult = hisPublicWSClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
@@ -60,12 +57,14 @@ public class PublicServiceImpl implements PublicService {
             throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
-            return JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
+            List<ResidentBaseInfoDto> list = JSON.parseArray(queryResultMsg, ResidentBaseInfoDto.class);
+            String total = hisResult.getTotal();
+            return new PageResult<ResidentBaseInfoDto>().setList(list).setTotal(total);
         }
     }
 
     @Override
-    public List<PersonalHealthCheckupDto> getPersonalHealthCheckupRecordList(CommonPojo<PersonalHealthCheckupVo> commonPojo) throws HisException {
+    public PageResult<PersonalHealthCheckupDto> getPersonalHealthCheckupRecordList(CommonPojo<PersonalHealthCheckupVo> commonPojo) throws HisException {
         HISResult hisResult = hisPublicWSClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
@@ -73,7 +72,9 @@ public class PublicServiceImpl implements PublicService {
             throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
-            return JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
+            List<PersonalHealthCheckupDto> list = JSON.parseArray(queryResultMsg, PersonalHealthCheckupDto.class);
+            String total = hisResult.getTotal();
+            return new PageResult<PersonalHealthCheckupDto>().setList(list).setTotal(total);
         }
     }
 

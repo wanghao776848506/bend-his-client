@@ -2,20 +2,17 @@ package com.bend.his.bean.vo;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.bend.his.bean.entity.AbstractBaseEntity;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 个人健康体检记录日期列表
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "HealthCheckupDateRecordVo - 个人健康体检记录日期列表", description = "个人健康体检记录日期列表")
 public class HealthCheckupDateRecordVo extends BaseEntity {
 
@@ -26,11 +23,7 @@ public class HealthCheckupDateRecordVo extends BaseEntity {
     @ApiModelProperty(notes = "居民ID")
     @JSONField(name = "PersonID")
     private String personId;
-    /*
-    *
-    "MtId": "B9DF8A1894554A85A9645A72F90E3C5C",
-      "ExamDate": "2016-08-04"
-    */
+
     @ApiModelProperty(notes = "随访ID")
     @JSONField(name = "MtID")
     private String mtId;

@@ -6,16 +6,13 @@ import com.bend.his.bean.entity.AbstractBaseEntity;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * 公卫产品注册信息
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "PublicProductVo - 公卫产品注册信息", description = "公卫产品注册信息")
 public class PublicProductVo extends BaseEntity {
 

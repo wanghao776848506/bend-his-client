@@ -34,11 +34,6 @@ public class GenericResponse implements Serializable {
     private Object data;
 
     /**
-     * 数据行数
-     */
-//    private int count;
-
-    /**
      * 对业务数据单独处理
      *
      * @return

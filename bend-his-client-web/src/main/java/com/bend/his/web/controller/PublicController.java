@@ -4,6 +4,7 @@ import com.bend.his.bean.entity.*;
 import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
 import com.bend.his.common.GenericResponse;
+import com.bend.his.common.PageResult;
 import com.bend.his.common.ResponseFormat;
 import com.bend.his.constant.TradeCode;
 import com.bend.his.exception.HisException;
@@ -97,7 +98,7 @@ public class PublicController {
         if (null != commonPojo && null != commonPojo.getData()) {
             ResidentBaseInfoVo residentBaseInfoVo = commonPojo.getData();
             commonPojo.setInputParameter(residentBaseInfoVo.getInputParameter());
-            List<ResidentBaseInfoDto> result = publicService.getResidentHealthBaseInfoList(commonPojo);
+            PageResult<ResidentBaseInfoDto> result = publicService.getResidentHealthBaseInfoList(commonPojo);
             return ResponseFormat.retInfo(result);
         } else {
             return ResponseFormat.retInfo(ResponseFormat.CODE_10004);
@@ -125,7 +126,7 @@ public class PublicController {
         if (null != commonPojo && null != commonPojo.getData()) {
             PersonalHealthCheckupVo personalHealthCheckupVo = commonPojo.getData();
             commonPojo.setInputParameter(personalHealthCheckupVo.getInputParameter());
-            List<PersonalHealthCheckupDto> result = publicService.getPersonalHealthCheckupRecordList(commonPojo);
+            PageResult<PersonalHealthCheckupDto> result = publicService.getPersonalHealthCheckupRecordList(commonPojo);
             return ResponseFormat.retInfo(result);
         } else {
             return ResponseFormat.retInfo(ResponseFormat.CODE_10004);

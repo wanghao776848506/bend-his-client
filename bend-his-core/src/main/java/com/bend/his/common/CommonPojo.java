@@ -25,14 +25,14 @@ public class CommonPojo<T> implements Serializable {
     @XmlElement(name = "TradeCode")
     @ApiModelProperty(notes = "接口交易编号")
     @JSONField(name = "交易编号")
-    protected String tradeCode;
+    private String tradeCode;
 
     /**
      * 入口参数-交易参数【JSON格式】
      */
-    @XmlElement(name = "InputParameter")
     @ApiModelProperty(notes = "交易参数【JSON格式】", hidden = true)
-    protected String inputParameter;
+    @XmlElement(name = "InputParameter")
+    private String inputParameter;
 
     /**
      * 验证码/产品验证码

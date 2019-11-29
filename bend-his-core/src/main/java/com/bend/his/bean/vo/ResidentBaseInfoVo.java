@@ -5,20 +5,11 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-/* 返回值
+import lombok.*;
 
 
-"REGION_NAME": "",
-"ORGID": "机构ID",
-"ORGNAME": "机构名称",
-*/
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "ResidentBaseInfoVo - 居民健康档案", description = "居民健康档案")
 public class ResidentBaseInfoVo extends BaseEntity {
     /*request params*/
