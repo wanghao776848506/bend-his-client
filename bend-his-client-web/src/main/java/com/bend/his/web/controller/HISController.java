@@ -1,6 +1,10 @@
 package com.bend.his.web.controller;
 
 import com.bend.his.bean.entity.*;
+import com.bend.his.bean.vo.AuthenticationVo;
+import com.bend.his.common.CommonPojo;
+import com.bend.his.common.GenericResponse;
+import com.bend.his.common.ResponseFormat;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.constant.TradeCode;
 import com.bend.his.exception.HisException;
@@ -24,20 +28,27 @@ public class HISController {
 
     @Resource
     private HisService hisService;
+
     /**
      * 登录验证
      *
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "100 接口测试", position = 0, notes = "此接口用于检测接口客户端是否与HIS系统中心服务器相连通")
+    @ApiOperation(value = "100 接口测试", position = 100, notes = "此接口用于检测接口客户端是否与HIS系统中心服务器相连通")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "manufacturerNumber", value = "厂商编号")
     })
     @PostMapping("his/connector")
-    public ResponseEntity<String> getHISAuthConnector(@RequestBody AuthenticationDto authenticationDto) throws HisException {
-        QueryResult<AuthenticationDto> result = hisService.getHISAuthConnector(authenticationDto);
-        return ResponseEntity.ok(result.getMsg());
+    public GenericResponse getHISAuthConnector(@RequestBody CommonPojo<AuthenticationVo> commonPojo) throws HisException {
+        if (null != commonPojo && null != commonPojo.getData()) {
+            AuthenticationVo authenticationVo = commonPojo.getData();
+            commonPojo.setInputParameter(authenticationVo.getInputParameter());
+            String hisAuthConnector = hisService.getHISAuthConnector(commonPojo);
+            return ResponseFormat.retInfo(hisAuthConnector);
+        } else {
+            return ResponseFormat.retInfo(ResponseFormat.CODE_10004);
+        }
     }
 
     /**
@@ -943,7 +954,6 @@ public class HISController {
         }
         return ResponseEntity.ok(result.getData());
     }
-
 
 
     /**

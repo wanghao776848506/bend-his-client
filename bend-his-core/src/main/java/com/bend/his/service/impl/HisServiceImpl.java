@@ -7,6 +7,10 @@ import com.bend.his.bean.bo.InspectionReportBO;
 import com.bend.his.bean.bo.InspectionReportItemBO;
 import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.*;
+import com.bend.his.bean.vo.AuthenticationVo;
+import com.bend.his.common.CommonPojo;
+import com.bend.his.common.HISResult;
+import com.bend.his.common.ResponseFormat;
 import com.bend.his.common.request.QueryRequest;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.config.HISPublicWSClient;
@@ -44,14 +48,14 @@ public class HisServiceImpl implements HisService {
 
 
     @Override
-    public QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        String tradeCode = "100";
-//        inputJson.put("厂商编号", "510303001");
-        queryRequest.setTradeCode(tradeCode);
-        queryRequest.setInputParameter(authenticationDto.createJSONObject());
-        HISInterfaceResponse hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        return JSON.parseObject(hisInterfaceResponse.getHISInterfaceResult(), QueryResult.class);
+    public String getHISAuthConnector(CommonPojo<AuthenticationVo> commonPojo) throws HisException {
+        HISResult hisResult = hisPublicWSClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            return hisResult.getMsg();
+        }
     }
 
 

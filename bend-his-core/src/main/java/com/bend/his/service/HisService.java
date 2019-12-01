@@ -1,6 +1,8 @@
 package com.bend.his.service;
 
 import com.bend.his.bean.entity.*;
+import com.bend.his.bean.vo.AuthenticationVo;
+import com.bend.his.common.CommonPojo;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.exception.HisException;
 
@@ -16,7 +18,7 @@ public interface HisService {
     /**
      * No.1 100:接口测试:此接口用于检测接口客户端是否与HIS系统中心服务器相连通
      */
-    QueryResult getHISAuthConnector(AuthenticationDto authenticationDto) throws HisException;
+    String getHISAuthConnector(CommonPojo<AuthenticationVo> commonPojo) throws HisException;
 
     /**
      * No.2 01:登录验证:此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配
