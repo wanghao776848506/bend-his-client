@@ -496,7 +496,7 @@ public class HISController {
      * @return
      * @throws HisException
      */
-    @ApiOperation(value = "查询科室下--挂号模板列表", position = 19, notes = "查询科室下挂号模板")
+    @ApiOperation(value = "查询科室下--挂号模板列表", position = 18, notes = "查询科室下挂号模板")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_1),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
