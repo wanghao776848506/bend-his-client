@@ -1,31 +1,18 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 医生
- *
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "DoctorDto - 医生",description = "医生")
-public class DoctorDto extends AbstractBaseEntity{
-
-    /*request params*/
-    @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
-    @JSONField(name = "机构编码")
-    private String organizationCode;
-
-    @ApiModelProperty(notes = "科室编码或科室ID")
-    @JSONField(name = "科室ID")
-    private String departmentId;
+@Getter
+@Setter
+@ApiModel(value = "DoctorDto - 医生", description = "医生")
+public class DoctorDto {
 
     /*response data*/
     @ApiModelProperty(notes = "医生ID")
@@ -40,14 +27,8 @@ public class DoctorDto extends AbstractBaseEntity{
     @JSONField(name = "科室名称")
     private String departmentName;
 
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("科室ID", this.getDepartmentId());
-        inputJson.put("机构编码", this.getOrganizationCode());
-        return inputJson.toJSONString();
-    }
+    @ApiModelProperty(notes = "科室编码或科室ID")
+    @JSONField(name = "科室ID")
+    private String departmentId;
 
 }

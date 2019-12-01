@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 /**
  * [ {  "AccName":"银联卡",
  * "Payment":"银联卡",
@@ -23,7 +21,7 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "PayAccountBO - 机构支付账户",description = "机构支付账户")
+@ApiModel(value = "PayAccountBO - 机构支付账户", description = "机构支付账户")
 public class PayAccountBO {
 
     @ApiModelProperty(notes = "账户名字")
@@ -54,11 +52,16 @@ public class PayAccountBO {
     @JSONField(name = "ID")
     private String id;
 
-    @ApiModelProperty(notes = "账户ID")
+    @ApiModelProperty(notes = "账户ID，门诊缴费使用")
     @JSONField(name = "OrgAccID")
     private String orgAccID;
 
-    @ApiModelProperty(notes = "金额")
+    @ApiModelProperty(notes = "金额，门诊缴费使用")
     @JSONField(name = "Fee")
     private String fee;
+
+    @ApiModelProperty(notes = "排序号")
+    @JSONField(name = "SortNo")
+    private String sortNo;
+
 }

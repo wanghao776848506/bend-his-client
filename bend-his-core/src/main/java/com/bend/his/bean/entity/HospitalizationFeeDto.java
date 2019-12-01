@@ -1,50 +1,26 @@
 package com.bend.his.bean.entity;
 
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 /**
  * 住院费用明细
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "HospitalizationFeeDto - 住院费用明细",description = "住院费用明细")
-public class HospitalizationFeeDto extends AbstractBaseEntity {
+@Getter
+@Setter
+@ApiModel(value = "HospitalizationFeeDto - 住院费用明细", description = "住院费用明细")
+public class HospitalizationFeeDto {
 
-    @ApiModelProperty(notes = "业务ID/住院ID")
-    @JSONField(name = "业务ID")
-    private String businessId;
-
+    /*response data*/
     @ApiModelProperty(notes = "住院号")
     @JSONField(name = "住院号")
     private String hospitalizationNo;
-
-
-    @ApiModelProperty(notes = "开始时间")
-    @JSONField(name = "开始时间")
-    private String beginTime;
-
-    @ApiModelProperty(notes = "结束时间")
-    @JSONField(name = "结束时间")
-    private String endTime;
-
-    @ApiModelProperty(notes = "状态[0表示清单不包含退药、退费等产生的负数记录；1表示清单包含退药、退费等产生的负数记录。（非必填项：默认为0 ）]")
-    @JSONField(name = "状态")
-    private Integer state;
-
-    /*response data*/
-//    @ApiModelProperty(notes = "住院号")
-//    @JSONField(name = "住院号")
-//    private String hospitalizationNo;
 
     @ApiModelProperty(notes = "费用明细ID")
     @JSONField(name = "费用明细ID")
@@ -54,7 +30,7 @@ public class HospitalizationFeeDto extends AbstractBaseEntity {
     @JSONField(name = "项目名称")
     private String costItemName;
 
-    @ApiModelProperty(notes = "项目编码[费用]")
+    @ApiModelProperty(notes = "项目编码[费用],05中的‘目录编码’")
     @JSONField(name = "项目编码")
     private String costItemCode;
 
@@ -185,17 +161,4 @@ public class HospitalizationFeeDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "机构名称")
     @JSONField(name = "机构名称")
     private String organizationName;
-
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("业务ID", this.getBusinessId());
-        inputJson.put("住院号", this.getHospitalizationNo());
-        inputJson.put("开始时间", this.getBeginTime());
-        inputJson.put("结束时间", this.getEndTime());
-        inputJson.put("状态", this.getState());
-        return inputJson.toJSONString();
-    }
 }

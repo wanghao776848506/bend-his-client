@@ -1,12 +1,10 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -24,24 +22,14 @@ import java.util.List;
  * }
  * ]
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "AuthenticationDto - 登录认证数据",description = "登录认证数据")
-public class AuthenticationDto extends AbstractBaseEntity {
+@Getter
+@Setter
+@ApiModel(value = "AuthenticationDto - 登录认证数据", description = "登录认证数据")
+public class AuthenticationDto {
 
-    /*params*/
-    @ApiModelProperty(notes = "用户名")
-    @JSONField(name = "用户名")
-    private String memberName;
-
-    @ApiModelProperty(notes = "密码")
-    @JSONField(name = "密码")
-    private String password;
-
-    @ApiModelProperty(notes = "厂商编号")
-    @JSONField(name = "厂商编号")
-    private String manufacturerNumber;
+    @ApiModelProperty(notes = "验证码/授权码")
+    @JSONField(name = "验证码")
+    protected String authCode;
 
     /*response data*/
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
@@ -67,13 +55,4 @@ public class AuthenticationDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "职员姓名")
     @JSONField(name = "职员姓名")
     private String userName;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("用户名", this.getMemberName());
-        inputJson.put("密码", this.getPassword());
-        inputJson.put("厂商编号", this.getManufacturerNumber());
-        return inputJson.toJSONString();
-    }
 }

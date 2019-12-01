@@ -1,45 +1,20 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 /**
  * 住院病人
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "InpatientDto - 住院病人",description = "住院病人")
-public class InpatientDto extends AbstractBaseEntity {
-
-    /*机构编码/机构ID 叫法不一样，数据其实一样*/
-    @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
-    @JSONField(name = "机构编码")
-    private String organizationCode;
-
-    @ApiModelProperty(notes = "身份证号码")
-    @JSONField(name = "身份证号码")
-    private String idCardNo;
-
-    @ApiModelProperty(notes = "开始时间")
-    @JSONField(name = "开始时间")
-    private String beginTime;
-
-    @ApiModelProperty(notes = "结束时间")
-    @JSONField(name = "结束时间")
-    private String endTime;
-
-    @ApiModelProperty(notes = "状态[0表示清单不包含退药、退费等产生的负数记录；1表示清单包含退药、退费等产生的负数记录。（非必填项：默认为0 ）]")
-    @JSONField(name = "状态")
-    private Integer state;
-
+@Getter
+@Setter
+@ApiModel(value = "InpatientDto - 住院病人信息", description = "住院病人")
+public class InpatientDto {
     /*response data*/
     @ApiModelProperty(notes = "医院名称")
     @JSONField(name = "医院名称")
@@ -60,21 +35,25 @@ public class InpatientDto extends AbstractBaseEntity {
     /**
      * 住院ID与业务ID 不同场景下参数，功能一致
      */
-    @ApiModelProperty(notes = "住院ID/业务ID")
+    @ApiModelProperty(notes = "住院ID/业务ID,不同场景下参数，功能一致", hidden = true)
     @JSONField(name = "住院ID")
     private String hospitalizationId;
+
+    @ApiModelProperty(notes = "住院记录ID", hidden = true)
+    @JSONField(name = "ID")
+    private String recordId;
 
     @ApiModelProperty(notes = "业务ID")
     @JSONField(name = "业务ID")
     private String businessId;
 
-    @ApiModelProperty(notes = "住院记录ID")
-    @JSONField(name = "ID")
-    private String recordId;
-
     @ApiModelProperty(notes = "姓名")
     @JSONField(name = "姓名")
     private String patientName;
+
+    @ApiModelProperty(notes = "身份证号")
+    @JSONField(name = "身份证号")
+    private String idCardNo;
 
     @ApiModelProperty(notes = "性别")
     @JSONField(name = "性别")
@@ -207,18 +186,4 @@ public class InpatientDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "出院病区编码")
     @JSONField(name = "出院病区编码")
     private String leaveHospitalWardId;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("身份证号码", this.getIdCardNo());
-
-        inputJson.put("身份证ID", this.getIdCardNo());
-        inputJson.put("机构编码", this.getOrganizationCode());
-        inputJson.put("开始时间", this.getBeginTime());
-        inputJson.put("结束时间", this.getEndTime());
-        inputJson.put("状态", this.getState());
-        return inputJson.toJSONString();
-    }
 }

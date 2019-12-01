@@ -1,31 +1,20 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
  * 科室
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "HospitalDepartmentDto - 医院科室", description = "医院科室")
-public class HospitalDepartmentDto extends AbstractBaseEntity {
-
-    @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
-    @JSONField(name = "机构编码")
-    private String organizationCode;
-
-    @ApiModelProperty(notes = "模板ID")
-    @JSONField(name = "模板ID")
-    private String templateId;
+public class HospitalDepartmentDto {
 
     /*response data*/
     @ApiModelProperty(notes = "科室编码或科室ID")
@@ -36,23 +25,12 @@ public class HospitalDepartmentDto extends AbstractBaseEntity {
     @JSONField(name = "科室名称")
     private String departmentName;
 
-    @ApiModelProperty(notes = "目录类型[0科室、1医生、2病区、3床位]")
-    //@JSONField(name = "目录类型") //数据库存储需要
+    @ApiModelProperty(notes = "目录类型[0科室、1医生、2病区、3床位]", hidden = true)
     private String directoryType;
 
-    @ApiModelProperty(notes = "挂号模板列表")
+    @ApiModelProperty(notes = "挂号模板列表", hidden = true)
     private List<RegistrationTemplateDto> registrationTemplateList;
 
-    @ApiModelProperty(notes = "挂号模板")
+    @ApiModelProperty(notes = "挂号模板", hidden = true)
     private RegistrationTemplateDto registrationTemplateDto;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("模板ID", this.getTemplateId());
-        inputJson.put("机构编码", this.getOrganizationCode());
-        return inputJson.toJSONString();
-    }
-
 }

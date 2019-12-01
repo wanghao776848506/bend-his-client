@@ -1,7 +1,7 @@
 package com.bend.his.service;
 
 import com.bend.his.bean.entity.*;
-import com.bend.his.bean.vo.AuthenticationVo;
+import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
 import com.bend.his.common.result.QueryResult;
 import com.bend.his.exception.HisException;
@@ -23,7 +23,7 @@ public interface HisService {
     /**
      * No.2 01:登录验证:此接口用于医院用户登录医保报账客户端的安全验证，用户名与密码由HIS系统统一分配
      */
-    QueryResult<AuthenticationDto> getHISAuth(AuthenticationDto authenticationDto) throws HisException;
+    AuthenticationDto getHISAuth(CommonPojo<AuthenticationVo> commonPojo) throws HisException;
 
 
     /**
@@ -32,79 +32,49 @@ public interface HisService {
      * @return
      * @throws HisException
      */
-    QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogue(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
+    List<ComprehensiveCatalogueDto> getHISComprehensiveCatalogue(CommonPojo<ComprehensiveCatalogueVo> commonPojo) throws HisException;
 
-    /**
-     * 目录名称（科室、医生、病区、床位）查询
-     *
-     * @param comprehensiveCatalogueDto
-     * @return
-     * @throws HisException
-     */
-    QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByName(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
-
-    /**
-     * @param comprehensiveCatalogueDto
-     * @return
-     * @throws HisException
-     */
-    QueryResult<List<ComprehensiveCatalogueDto>> getHISComprehensiveCatalogueByDoctorInfo(ComprehensiveCatalogueDto comprehensiveCatalogueDto) throws HisException;
+    List<ComprehensiveCatalogueDto> getHISComprehensiveCatalogueByDoctorInfo(CommonPojo<ComprehensiveCatalogueVo> commonPojo) throws HisException;
 
     /**
      * No.4 05:医院三大目录查询(药品、诊疗、耗材) 此接口用于获取HIS系统中药品、诊疗、耗材三大目录的基本信息
-     *
-     * @param hospitalThreeCatalogueDto
-     * @return
-     * @throws HisException
      */
-    QueryResult<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogue(HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException;
+    List<HospitalThreeCatalogueDto> getHISHospitalThreeCatalogue(CommonPojo<HospitalThreeCatalogueVo> commonPojo) throws HisException;
 
 
     /**
      * No.5	06:医院三大目录行数(药品、诊疗、耗材) 此接口用于获取HIS系统中药品、诊疗、耗材三大目录的行数
-     *
-     * @param hospitalThreeCatalogueDto
-     * @return
-     * @throws HisException
      */
-    QueryResult<List<HospitalThreeCatalogueDto>> getHISHospitalThreeCatalogueRows(HospitalThreeCatalogueDto hospitalThreeCatalogueDto) throws HisException;
+    List<HospitalThreeCatalogueDto> getHISHospitalThreeCatalogueRows(CommonPojo<HospitalThreeCatalogueVo> commonPojo) throws HisException;
 
     /**
      * No.6 07:ICD10数据查询:此接口用于获取HIS系统中ICD10的基本信息
-     *
-     * @param icd10Dto
-     * @return
-     * @throws HisException
      */
-    QueryResult<List<ICD10Dto>> getHISHospitalICD10(ICD10Dto icd10Dto) throws HisException;
+    List<ICD10Dto> getHISHospitalICD10(CommonPojo<ICD10Vo> commonPojo) throws HisException;
 
     /**
      * No.7 08:ICD10数据行数:此接口用于获取HIS系统中ICD10数据的行数
-     *
-     * @param icd10Dto
-     * @return
-     * @throws HisException
      */
-    QueryResult<List<ICD10Dto>> getHISHospitalICD10Rows(ICD10Dto icd10Dto) throws HisException;
+    List<ICD10Dto> getHISHospitalICD10Rows(CommonPojo<ICD10Vo> commonPojo) throws HisException;
 
     /**
      * No.8 10:住院病人信息查询:此接口用于获取HIS系统中住院病人的基本信息
      *
-     * @param inpatientDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<InpatientDto>> getHISInpatientList(InpatientDto inpatientDto) throws HisException;
+    List<InpatientDto> getHISInpatientList(CommonPojo<InpatientVo> commonPojo) throws HisException;
 
 
     /**
      * No.9	12:门诊病人信息查询:此接口用于获取HIS系统中门诊病人的基本信息
      *
-     * @param outpatientDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<OutpatientDto>> getHISOutpatientList(OutpatientDto outpatientDto) throws HisException;
+    List<OutpatientDto> getHISOutpatientList(CommonPojo<OutpatientVo> commonPojo) throws HisException;
 
 
     /**
@@ -112,117 +82,127 @@ public interface HisService {
      * <p>
      * 诊疗结算：住院结算和门诊结算
      *
-     * @param hospitalizationSettlementDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalizationSettlementDto>> getHISHospitalizationSettlement(HospitalizationSettlementDto hospitalizationSettlementDto) throws HisException;
+    List<HospitalizationMidwaySettlementDto> getHISHospitalizationSettlement(CommonPojo<HospitalizationMidwaySettlementVo> commonPojo) throws HisException;
 
     /**
      * No.11 14:住院费用明细查询:此接口用于获取HIS系统中住院费用明细的详细信息
      */
-    QueryResult<List<HospitalizationFeeDto>> getHISHospitalizationFee(HospitalizationFeeDto hospitalizationFeeDto) throws HisException;
+    List<HospitalizationFeeDto> getHISHospitalizationFee(CommonPojo<HospitalizationFeeVo> commonPojo) throws HisException;
 
     /**
      * No.12 16:门诊费用明细查询:此接口用于获取HIS系统中门诊费用明细的详细信息
      *
-     * @param outpatientFeeDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<OutpatientFeeDto>> getHISOutpatientFee(OutpatientFeeDto outpatientFeeDto) throws HisException;
+    List<OutpatientFeeDto> getHISOutpatientFee(CommonPojo<OutpatientFeeVo> commonPojo) throws HisException;
 
 
     /**
      * No.13 30：医疗机构信息查询:此接口用于获取HIS系统中医疗机构的详细信息
      *
-     * @param hospitalOrganizationDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionDetail(HospitalOrganizationDto hospitalOrganizationDto) throws HisException;
+    List<HospitalInfoDto> getHISHospitalInstitutionDetail(CommonPojo<HospitalInfoVo> commonPojo) throws HisException;
 
     /**
      * No.14 30-100：机构信息获取:此接口用于获取HIS系统中 的乡镇卫生院和社区服务中心列表
      *
-     * @param hospitalOrganizationDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalOrganizationDto>> getHISHospitalInstitutionList(HospitalOrganizationDto hospitalOrganizationDto) throws HisException;
+    List<HospitalOrganizationDto> getHISHospitalInstitutionList(CommonPojo<HospitalOrganizationVo> commonPojo) throws HisException;
 
     /**
      * No.15 30-99:获取机构支付方式列表:此接口用于获取HIS系统中机构支付方式列表
      *
-     * @param hospitalPaymentDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalPaymentDto>> getHISHospitalPaymentList(HospitalPaymentDto hospitalPaymentDto) throws HisException;
+    List<HospitalPaymentDto> getHISHospitalPaymentList(CommonPojo<HospitalPaymentVo> commonPojo) throws HisException;
 
     /**
      * No.16:30-98:获取挂号费用类型列表
      *
-     * @param registrationFeeTypeDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<RegistrationFeeTypeDto>> getHISPatientRegistrationList(RegistrationFeeTypeDto registrationFeeTypeDto) throws HisException;
+    List<RegistrationFeeTypeDto> getHISPatientRegistrationList(CommonPojo<RegistrationFeeTypeVo> commonPojo) throws HisException;
 
 
     /**
      * No.17 30-1 查询挂号模板:此接口用于获取HIS系统中挂号模板
      *
-     * @param registrationTemplateDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<RegistrationTemplateDto>> getHISHospitalRegistrationTemplateList(RegistrationTemplateDto registrationTemplateDto) throws HisException;
+    List<RegistrationTemplateDto> getRegistrationTemplateList(CommonPojo<RegistrationTemplateVo> commonPojo) throws HisException;
+
+    /**
+     * 所有科室下挂号模板--自定义方法
+     *
+     * @param commonPojo
+     * @return
+     * @throws HisException
+     */
+    List<RegistrationTemplateDto> getHISRegistrationTemplateList(CommonPojo<HospitalDepartmentVo> commonPojo) throws HisException;
 
     /**
      * No.18: 30-2:查询挂号模板下科室:此接口用于获取HIS系统中挂号模板下科室
      *
-     * @param hospitalDepartmentDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<HospitalDepartmentDto>> getHISHospitalRegistrationDepartmentList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException;
+    List<HospitalDepartmentDto> getRegistrationTemplateDepartmentList(CommonPojo<RegistrationTemplateVo> commonPojo) throws HisException;
 
 
     /**
      * 查所有科室下挂号模板--可以科室查询
      *
-     * @param hospitalDepartmentDto       --科室名称
+     * @param hospitalDepartmentVo       --科室名称
      * @param registrationTemplateDtoList --挂号模板列表
      * @return
      * @throws HisException
      */
-    List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
-
+    List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentVo hospitalDepartmentVo,
+                                                                         List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
 
     /**
      * No.19 : 30-3:查询科室下医生:此接口用于获取HIS科室下医生
+     * @param commonPojo
      */
-    QueryResult<List<DoctorDto>> getHISDepartmentDoctorList(DoctorDto doctorDto) throws HisException;
+    List<DoctorDto> getHISDepartmentDoctorList(CommonPojo<DoctorVo> commonPojo) throws HisException;
 
 
     /**
      * No.20 : 30-4:门诊挂号:保存挂号信息
      *
-     * @param registrationDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<List<RegistrationDto>> getHISRegistration(RegistrationDto registrationDto) throws HisException;
+    List<RegistrationDto> getHISRegistration(CommonPojo<RegistrationVo> commonPojo) throws HisException;
 
     /**
      * No.21: 30-5 退挂号 : 此接口用于厂商在HIS系统中退挂号
      *
-     * @param registrationDto
+     * @param commonPojo
      * @return
      * @throws HisException
      */
-    QueryResult<String> getHISWithdrawalRegistration(RegistrationDto registrationDto) throws HisException;
+    String getHISWithdrawalRegistration(CommonPojo<RegistrationCancelVo> commonPojo) throws HisException;
 
     /**
      * No.22: 30-6 查询挂号记录 : 此接口用于获取HIS系统中的挂号记录
@@ -282,8 +262,10 @@ public interface HisService {
 
     /**
      * No.28	30-10 获取住院记录：此接口用于获取HIS系统中住院记录
+     *
+     * @param commonPojo
      */
-    QueryResult<List<InpatientDto>> getHISInpatientRecordList(InpatientDto inpatientDto) throws HisException;
+    List<InpatientRecordDto> getHISInpatientRecordList(CommonPojo<InpatientRecordVo> commonPojo) throws HisException;
 
     /**
      * No.29	30-11 保存预交金/住院预交费:此接口用于HIS中的住院预交费

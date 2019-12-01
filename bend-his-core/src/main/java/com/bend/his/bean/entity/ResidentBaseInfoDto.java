@@ -1,12 +1,10 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /* 返回值
 
@@ -15,9 +13,8 @@ import lombok.NoArgsConstructor;
 "ORGID": "机构ID",
 "ORGNAME": "机构名称",
 */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "ResidentBaseInfoDto - 居民健康档案", description = "居民健康档案")
 public class ResidentBaseInfoDto {
 //    /*request params*/

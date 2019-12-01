@@ -1,8 +1,6 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.bend.his.bean.bo.PayAccountBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * 门诊费用明细查询
@@ -18,21 +15,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "OutpatientFeeDto - 门诊费用明细",description = "门诊费用明细")
+@ApiModel(value = "OutpatientFeeDto - 门诊费用明细", description = "门诊费用明细")
 public class OutpatientFeeDto extends AbstractBaseEntity {
 
-    @ApiModelProperty(notes = "业务ID/门诊ID")
-    @JSONField(name = "业务ID")
-    private String businessId;
 
+    /*response data*/
     @ApiModelProperty(notes = "门诊号")
     @JSONField(name = "门诊号")
     private String outpatientNumber;
-
-    /*response data*/
-//    @ApiModelProperty(notes = "门诊号")
-//    @JSONField(name = "门诊号")
-//    private String outpatientNumber;
 
     @ApiModelProperty(notes = "费用明细ID")
     @JSONField(name = "费用明细ID")
@@ -42,7 +32,7 @@ public class OutpatientFeeDto extends AbstractBaseEntity {
     @JSONField(name = "项目名称")
     private String costItemName;
 
-    @ApiModelProperty(notes = "项目编码[费用]")
+    @ApiModelProperty(notes = "项目编码[费用],参考05中的‘目录编码’，另增加‘10’挂号费")
     @JSONField(name = "项目编码")
     private String costItemCode;
 
@@ -173,14 +163,4 @@ public class OutpatientFeeDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "机构名称")
     @JSONField(name = "机构名称")
     private String organizationName;
-
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("业务ID", this.getBusinessId());
-        inputJson.put("门诊号", this.getOutpatientNumber());
-        return inputJson.toJSONString();
-    }
 }

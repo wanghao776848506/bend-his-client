@@ -35,12 +35,6 @@ public class CommonPojo<T> implements Serializable {
     private String inputParameter;
 
     /**
-     * 验证码/产品验证码
-     */
-    @ApiModelProperty(notes = "验证码,HIS接口必传")
-    private String authCode;
-
-    /**
      * 请求业务参数对象
      */
     @ApiModelProperty(notes = "业务参数对象")

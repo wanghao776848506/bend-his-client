@@ -1,68 +1,37 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 机构信息:获取HIS系统中医疗机构的详细信息<br/>
  * 包含：乡镇卫生院和社区服务中心
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "HospitalOrganizationDto - 医院机构信息",description = "医院机构信息")
-public class HospitalOrganizationDto extends AbstractBaseEntity {
-    /*request params*/
-    @ApiModelProperty(notes = "医院名称")
-    @JSONField(name = "医院名称")
-    private String hospitalName;
+@Getter
+@Setter
+@ApiModel(value = "HospitalOrganizationDto - 机构信息", description = "机构信息")
+public class HospitalOrganizationDto {
+    /*response data*/
+    @ApiModelProperty(notes = "机构编码/机构ID")
+    @JSONField(name = "机构ID")
+    private String organizationCode;
 
     @ApiModelProperty(notes = "机构名称")
     @JSONField(name = "机构名称")
-    private String organizationName;
+    private String orgName;
 
-    /*response data*/
-    @ApiModelProperty(notes = "医院ID")
-    @JSONField(name = "ID")
-    private String hospitalId;
-
-    @ApiModelProperty(notes = "医院地址/地址")
-    @JSONField(name = "地址")
-    private String hospitalAddr;
+    @ApiModelProperty(notes = "机构地址/地址")
+    @JSONField(name = "机构地址")
+    private String orgAddr;
 
     @ApiModelProperty(notes = "联系电话")
     @JSONField(name = "联系电话")
     private String contactPhone;
 
-    @ApiModelProperty(notes = "邮政编码")
-    @JSONField(name = "邮政编码")
-    private String postalCode;
-
-    @ApiModelProperty(notes = "联系人")
-    @JSONField(name = "联系人")
-    private String contactPerson;
-
-    /*机构编码/机构ID 叫法不一样，数据其实一样*/
-    @ApiModelProperty(notes = "机构编码/机构ID[取接口30返回的ID]")
-    @JSONField(name = "机构ID")
-    private String organizationId;
-
-    @ApiModelProperty(notes = "机构地址")
-    @JSONField(name = "机构地址")
-    private String organizationAddr;
-
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("医院名称", this.getHospitalName());
-        inputJson.put("机构名称", this.getOrganizationName());
-        return inputJson.toJSONString();
-    }
+    @ApiModelProperty(notes = "机构等级名称")
+    @JSONField(name = "机构等级")
+    private String organizationTypeName;
 }
