@@ -4,27 +4,16 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.UserRoleBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "PublicAuthDto - 公卫登录认证数据", description = "公卫登录认证数据")
 public class PublicAuthDto {
-
-    @ApiModelProperty(notes = "账号名/用户名/职员姓名")
-    @JSONField(name = "UserName")
-    private String userName;
-
-    @ApiModelProperty(notes = "产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
     /*response data*/
     @ApiModelProperty(notes = "职员的PersonID/用户ID")
     @JSONField(name = "UserId")
@@ -52,6 +41,6 @@ public class PublicAuthDto {
 
     @ApiModelProperty(notes = "")
     @JSONField(name = "UserRoleList")
-    private List<UserRoleBO>  userRoleList;
+    private List<UserRoleBO> userRoleList;
 
 }

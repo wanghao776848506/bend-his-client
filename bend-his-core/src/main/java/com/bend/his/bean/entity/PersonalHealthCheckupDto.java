@@ -1,20 +1,16 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 56-1 查询个人健康体检记录列表
- *
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "PersonalHealthCheckupDto - 个人健康体检记录", description = "个人健康体检记录")
 public class PersonalHealthCheckupDto {
 
