@@ -4,15 +4,12 @@ import com.bend.his.bean.entity.*;
 import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
 import com.bend.his.common.PageResult;
-import com.bend.his.common.result.QueryResult;
 import com.bend.his.exception.HisException;
 
 import java.util.List;
 
 /**
- *
  * 公卫接口
- *
  */
 public interface PublicService {
 

@@ -21,7 +21,7 @@ public class InpatientRecordVo extends BaseEntity {
     @JSONField(name = "机构编码")
     private String organizationCode;
 
-    @ApiModelProperty(notes = "身份证号码/身份证ID")
+    @ApiModelProperty(notes = "身份证号码/身份证ID，姓名为空身份证不为空时通过身份证检索；身份证和姓名均为空时获取该机构下所有在院数据")
     @JSONField(name = "身份证ID")
     private String idCardNo;
 
@@ -29,7 +29,7 @@ public class InpatientRecordVo extends BaseEntity {
     @JSONField(name = "姓名")
     private String patientName;
 
-    @ApiModelProperty(notes = "是否医保登记[0否1是，当值为1时只取医保已经登记的]")
+    @ApiModelProperty(notes = "是否医保登记，0否1是，当值为1时只取医保已经登记的在院数据（泸州医保专用，其他情况可不传）")
     @JSONField(name = "是否医保登记")
     private Integer isInsurance;
 

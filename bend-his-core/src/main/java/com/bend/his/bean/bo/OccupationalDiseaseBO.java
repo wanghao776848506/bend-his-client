@@ -3,16 +3,11 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- *
- */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "OccupationalDiseaseBO - 生活方式的职业病危害因素接触史的毒物种类", description = "生活方式的职业病危害因素接触史的毒物种类")
 public class OccupationalDiseaseBO {
 

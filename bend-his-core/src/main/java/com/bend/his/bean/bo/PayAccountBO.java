@@ -3,9 +3,7 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * [ {  "AccName":"银联卡",
@@ -18,9 +16,8 @@ import lombok.NoArgsConstructor;
  * "SortNo":3
  * }]
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "PayAccountBO - 机构支付账户", description = "机构支付账户")
 public class PayAccountBO {
 

@@ -1,12 +1,10 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 56-8 老年人体检查询
@@ -44,11 +42,10 @@ import lombok.NoArgsConstructor;
  * "PERFECT": "是否完善 0:是 1:否 ",
  * "R__N": "行号"
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "OldHealthCheckupDto - 老年人体检查询", description = "老年人体检查询")
-public class OldHealthCheckupDto extends AbstractBaseEntity {
+public class OldHealthCheckupDto {
 
     @ApiModelProperty(notes = "验证码/产品验证码")
     @JSONField(name = "ProductCode")
@@ -174,23 +171,4 @@ public class OldHealthCheckupDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "当前行数")
     @JSONField(name = "R__N")
     private String rowNum;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
-        inputJson.put("RegionCode", this.getRegionCode());
-        inputJson.put("PageSize", this.getPageSize());
-        inputJson.put("PageIndex", this.getPageIndex());
-        inputJson.put("IsPerfect", this.getIsPerfect());
-        inputJson.put("FollowUpDateS", this.getFollowUpDateS());
-        inputJson.put("FollowUpDateE", this.getFollowUpDateE());
-        inputJson.put("NextFollowUpDateS", this.getNextFollowUpDateS());
-        inputJson.put("NextFollowUpDateE", this.getNextFollowUpDateE());
-        inputJson.put("DoctorID", this.getDoctorID());
-        inputJson.put("KeyValueType", this.getKeyValueType());
-        inputJson.put("KeyValue", this.getKeyValue());
-        inputJson.put("ManageRegionCodeList", this.getManageRegionCodeList());
-        return inputJson.toJSONString();
-    }
 }

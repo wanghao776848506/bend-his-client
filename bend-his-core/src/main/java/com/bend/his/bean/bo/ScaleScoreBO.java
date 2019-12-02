@@ -3,13 +3,10 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "ScaleScoreBO - 量表筛查得分", description = "量表筛查得分")
 public class ScaleScoreBO {
 

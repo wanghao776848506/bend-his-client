@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ApiModel(value = "RegistrationDto - 门诊挂号", description = "门诊挂号")
+@ApiModel(value = "RegistrationVo - 门诊挂号", description = "门诊挂号")
 public class RegistrationVo extends BaseEntity {
 
     @ApiModelProperty(notes = "病人姓名")

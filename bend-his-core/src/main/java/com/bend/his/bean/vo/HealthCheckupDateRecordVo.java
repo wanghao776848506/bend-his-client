@@ -24,14 +24,6 @@ public class HealthCheckupDateRecordVo extends BaseEntity {
     @JSONField(name = "PersonID")
     private String personId;
 
-    @ApiModelProperty(notes = "随访ID")
-    @JSONField(name = "MtID")
-    private String mtId;
-
-    @ApiModelProperty(notes = "体检时间")
-    @JSONField(name = "ExamDate")
-    private String examDate;
-
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();

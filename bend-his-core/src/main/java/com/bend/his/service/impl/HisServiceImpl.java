@@ -10,14 +10,11 @@ import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
 import com.bend.his.common.HISResult;
 import com.bend.his.common.ResponseFormat;
-import com.bend.his.common.request.QueryRequest;
-import com.bend.his.common.result.QueryResult;
 import com.bend.his.config.HISWSClient;
 import com.bend.his.constant.DirectoryTypeEnum;
 import com.bend.his.constant.IConstant;
 import com.bend.his.exception.HisException;
 import com.bend.his.service.HisService;
-import com.bend.his.wsdl.HISInterfaceResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,7 +39,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             return hisResult.getMsg();
         }
@@ -54,7 +51,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             //与接口文档有出入，此处接口返回[{}]
@@ -68,7 +65,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, ComprehensiveCatalogueDto.class);
@@ -92,7 +89,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             List<ComprehensiveCatalogueDto> catalogueDtoList = JSON.parseArray(queryResultMsg, ComprehensiveCatalogueDto.class);
@@ -132,7 +129,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalThreeCatalogueDto.class);
@@ -144,7 +141,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalThreeCatalogueDto.class);
@@ -156,7 +153,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, ICD10Dto.class);
@@ -168,7 +165,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, ICD10Dto.class);
@@ -181,7 +178,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, InpatientDto.class);
@@ -193,7 +190,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, OutpatientDto.class);
@@ -205,7 +202,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalizationMidwaySettlementDto.class);
@@ -217,7 +214,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalizationFeeDto.class);
@@ -229,7 +226,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, OutpatientFeeDto.class);
@@ -242,7 +239,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalInfoDto.class);
@@ -254,7 +251,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalOrganizationDto.class);
@@ -266,7 +263,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalPaymentDto.class);
@@ -278,7 +275,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
 
@@ -292,7 +289,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             List<RegistrationTemplateDto> registrationTemplateDtoList = JSON.parseArray(queryResultMsg, RegistrationTemplateDto.class);
@@ -310,7 +307,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             List<RegistrationTemplateDto> registrationTemplateDtoList = JSON.parseArray(queryResultMsg, RegistrationTemplateDto.class);
@@ -327,7 +324,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, HospitalDepartmentDto.class);
@@ -398,7 +395,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             List<HospitalDepartmentDto> hospitalDepartmentDtoList = JSON.parseArray(queryResultMsg, HospitalDepartmentDto.class);
@@ -415,7 +412,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, DoctorDto.class);
@@ -445,7 +442,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, RegistrationDto.class);
@@ -457,72 +454,48 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             return hisResult.getMsg();
         }
     }
 
     @Override
-    public QueryResult<List<RegistrationDto>> getHISRegistrationRecord(RegistrationDto registrationDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(registrationDto.getTradeCode());
-        queryRequest.setInputParameter(registrationDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<RegistrationRecordDto> getHISRegistrationRecord(CommonPojo<RegistrationRecordVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, RegistrationRecordDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<RegistrationDto> registrationDtoList = JSON.parseArray(queryResultMsg, RegistrationDto.class);
-            queryResult.setData(registrationDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<OutpatientExpensesBillDto>> getHISPrePayOutpatientExpensesBillList(OutpatientExpensesBillDto outpatientExpensesBillDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(outpatientExpensesBillDto.getTradeCode());
-        queryRequest.setInputParameter(outpatientExpensesBillDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<OutpatientExpensesBillDto> outpatientExpensesBillDtoList = JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
-            if (!CollectionUtils.isEmpty(outpatientExpensesBillDtoList)) {
-                for (OutpatientExpensesBillDto dto : outpatientExpensesBillDtoList) {
+    public List<OutpatientExpensesBillDto> getHISPrePayOutpatientExpensesBillList(CommonPojo<OutpatientExpensesBillVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            List<OutpatientExpensesBillDto> outpatientExpensesBillList = JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
+            if (!CollectionUtils.isEmpty(outpatientExpensesBillList)) {
+                for (OutpatientExpensesBillDto dto : outpatientExpensesBillList) {
                     String prescriptionDetail = dto.getPrescriptionDetail();
                     List<ExpensesBillBO> expensesBillBOList = JSON.parseArray(prescriptionDetail, ExpensesBillBO.class);
                     dto.setExpensesBillList(expensesBillBOList);
                 }
             }
-            queryResult.setData(outpatientExpensesBillDtoList);
+            return JSON.parseArray(queryResultMsg, OutpatientExpensesBillDto.class);
         }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<OutpatientPaymentDto> getHISOutpatientPayment(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
-        List<PayAccountBO> paymentList = outpatientPaymentDto.getPaymentList();
+    public OutpatientPaymentDto getHISOutpatientPayment(CommonPojo<OutpatientPaymentVo> commonPojo) throws HisException {
+        OutpatientPaymentVo outpatientPaymentVo = commonPojo.getData();
+        List<PayAccountBO> paymentList = outpatientPaymentVo.getPaymentList();
         String paymentListStr = "";
         StringBuilder sbs = new StringBuilder();
         sbs.append("[");
@@ -537,98 +510,52 @@ public class HisServiceImpl implements HisService {
         }
         sbs.append("]");
         paymentListStr = sbs.toString();
-        outpatientPaymentDto.setPaymentListStr(paymentListStr);
+        outpatientPaymentVo.setPaymentListStr(paymentListStr);
 
-        queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
-            queryResult.setData(outpatientPayment);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<OutpatientPaymentDto>> getHISOutpatientPaidList(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
-        queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<OutpatientPaidDto> getHISOutpatientPaidList(CommonPojo<OutpatientPaidVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, OutpatientPaidDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<OutpatientPaymentDto> outpatientPaymentDtoList = JSON.parseArray(queryResultMsg, OutpatientPaymentDto.class);
-            queryResult.setData(outpatientPaymentDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<ExpenseBillDto>> getHISOutpatientBillDetail(ExpenseBillDto expenseBillDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(expenseBillDto.getTradeCode());
-        queryRequest.setInputParameter(expenseBillDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<ExpenseBillDto> getHISOutpatientBillDetail(CommonPojo<ExpenseBillVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, ExpenseBillDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<ExpenseBillDto> expenseBillDtoList = JSON.parseArray(queryResultMsg, ExpenseBillDto.class);
-            queryResult.setData(expenseBillDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<OutpatientPaymentDto> getHISOutpatientRefund(OutpatientPaymentDto outpatientPaymentDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(outpatientPaymentDto.getTradeCode());
-        queryRequest.setInputParameter(outpatientPaymentDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public OutpatientRefundDto getHISOutpatientRefund(CommonPojo<OutpatientRefundVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseObject(queryResultMsg, OutpatientRefundDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            OutpatientPaymentDto outpatientPayment = JSON.parseObject(queryResultMsg, OutpatientPaymentDto.class);
-            queryResult.setData(outpatientPayment);
-        }
-        return queryResult;
     }
 
     @Override
@@ -636,7 +563,7 @@ public class HisServiceImpl implements HisService {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
-            throw new com.bend.his.common.HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
             return JSON.parseArray(queryResultMsg, InpatientRecordDto.class);
@@ -644,11 +571,9 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public QueryResult<PrepaymentDto> getHISInpatientPrepayment(PrepaymentDto prepaymentDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(prepaymentDto.getTradeCode());
-
-        List<PayAccountBO> paymentList = prepaymentDto.getPaymentList();
+    public PrepaymentDto getHISInpatientPrepayment(CommonPojo<PrepaymentVo> commonPojo) throws HisException {
+        PrepaymentVo prepaymentVo = commonPojo.getData();
+        List<PayAccountBO> paymentList = prepaymentVo.getPaymentList();
         String paymentListStr = "";
         StringBuilder sbs = new StringBuilder();
         sbs.append("[");
@@ -663,100 +588,56 @@ public class HisServiceImpl implements HisService {
         }
         sbs.append("]");
         paymentListStr = sbs.toString();
-        prepaymentDto.setPaymentListStr(paymentListStr);
+        prepaymentVo.setPaymentListStr(paymentListStr);
 
-        queryRequest.setInputParameter(prepaymentDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseObject(queryResultMsg, PrepaymentDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            PrepaymentDto prepayment = JSON.parseObject(queryResultMsg, PrepaymentDto.class);
-            queryResult.setData(prepayment);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<PrepaymentDto>> getHISInpatientPrepaymentRecordList(PrepaymentDto prepaymentDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(prepaymentDto.getTradeCode());
-        queryRequest.setInputParameter(prepaymentDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<PrepaymentRecordDto> getHISInpatientPrepaymentRecordList(CommonPojo<PrepaymentRecordVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, PrepaymentRecordDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<PrepaymentDto> prepaymentDtoList = JSON.parseArray(queryResultMsg, PrepaymentDto.class);
-            queryResult.setData(prepaymentDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<DailyBillDto>> getHISInpatientDailyBillList(DailyBillDto dailyBillDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(dailyBillDto.getTradeCode());
-        queryRequest.setInputParameter(dailyBillDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<DailyBillDto> getHISInpatientDailyBillList(CommonPojo<DailyBillVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, DailyBillDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<DailyBillDto> dailyBillDtoList = JSON.parseArray(queryResultMsg, DailyBillDto.class);
-            queryResult.setData(dailyBillDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<InspectionReportDto> getHISInspectionReportList(InspectionReportDto inspectionReportDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(inspectionReportDto.getTradeCode());
-        queryRequest.setInputParameter(inspectionReportDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
+    public InspectionReportDto getHISInspectionReportList(CommonPojo<InspectionReportVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
             InspectionReportDto inspectionReport = JSON.parseObject(queryResultMsg, InspectionReportDto.class);
             if (null != inspectionReport) {
-                String perInfo = inspectionReport.getPerInfo();
+                String perInfo = inspectionReport.getPerInfo();//患者信息、标本号 结论 结果等
                 InspectionReportBO inspectionReportBO = JSON.parseObject(perInfo, InspectionReportBO.class);
                 inspectionReport.setInspectionReportBO(inspectionReportBO);
-                //
+                //指标值  参考值等
                 String reportIdx = inspectionReport.getIdx();
                 InspectionReportItemBO inspectionReportItemBO = JSON.parseObject(reportIdx, InspectionReportItemBO.class);
                 if (null != inspectionReportItemBO) {
@@ -765,230 +646,31 @@ public class HisServiceImpl implements HisService {
                     inspectionReportBO.setInspectionReportItemList(inspectionReportItemList);
                 }
             }
-            queryResult.setData(inspectionReport);
+            return inspectionReport;
         }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<InspectionApplyFormDto>> getHISInspectionReportApplyForm(InspectionApplyFormDto inspectionApplyFormDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(inspectionApplyFormDto.getTradeCode());
-        queryRequest.setInputParameter(inspectionApplyFormDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<InspectionApplyFormDto> getHISInspectionReportApplyForm(CommonPojo<InspectionApplyFormVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, InspectionApplyFormDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<InspectionApplyFormDto> inspectionApplyFormDtoList = JSON.parseArray(queryResultMsg, InspectionApplyFormDto.class);
-            queryResult.setData(inspectionApplyFormDtoList);
-        }
-        return queryResult;
     }
 
     @Override
-    public QueryResult<List<DoctorScheduleDto>> getHISDoctorScheduleList(DoctorScheduleDto doctorScheduleDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(doctorScheduleDto.getTradeCode());
-        queryRequest.setInputParameter(doctorScheduleDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
+    public List<DoctorScheduleDto> getHISDoctorScheduleList(CommonPojo<DoctorScheduleVo> commonPojo) throws HisException {
+        HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
+        /*ws服务请求成功验证*/
+        if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
+            throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
+        } else {
+            String queryResultMsg = hisResult.getMsg();
+            return JSON.parseArray(queryResultMsg, DoctorScheduleDto.class);
         }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<DoctorScheduleDto> doctorScheduleDtoList = JSON.parseArray(queryResultMsg, DoctorScheduleDto.class);
-            queryResult.setData(doctorScheduleDtoList);
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<List<MedicalOrderDto>> getHISMedicalOrderList(MedicalOrderDto medicalOrderDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(medicalOrderDto.getTradeCode());
-        queryRequest.setInputParameter(medicalOrderDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<MedicalOrderDto> medicalOrderDtoList = JSON.parseArray(queryResultMsg, MedicalOrderDto.class);
-            queryResult.setData(medicalOrderDtoList);
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> deleteSettlementFeeByBusinessId(CommonDto commonDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(commonDto.getTradeCode());
-        queryRequest.setInputParameter(commonDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("删除成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> savePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
-        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("保存成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> deletePersonalMedicalInsurance(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
-        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("删除成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> saveExpenseSettlementToHis(ExpenseSettlementDto expenseSettlementDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(expenseSettlementDto.getTradeCode());
-        queryRequest.setInputParameter(expenseSettlementDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("回写至基层系统成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> saveThreeCataloguePairCodeToHis(ThreeCataloguePairCodeDto threeCataloguePairCodeDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(threeCataloguePairCodeDto.getTradeCode());
-        queryRequest.setInputParameter(threeCataloguePairCodeDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<String> saveMedicalInsuranceToHis(MedicalInsuranceDto medicalInsuranceDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(medicalInsuranceDto.getTradeCode());
-        queryRequest.setInputParameter(medicalInsuranceDto.createJSONObject());
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            queryResult.setMsg("信息回写成功!");//返回的msg文本比较长
-        }
-        return queryResult;
-    }
-
-    @Override
-    public QueryResult<List<PacsItemDto>> getPacsItemList(PacsItemDto pacsItemDto) throws HisException {
-        QueryRequest queryRequest = QueryRequest.newBuilder().build();
-        queryRequest.setTradeCode(pacsItemDto.getTradeCode());
-        queryRequest.setInputParameter(pacsItemDto.createJSONObject());
-
-        logger.debug("接口交易参数:{}", queryRequest.getInputParameter());
-        HISInterfaceResponse hisInterfaceResponse = null;
-        try {
-            hisInterfaceResponse = hiswsClient.invokeWebService(queryRequest);
-        } catch (HisException e) {
-            throw new HisException("Request failed or timeout.");
-        }
-        String hisInterfaceResult = hisInterfaceResponse.getHISInterfaceResult();
-        QueryResult queryResult = JSON.parseObject(hisInterfaceResult, QueryResult.class);
-        logger.debug("接口响应数据:{}", hisInterfaceResult);
-        if (IConstant.RESULT_SUCCESS_CODE.equals(queryResult.getResult())) {
-            String queryResultMsg = queryResult.getMsg();
-            List<PacsItemDto> pacsItemDtoList = JSON.parseArray(queryResultMsg, PacsItemDto.class);
-            queryResult.setData(pacsItemDtoList);
-        }
-        return queryResult;
     }
 }

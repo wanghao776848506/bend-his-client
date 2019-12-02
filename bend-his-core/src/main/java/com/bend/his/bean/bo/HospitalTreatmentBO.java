@@ -4,14 +4,12 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "HospitalTreatmentBO - 体检住院治疗情况",description = "体检住院治疗情况")
+@Getter
+@Setter
+@ApiModel(value = "HospitalTreatmentBO - 体检住院治疗情况", description = "体检住院治疗情况")
 public class HospitalTreatmentBO {
 
     @ApiModelProperty(notes = "ID")

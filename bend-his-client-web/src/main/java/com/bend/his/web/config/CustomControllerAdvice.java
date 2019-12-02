@@ -1,8 +1,8 @@
 package com.bend.his.web.config;
 
 import com.bend.his.common.GenericResponse;
-import com.bend.his.common.HisException;
 import com.bend.his.common.ResponseFormat;
+import com.bend.his.exception.HisException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;

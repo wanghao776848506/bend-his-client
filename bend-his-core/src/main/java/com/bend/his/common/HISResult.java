@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 获取hisInterfaceResult属性的值<br/>
  */
 @Data
-@ApiModel(value = "HISResult - 接口响应基础数据", description = "BaseResult")
+@ApiModel(value = "HISResult - 接口响应基础数据", description = "接口响应基础数据")
 public class HISResult implements Serializable {
 
     /**

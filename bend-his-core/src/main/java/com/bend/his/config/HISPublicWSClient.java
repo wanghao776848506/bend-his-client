@@ -3,7 +3,7 @@ package com.bend.his.config;
 
 import com.alibaba.fastjson.JSON;
 import com.bend.his.common.*;
-import com.bend.his.common.request.QueryRequest;
+import com.bend.his.exception.HisException;
 import com.bend.his.wsdl.HISInterface;
 import com.bend.his.wsdl.HISInterfaceResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -30,13 +30,5 @@ public class HISPublicWSClient extends WebServiceGatewaySupport {
         } else {
             throw new HisException(ResponseFormat.CODE_60001);
         }
-    }
-
-    public HISInterfaceResponse invokeWebService(QueryRequest queryRequest) throws HisException {
-        HISInterface req = new HISInterface();
-        req.setTradeCode(queryRequest.getTradeCode());
-        req.setInputParameter(queryRequest.getInputParameter());
-        //使用 marshalSendAndReceive 进行调用
-        return (HISInterfaceResponse) getWebServiceTemplate().marshalSendAndReceive(req);
     }
 }

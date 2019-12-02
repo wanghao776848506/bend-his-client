@@ -3,21 +3,17 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 /**
  * 门诊费用明细查询
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "OutpatientFeeDto - 门诊费用明细", description = "门诊费用明细")
-public class OutpatientFeeDto extends AbstractBaseEntity {
-
+public class OutpatientFeeDto {
 
     /*response data*/
     @ApiModelProperty(notes = "门诊号")

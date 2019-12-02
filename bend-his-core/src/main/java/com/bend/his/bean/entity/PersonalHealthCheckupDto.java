@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "PersonalHealthCheckupDto - 个人健康体检记录", description = "个人健康体检记录")
 public class PersonalHealthCheckupDto {
 
-
-
     /*response data*/
     @ApiModelProperty(notes = "个人ID")
     @JSONField(name = "PERSONID")

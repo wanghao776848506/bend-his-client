@@ -1,30 +1,18 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @ApiModel(value = "ResidentHealthFileDto - 居民个人健康体检记录", description = "居民个人健康体检记录")
-public class ResidentHealthFileDto extends AbstractBaseEntity {
-    /*request params*/
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
-    @ApiModelProperty(notes = "随访ID")
-    @JSONField(name = "MtID")
-    private String mtId;
-
+public class ResidentHealthFileDto {
     /*response data*/
     @ApiModelProperty(notes = "非免疫规划预防接种史")
     @JSONField(name = "vaccList")
@@ -89,12 +77,4 @@ public class ResidentHealthFileDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "扩展信息3")
     @JSONField(name = "ans3")
     private Object ans3;
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
-        inputJson.put("MtID", this.getMtId());
-        return inputJson.toJSONString();
-    }
 }

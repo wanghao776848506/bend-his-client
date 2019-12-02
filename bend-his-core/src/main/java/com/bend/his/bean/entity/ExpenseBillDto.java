@@ -1,30 +1,20 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 /**
  * 费用账单/清单
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "ExpenseBillDto - 费用清单/账单 ",description = "费用清单/账单")
-public class ExpenseBillDto extends AbstractBaseEntity {
-
-    @ApiModelProperty(notes = "收费记录ID")
-    @JSONField(name = "收费记录ID")
-    private String chargeRecordId;
-
-
-    /*response data*/
+@Getter
+@Setter
+@ApiModel(value = "ExpenseBillDto - 费用清单/账单 ", description = "费用清单/账单")
+public class ExpenseBillDto {
     @ApiModelProperty(notes = "清单ID")
     @JSONField(name = "ID")
     private String id;
@@ -76,13 +66,4 @@ public class ExpenseBillDto extends AbstractBaseEntity {
     @ApiModelProperty(notes = "开单时间/OperDate")
     @JSONField(name = "OperDate")
     private String billTime;
-
-
-    @Override
-    public String createJSONObject() {
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("收费记录ID", this.getChargeRecordId());
-        return inputJson.toJSONString();
-    }
 }

@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-@ApiModel(value = "HospitalizationSettlementDto - 中途结算记录查询", description = "中途结算记录查询")
+@ApiModel(value = "HospitalizationMidwaySettlementDto - 中途结算记录查询", description = "中途结算记录查询")
 public class HospitalizationMidwaySettlementDto {
     /*response data*/
     @ApiModelProperty(notes = "姓名/病人姓名")

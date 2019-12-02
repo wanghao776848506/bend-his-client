@@ -6,6 +6,7 @@ import com.bend.his.bean.vo.*;
 import com.bend.his.common.*;
 import com.bend.his.config.HISPublicWSClient;
 import com.bend.his.constant.IConstant;
+import com.bend.his.exception.HisException;
 import com.bend.his.service.PublicService;
 import org.springframework.stereotype.Service;
 

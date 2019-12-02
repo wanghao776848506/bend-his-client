@@ -1,8 +1,10 @@
-package com.bend.his.bean.entity;
+package com.bend.his.bean.vo;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.InspectionReportBO;
+import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -13,22 +15,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@ApiModel(value = "InspectionReportDto - 检查检验报告/结果", description = "检查检验报告/结果")
-public class InspectionReportDto {
+@ApiModel(value = "InspectionReportVo - 检查检验报告/结果", description = "检查检验报告/结果")
+public class InspectionReportVo extends BaseEntity {
 
     /*request data*/
     @ApiModelProperty(notes = "申请ID/申请单ID[30-15接口获取]")
     @JSONField(name = "申请单ID")
     private String applyId;
-
-    @ApiModelProperty(notes = "收费人员ID/操作员ID")
-    @JSONField(name = "操作员ID")
-    private String userId;
-
-    @ApiModelProperty(notes = "虚拟收费人员ID/虚拟操作人员ID")
-    @JSONField(name = "虚拟操作人员ID")
-    private String vmUserId;
-    /*response data*/
 
     @ApiModelProperty(notes = "患者信息、标本号、结论、结果等", hidden = true)
     @JSONField(name = "perInfo")
@@ -40,5 +33,15 @@ public class InspectionReportDto {
 
     @ApiModelProperty(notes = "检查检验报告")
     private InspectionReportBO inspectionReportBO;
+
+
+    @Override
+    public String getInputParameter() {
+        JSONObject inputJson = new JSONObject();
+        inputJson.put("验证码", this.getAuthCode());
+        inputJson.put("申请单ID", this.getApplyId());
+        return inputJson.toJSONString();
+    }
+
 
 }

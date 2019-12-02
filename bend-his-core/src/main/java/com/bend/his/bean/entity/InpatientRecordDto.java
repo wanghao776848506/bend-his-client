@@ -24,7 +24,7 @@ public class InpatientRecordDto {
     @JSONField(name = "住院号")
     private String hospitalizationNo;
 
-    @ApiModelProperty(notes = "病人姓名")
+    @ApiModelProperty(notes = "病人姓名，不为空时优先通过姓名检索在院数据")
     @JSONField(name = "姓名")
     private String patientName;
 
@@ -48,10 +48,7 @@ public class InpatientRecordDto {
     @JSONField(name = "总费用")
     private BigDecimal totalFee;
 
-    /**
-     * 住院ID与业务ID 不同场景下参数，功能一致
-     */
-    @ApiModelProperty(notes = "住院ID/业务ID,不同场景下参数，功能一致", hidden = true)
+    @ApiModelProperty(notes = "住院ID/业务ID,不同场景下参数，功能一致")
     @JSONField(name = "住院ID")
     private String hospitalizationId;
 
