@@ -15,7 +15,7 @@ import java.io.Serializable;
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(notes = "验证码/授权码")
+    @ApiModelProperty(notes = "验证码/授权码/产品验证码")
     @JSONField(name = "验证码")
     protected String authCode;
 

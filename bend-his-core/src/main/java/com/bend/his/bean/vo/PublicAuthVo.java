@@ -5,7 +5,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
@@ -22,16 +23,11 @@ public class PublicAuthVo extends BaseEntity {
     @JSONField(name = "Password")
     private String password;
 
-    @ApiModelProperty(notes = "产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
-    @ApiModelProperty(hidden = true)
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("UserName", this.getUserName());
-        inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("ProductCode", this.getAuthCode());
         inputJson.put("Password", this.getPassword());
         return inputJson.toJSONString();
     }

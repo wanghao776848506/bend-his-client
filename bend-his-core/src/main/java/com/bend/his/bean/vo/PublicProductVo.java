@@ -2,7 +2,6 @@ package com.bend.his.bean.vo;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "PublicProductVo - 公卫产品注册信息", description = "公卫产品注册信息")
-public class PublicProductVo extends BaseEntity {
+public class PublicProductVo {
 
 
     @ApiModelProperty(notes = "账号名/用户名/职员姓名 -- 是基卫系统登录用户姓名")
@@ -42,7 +41,6 @@ public class PublicProductVo extends BaseEntity {
     private String extInfo;
 
 
-    @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("CompanyCode", this.getCompanyCode());

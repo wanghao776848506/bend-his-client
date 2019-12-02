@@ -16,10 +16,6 @@ import lombok.Setter;
 @ApiModel(value = "HealthCheckupDateRecordVo - 个人健康体检记录日期列表", description = "个人健康体检记录日期列表")
 public class HealthCheckupDateRecordVo extends BaseEntity {
 
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
     @ApiModelProperty(notes = "居民ID")
     @JSONField(name = "PersonID")
     private String personId;
@@ -27,7 +23,7 @@ public class HealthCheckupDateRecordVo extends BaseEntity {
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("ProductCode", this.getAuthCode());
         inputJson.put("PersonID", this.getPersonId());
         return inputJson.toJSONString();
     }

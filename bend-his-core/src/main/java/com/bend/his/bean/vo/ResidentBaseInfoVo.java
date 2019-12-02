@@ -5,17 +5,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Getter
 @Setter
 @ApiModel(value = "ResidentBaseInfoVo - 居民健康档案", description = "居民健康档案")
 public class ResidentBaseInfoVo extends BaseEntity {
-    /*request params*/
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
 
     @ApiModelProperty(notes = "居民姓名")
     @JSONField(name = "NAME")
@@ -57,7 +54,7 @@ public class ResidentBaseInfoVo extends BaseEntity {
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("ProductCode", this.getAuthCode());
         inputJson.put("RegionCode", this.getRegionCode());
         inputJson.put("NAME", this.getName());
         inputJson.put("Status", this.getStatus());

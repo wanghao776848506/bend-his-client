@@ -5,7 +5,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 56-1 查询个人健康体检记录列表
@@ -14,10 +15,6 @@ import lombok.*;
 @Setter
 @ApiModel(value = "PersonalHealthCheckupVo - 个人健康体检记录", description = "个人健康体检记录")
 public class PersonalHealthCheckupVo extends BaseEntity {
-
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
 
     @ApiModelProperty(notes = "机构ID/机构编码")
     @JSONField(name = "orgId")
@@ -39,7 +36,7 @@ public class PersonalHealthCheckupVo extends BaseEntity {
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("ProductCode", this.getAuthCode());
         inputJson.put("PersonID", this.getPersonId());
         inputJson.put("orgId", this.getOrganizationCode());
         inputJson.put("PageSize", this.getPageSize());

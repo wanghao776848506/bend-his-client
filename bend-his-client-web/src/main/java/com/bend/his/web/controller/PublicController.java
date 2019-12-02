@@ -36,7 +36,7 @@ public class PublicController {
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_01),
             @ApiImplicitParam(name = "userName", value = "账号名/用户名"),
             @ApiImplicitParam(name = "password", value = "密码"),
-            @ApiImplicitParam(name = "productCode", value = "产品验证码")
+            @ApiImplicitParam(name = "authCode", value = "产品验证码")
     })
     @PostMapping("public/auth")
     public GenericResponse getHISPublicAuth(@RequestBody CommonPojo<PublicAuthVo> commonPojo) throws HisException {
@@ -82,7 +82,7 @@ public class PublicController {
     @ApiOperation(value = "55-11 查询居民健康档案基本信息(综合查询)", position = 3, notes = "查询居民健康档案基本信息(综合查询)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_55_11),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "authCode", value = "验证码/产品验证码"),
             @ApiImplicitParam(name = "idCardNo", value = "居民身份证"),
             @ApiImplicitParam(name = "name", value = "居民姓名"),
             @ApiImplicitParam(name = "regionCode", value = "区划编码"),
@@ -115,7 +115,7 @@ public class PublicController {
     @ApiOperation(value = "56-1 查询个人健康体检记录列表(接口55-11返回居民ID)", position = 4, notes = "查询个人健康体检记录列表(接口55-11返回居民ID)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_1),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "authCode", value = "验证码/产品验证码"),
             @ApiImplicitParam(name = "personId", value = "居民ID"),
             @ApiImplicitParam(name = "organizationCode", value = "机构ID/编码"),
             @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)"),
@@ -145,7 +145,7 @@ public class PublicController {
     @ApiOperation(value = "56-4 查询个人健康体检记录(随访ID) ", position = 5, notes = "查询个人健康体检记录(接口56-1返回随访ID-mtId)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_4),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "authCode", value = "验证码/产品验证码"),
             @ApiImplicitParam(name = "mtId", value = "随访ID")
     })
     @PostMapping("public/personal/health/file")
@@ -171,7 +171,7 @@ public class PublicController {
     @ApiOperation(value = "56-6 查询个人健康体检记录日期列表(通过接口55-11返回居民ID) ", position = 6, notes = "查询个人健康体检记录日期列表(通过接口55-11返回居民ID)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_6),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "authCode", value = "验证码/产品验证码"),
             @ApiImplicitParam(name = "personId", value = "居民ID"),
     })
     @PostMapping("public/personal/health/date/record")
@@ -196,7 +196,7 @@ public class PublicController {
     @ApiOperation(value = "56-8 老年人体检查询", position = 7, notes = "老年人体检查询(65岁以上)")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_56_8),
-            @ApiImplicitParam(name = "productCode", value = "验证码/产品验证码"),
+            @ApiImplicitParam(name = "authCode", value = "验证码/产品验证码"),
             @ApiImplicitParam(name = "pageIndex", value = "分页索引(0~)(必填)"),
             @ApiImplicitParam(name = "pageSize", value = "分页大小(1~100)(必填)"),
             @ApiImplicitParam(name = "regionCode", value = "区划编码(必填)"),

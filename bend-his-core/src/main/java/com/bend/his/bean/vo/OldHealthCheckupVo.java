@@ -49,10 +49,6 @@ import lombok.Setter;
 @ApiModel(value = "OldHealthCheckupVo - 老年人体检查询", description = "老年人体检查询")
 public class OldHealthCheckupVo extends BaseEntity {
 
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
     @ApiModelProperty(notes = "分页大小(1~100)(必填)")
     @JSONField(name = "PageSize")
     private String pageSize;
@@ -104,7 +100,7 @@ public class OldHealthCheckupVo extends BaseEntity {
     @Override
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
-        inputJson.put("ProductCode", this.getProductCode());
+        inputJson.put("ProductCode", this.getAuthCode());
         inputJson.put("RegionCode", this.getRegionCode());
         inputJson.put("PageSize", this.getPageSize());
         inputJson.put("PageIndex", this.getPageIndex());
