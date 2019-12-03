@@ -3,16 +3,14 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 公卫产品注册信息
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "PublicProductDto - 公卫产品注册信息", description = "公卫产品注册信息")
-public class PublicProductDto {
+public class PublicProductDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "产品验证码 - 终端产品授权码")
     @JSONField(name = "ProductCode")

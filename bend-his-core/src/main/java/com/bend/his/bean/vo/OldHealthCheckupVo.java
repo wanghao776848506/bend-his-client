@@ -5,8 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 56-8 老年人体检查询
@@ -44,8 +43,7 @@ import lombok.Setter;
  * "PERFECT": "是否完善 0:是 1:否 ",
  * "R__N": "行号"
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OldHealthCheckupVo - 老年人体检查询", description = "老年人体检查询")
 public class OldHealthCheckupVo extends BaseEntity {
 

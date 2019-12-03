@@ -4,14 +4,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 公卫产品注册信息
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "PublicProductVo - 公卫产品注册信息", description = "公卫产品注册信息")
 public class PublicProductVo {
 

@@ -7,14 +7,12 @@ import com.bend.his.bean.bo.InspectionReportBO;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 检查检验报告/结果
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "InspectionReportVo - 检查检验报告/结果", description = "检查检验报告/结果")
 public class InspectionReportVo extends BaseEntity {
 

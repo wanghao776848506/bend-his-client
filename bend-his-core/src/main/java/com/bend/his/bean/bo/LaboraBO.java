@@ -3,11 +3,9 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "LaboraBO - 辅助检查", description = "辅助检查")
 public class LaboraBO {
 

@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 门诊退费
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientRefundVo - 门诊退费 ", description = "门诊退费")
 public class OutpatientRefundVo extends BaseEntity {
 

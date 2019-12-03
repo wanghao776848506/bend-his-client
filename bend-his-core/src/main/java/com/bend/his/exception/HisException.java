@@ -1,13 +1,11 @@
 package com.bend.his.exception;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Spring 对于 RuntimeException 异常才会进行事务回滚。
  */
-@Getter
-@Setter
+@Data
 public class HisException extends RuntimeException {
 
     public HisException(Integer code) {

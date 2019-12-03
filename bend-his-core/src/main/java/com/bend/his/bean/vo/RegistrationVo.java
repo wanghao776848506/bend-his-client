@@ -6,16 +6,14 @@ import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * 门诊挂号
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "RegistrationVo - 门诊挂号", description = "门诊挂号")
 public class RegistrationVo extends BaseEntity {
 

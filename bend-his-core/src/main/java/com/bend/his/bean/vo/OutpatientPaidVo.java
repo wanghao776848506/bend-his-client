@@ -6,14 +6,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 门诊已缴费列表
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientPaidVo - 门诊已缴费列表 ", description = "门诊已缴费列表")
 public class OutpatientPaidVo extends BaseEntity {
     /*门诊ID在其他接口里面也就是业务ID*/

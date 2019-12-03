@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 个人健康体检记录日期列表
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "HealthCheckupDateRecordVo - 个人健康体检记录日期列表", description = "个人健康体检记录日期列表")
 public class HealthCheckupDateRecordVo extends BaseEntity {
 

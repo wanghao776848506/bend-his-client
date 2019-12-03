@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "VitalSignBO - 体征", description = "体征")
 public class VitalSignBO {
 

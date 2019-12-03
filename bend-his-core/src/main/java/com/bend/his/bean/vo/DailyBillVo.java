@@ -6,14 +6,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 每日账单/清单
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "DailyBillVo - 每日清单(住院)", description = "每日清单(住院)")
 public class DailyBillVo extends BaseEntity {
 

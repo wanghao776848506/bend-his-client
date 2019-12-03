@@ -7,16 +7,14 @@ import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * 门诊缴费
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientPaymentVo - 门诊缴费 ", description = "门诊缴费")
 public class OutpatientPaymentVo extends BaseEntity {
     /*--------request params--------*/

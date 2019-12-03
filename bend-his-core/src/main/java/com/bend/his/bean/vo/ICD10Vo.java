@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  *
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ICD10Vo - ICD10标准病种", description = "ICD10")
 public class ICD10Vo extends BaseEntity {
     @ApiModelProperty(notes = "病种名称")

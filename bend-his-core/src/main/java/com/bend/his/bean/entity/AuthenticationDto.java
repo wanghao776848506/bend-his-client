@@ -3,8 +3,7 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
@@ -22,16 +21,16 @@ import java.util.List;
  * }
  * ]
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "AuthenticationDto - 登录认证数据", description = "登录认证数据")
-public class AuthenticationDto {
+public class AuthenticationDto extends AbstractBaseEntity{
 
+
+    /*response data*/
     @ApiModelProperty(notes = "验证码/授权码")
     @JSONField(name = "验证码")
     protected String authCode;
 
-    /*response data*/
     @ApiModelProperty(notes = "机构编码[取接口30返回的ID]")
     @JSONField(name = "机构编码")
     private String organizationCode;

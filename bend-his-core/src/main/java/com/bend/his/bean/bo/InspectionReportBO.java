@@ -3,13 +3,11 @@ package com.bend.his.bean.bo;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "InspectionReportBO - 检查检验报告", description = "检查检验报告")
 public class InspectionReportBO {
 

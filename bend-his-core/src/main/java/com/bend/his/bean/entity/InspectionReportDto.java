@@ -5,16 +5,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.InspectionReportBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 检查检验报告/结果
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "InspectionReportDto - 检查检验报告/结果", description = "检查检验报告/结果")
-public class InspectionReportDto {
+public class InspectionReportDto extends AbstractBaseEntity {
 
     /*request data*/
     @ApiModelProperty(notes = "申请ID/申请单ID[30-15接口获取]")

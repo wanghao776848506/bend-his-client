@@ -6,16 +6,14 @@ import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * 住院预交费
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "PrepaymentVo - 住院预交费", description = "住院预交费")
 public class PrepaymentVo extends BaseEntity {
 

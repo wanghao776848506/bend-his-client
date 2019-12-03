@@ -3,8 +3,7 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,10 +11,9 @@ import java.util.Date;
 /**
  * 住院预交费
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "PrepaymentDto - 住院预交费", description = "住院预交费")
-public class PrepaymentDto {
+public class PrepaymentDto extends AbstractBaseEntity {
 
     /*response data*/
     @ApiModelProperty(notes = "ID/住院预交费ID")

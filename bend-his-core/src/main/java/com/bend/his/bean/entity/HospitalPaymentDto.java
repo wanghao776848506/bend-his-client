@@ -1,21 +1,19 @@
 package com.bend.his.bean.entity;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.PayAccountBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * 医院机构支付方式
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "HospitalPaymentDto - 医院机构支付方式", description = "医院机构支付方式")
-public class HospitalPaymentDto {
+public class HospitalPaymentDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "支付方式ID")
     @JSONField(name = "PaymentID")

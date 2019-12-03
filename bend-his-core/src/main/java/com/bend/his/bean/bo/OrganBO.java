@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OrganBO - 脏器功能", description = "脏器功能")
 public class OrganBO {
 

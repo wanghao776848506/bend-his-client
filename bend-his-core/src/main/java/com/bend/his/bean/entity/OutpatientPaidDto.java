@@ -5,18 +5,16 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.PayAccountBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * 门诊缴费
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientPaidDto - 门诊已缴费列表 ", description = "门诊已缴费列表")
-public class OutpatientPaidDto {
+public class OutpatientPaidDto extends AbstractBaseEntity {
     /*返回值：key不一致的情况*/
     @ApiModelProperty(notes = "记录ID/收费记录ID")
     @JSONField(name = "记录ID")

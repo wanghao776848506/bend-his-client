@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ScaleScoreBO - 量表筛查得分", description = "量表筛查得分")
 public class ScaleScoreBO {
 

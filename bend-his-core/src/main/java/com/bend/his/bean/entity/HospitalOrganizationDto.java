@@ -3,17 +3,15 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 机构信息:获取HIS系统中医疗机构的详细信息<br/>
  * 包含：乡镇卫生院和社区服务中心
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "HospitalOrganizationDto - 机构信息", description = "机构信息")
-public class HospitalOrganizationDto {
+public class HospitalOrganizationDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "机构编码/机构ID")
     @JSONField(name = "机构ID")

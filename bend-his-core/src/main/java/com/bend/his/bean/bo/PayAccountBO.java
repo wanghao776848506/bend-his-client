@@ -16,8 +16,7 @@ import lombok.*;
  * "SortNo":3
  * }]
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "PayAccountBO - 机构支付账户", description = "机构支付账户")
 public class PayAccountBO {
 

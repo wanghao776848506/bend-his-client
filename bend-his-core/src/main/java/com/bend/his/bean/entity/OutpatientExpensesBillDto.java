@@ -4,8 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.ExpensesBillBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,10 +12,9 @@ import java.util.List;
 /**
  * 门诊费用清单查询
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientExpensesBillDto - 门诊费用清单", description = "门诊费用清单")
-public class OutpatientExpensesBillDto {
+public class OutpatientExpensesBillDto extends AbstractBaseEntity {
 
     /*response data*/
     @ApiModelProperty(notes = "处方号/CFCODE")

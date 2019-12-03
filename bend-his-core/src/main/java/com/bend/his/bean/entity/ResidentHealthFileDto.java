@@ -4,15 +4,13 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.bo.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ResidentHealthFileDto - 居民个人健康体检记录", description = "居民个人健康体检记录")
-public class ResidentHealthFileDto {
+public class ResidentHealthFileDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "非免疫规划预防接种史")
     @JSONField(name = "vaccList")

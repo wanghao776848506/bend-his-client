@@ -14,8 +14,7 @@ import java.util.Objects;
  *
  * @since 2018/4/1
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GenericResponse implements Serializable {

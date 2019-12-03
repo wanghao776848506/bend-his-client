@@ -4,18 +4,17 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
  * 每日账单/清单
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "DailyBillDto - 每日清单(住院)", description = "每日清单(住院)")
-public class DailyBillDto {
+public class DailyBillDto extends AbstractBaseEntity {
 
 
     @ApiModelProperty(notes = "每日清单ID")

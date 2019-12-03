@@ -5,8 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 用户登录信息:
@@ -22,8 +21,7 @@ import lombok.Setter;
  * }
  * ]
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "AuthenticationVo - 登录认证数据", description = "登录认证数据")
 public class AuthenticationVo extends BaseEntity {
 

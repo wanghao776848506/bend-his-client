@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 医院综合目录查询(科室、医生、病区、床位)
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ComprehensiveCatalogueVo - 医院综合目录", description = "医院综合目录查询")
 public class ComprehensiveCatalogueVo extends BaseEntity {
 

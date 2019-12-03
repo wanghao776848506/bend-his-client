@@ -10,10 +10,9 @@ import java.math.BigDecimal;
 /**
  * 门诊费用明细查询
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "OutpatientFeeDto - 门诊费用明细", description = "门诊费用明细")
-public class OutpatientFeeDto {
+public class OutpatientFeeDto extends AbstractBaseEntity {
 
     /*response data*/
     @ApiModelProperty(notes = "门诊号")

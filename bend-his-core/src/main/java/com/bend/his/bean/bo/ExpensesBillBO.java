@@ -7,8 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ExpensesBillBO - 门诊费用清单详情", description = "清单明细/QdList/该处方的清单明细[列表]")
 public class ExpensesBillBO {
 

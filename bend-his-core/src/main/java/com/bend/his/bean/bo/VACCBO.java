@@ -5,8 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @ApiModel(value = "VACCBO - 非免疫规划预防接种史",description = "非免疫规划预防接种史")
 public class VACCBO {
     /**

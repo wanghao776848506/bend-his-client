@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 取消挂号
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "RegistrationCancelVo - 取消挂号", description = "取消挂号")
 public class RegistrationCancelVo extends BaseEntity {
 

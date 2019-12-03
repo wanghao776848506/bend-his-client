@@ -3,8 +3,7 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /* 返回值
 
@@ -13,10 +12,9 @@ import lombok.Setter;
 "ORGID": "机构ID",
 "ORGNAME": "机构名称",
 */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ResidentBaseInfoDto - 居民健康档案", description = "居民健康档案")
-public class ResidentBaseInfoDto {
+public class ResidentBaseInfoDto extends AbstractBaseEntity {
     /*response data*/
     @ApiModelProperty(notes = "居民ID -> 接口返回值")
     @JSONField(name = "ID")

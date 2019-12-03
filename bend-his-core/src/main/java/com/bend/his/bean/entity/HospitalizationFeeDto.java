@@ -4,18 +4,16 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
  * 住院费用明细
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "HospitalizationFeeDto - 住院费用明细", description = "住院费用明细")
-public class HospitalizationFeeDto {
+public class HospitalizationFeeDto extends AbstractBaseEntity{
 
     /*response data*/
     @ApiModelProperty(notes = "住院号")

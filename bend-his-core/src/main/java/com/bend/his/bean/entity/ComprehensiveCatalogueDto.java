@@ -3,16 +3,14 @@ package com.bend.his.bean.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 医院综合目录查询(科室、医生、病区、床位)
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "ComprehensiveCatalogueDto - 医院综合目录", description = "医院综合目录查询")
-public class ComprehensiveCatalogueDto {
+public class ComprehensiveCatalogueDto extends AbstractBaseEntity{
 
     /*response data*/
     @ApiModelProperty(notes = "目录名称")

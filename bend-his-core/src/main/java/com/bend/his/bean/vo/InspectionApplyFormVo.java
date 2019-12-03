@@ -5,14 +5,12 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.bend.his.bean.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * 检查检验_申请表
  */
-@Getter
-@Setter
+@Data
 @ApiModel(value = "InspectionApplyFormVo - 检查检验申请表", description = "检查检验申请表")
 public class InspectionApplyFormVo extends BaseEntity {
 
