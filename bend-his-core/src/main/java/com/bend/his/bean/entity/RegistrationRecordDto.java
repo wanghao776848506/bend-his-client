@@ -18,9 +18,9 @@ public class RegistrationRecordDto extends AbstractBaseEntity {
     @JSONField(name = "挂号时间")
     private String createDate;
 
-    @ApiModelProperty(notes = "机构名称")
-    @JSONField(name = "ORG_NAME")
-    private String orgName;
+    @ApiModelProperty(notes = "医院名称")
+    @JSONField(name = "医院名称")
+    private String hospitalName;
 
     @ApiModelProperty(notes = "门诊号")
     @JSONField(name = "门诊号")
