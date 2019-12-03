@@ -14,10 +14,6 @@ import lombok.Data;
 @Data
 @ApiModel(value = "HospitalThreeCatalogueVo - 医院三大目录查询(药品、诊疗、耗材)", description = "医院三大目录查询(药品、诊疗、耗材)")
 public class HospitalThreeCatalogueVo extends BaseEntity {
-    /*request params*/
-    @ApiModelProperty(notes = "验证码/授权码")
-    @JSONField(name = "验证码")
-    protected String authCode;
 
     /*0中药、1、西药、2诊疗、3耗材*/
     @ApiModelProperty(notes = "目录类型:0中药、1、西药、2诊疗、3耗材")

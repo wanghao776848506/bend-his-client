@@ -12,6 +12,10 @@ import lombok.Data;
 @ApiModel(value = "ICD10Dto - ICD10标准病种", description = "ICD10")
 public class ICD10Dto extends AbstractBaseEntity {
     /*response data*/
+    @ApiModelProperty(notes = "病种名称")
+    @JSONField(name = "病种名称")
+    private String diseaseName;
+
     @ApiModelProperty(notes = "疾病编码")
     @JSONField(name = "疾病编码")
     private String diseaseCode;
