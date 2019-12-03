@@ -13,6 +13,7 @@ import com.bend.his.common.ResponseFormat;
 import com.bend.his.config.HISWSClient;
 import com.bend.his.constant.DirectoryTypeEnum;
 import com.bend.his.constant.IConstant;
+import com.bend.his.constant.TradeCode;
 import com.bend.his.exception.HisException;
 import com.bend.his.service.HisService;
 import org.slf4j.Logger;
@@ -338,8 +339,14 @@ public class HisServiceImpl implements HisService {
         List<HospitalDepartmentDto> departmentAllList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(registrationTemplateDtoList)) {
             for (RegistrationTemplateDto registrationTemplate : registrationTemplateDtoList) {
+                //
+                RegistrationTemplateVo vo = new RegistrationTemplateVo();
+                vo.setAuthCode(hospitalDepartmentVo.getAuthCode());
+                vo.setTemplateId(registrationTemplate.getTemplateId());
+                vo.setOrganizationCode(registrationTemplate.getOrganizationCode());
+
                 //查询挂号模板下的科室列表
-                List<HospitalDepartmentDto> departmentList = this.getHISRegistrationDepartmentList(registrationTemplate);
+                List<HospitalDepartmentDto> departmentList = this.getHISRegistrationDepartmentList(vo,registrationTemplate);
                 if (!CollectionUtils.isEmpty(departmentList)) {
                     departmentAllList.addAll(departmentList);
                 }
@@ -389,9 +396,12 @@ public class HisServiceImpl implements HisService {
     }
 
 
-    private List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateDto registrationTemplate) throws HisException {
+    private List<HospitalDepartmentDto> getHISRegistrationDepartmentList(RegistrationTemplateVo vo,RegistrationTemplateDto registrationTemplate) throws HisException {
         //自定义参数
-        CommonPojo<RegistrationTemplateDto> commonPojo = CommonPojo.<RegistrationTemplateDto>newBuilder().build();
+        CommonPojo<RegistrationTemplateVo> commonPojo = CommonPojo.<RegistrationTemplateVo>newBuilder().build();
+        commonPojo.setTradeCode(TradeCode.TRADE_30_2);//查询挂号模板下科室
+        commonPojo.setInputParameter(vo.getInputParameter());
+
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
@@ -399,9 +409,11 @@ public class HisServiceImpl implements HisService {
         } else {
             String queryResultMsg = hisResult.getMsg();
             List<HospitalDepartmentDto> hospitalDepartmentDtoList = JSON.parseArray(queryResultMsg, HospitalDepartmentDto.class);
-            for (HospitalDepartmentDto hospitalDepartmentDto : hospitalDepartmentDtoList) {
-                //设置挂号模板(当前的)
-                hospitalDepartmentDto.setRegistrationTemplateDto(registrationTemplate);
+            if (!CollectionUtils.isEmpty(hospitalDepartmentDtoList)){
+                for (HospitalDepartmentDto hospitalDepartmentDto : hospitalDepartmentDtoList) {
+                    //设置挂号模板(当前的)
+                    hospitalDepartmentDto.setRegistrationTemplateDto(registrationTemplate);
+                }
             }
             return hospitalDepartmentDtoList;
         }
