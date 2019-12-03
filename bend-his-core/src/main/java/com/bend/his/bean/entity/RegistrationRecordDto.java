@@ -30,23 +30,15 @@ public class RegistrationRecordDto extends AbstractBaseEntity {
     @JSONField(name = "就诊序号")
     private String seq;
 
-    @ApiModelProperty(notes = "科室编码或科室ID")
-    @JSONField(name = "科室ID")
-    private String departmentId;
-
     @ApiModelProperty(notes = "科室名称")
     @JSONField(name = "科室")
     private String departmentName;
-
-    @ApiModelProperty(notes = "医生ID")
-    @JSONField(name = "医生ID")
-    private String doctorId;
 
     @ApiModelProperty(notes = "医生名称")
     @JSONField(name = "医生")
     private String doctorName;
 
-    @ApiModelProperty(notes = "是否可退")
+    @ApiModelProperty(notes = "是否可退[0是1否]")
     @JSONField(name = "是否可退")
     private String refundAble;
 }
