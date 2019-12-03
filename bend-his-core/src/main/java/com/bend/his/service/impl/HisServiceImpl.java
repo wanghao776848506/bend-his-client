@@ -433,24 +433,6 @@ public class HisServiceImpl implements HisService {
 
     @Override
     public List<RegistrationDto> getHISRegistration(CommonPojo<RegistrationVo> commonPojo) throws HisException {
-        RegistrationVo registrationVo = commonPojo.getData();
-        List<PayAccountBO> paymentList = registrationVo.getPaymentList();
-        String paymentListStr = "";
-        StringBuilder sbs = new StringBuilder();
-        sbs.append("[");
-        for (PayAccountBO payAccountBO : paymentList) {
-            String orgAccID = payAccountBO.getOrgAccID();
-            String paymentId = payAccountBO.getPaymentId();
-            String fee = payAccountBO.getFee();
-            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
-                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
-                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
-                    .append(",");
-        }
-        sbs.append("]");
-        paymentListStr = sbs.toString();
-        registrationVo.setPaymentListStr(paymentListStr);
-
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
@@ -506,24 +488,6 @@ public class HisServiceImpl implements HisService {
 
     @Override
     public OutpatientPaymentDto getHISOutpatientPayment(CommonPojo<OutpatientPaymentVo> commonPojo) throws HisException {
-        OutpatientPaymentVo outpatientPaymentVo = commonPojo.getData();
-        List<PayAccountBO> paymentList = outpatientPaymentVo.getPaymentList();
-        String paymentListStr = "";
-        StringBuilder sbs = new StringBuilder();
-        sbs.append("[");
-        for (PayAccountBO payAccountBO : paymentList) {
-            String orgAccID = payAccountBO.getOrgAccID();
-            String paymentId = payAccountBO.getPaymentId();
-            String fee = payAccountBO.getFee();
-            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
-                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
-                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
-            /*.append(",")*/;
-        }
-        sbs.append("]");
-        paymentListStr = sbs.toString();
-        outpatientPaymentVo.setPaymentListStr(paymentListStr);
-
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
@@ -584,23 +548,6 @@ public class HisServiceImpl implements HisService {
 
     @Override
     public PrepaymentDto getHISInpatientPrepayment(CommonPojo<PrepaymentVo> commonPojo) throws HisException {
-        PrepaymentVo prepaymentVo = commonPojo.getData();
-        List<PayAccountBO> paymentList = prepaymentVo.getPaymentList();
-        String paymentListStr = "";
-        StringBuilder sbs = new StringBuilder();
-        sbs.append("[");
-        for (PayAccountBO payAccountBO : paymentList) {
-            String orgAccID = payAccountBO.getOrgAccID();
-            String paymentId = payAccountBO.getPaymentId();
-            String fee = payAccountBO.getFee();
-            sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
-                    .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
-                    .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
-            /*.append(",")*/;
-        }
-        sbs.append("]");
-        paymentListStr = sbs.toString();
-        prepaymentVo.setPaymentListStr(paymentListStr);
 
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/

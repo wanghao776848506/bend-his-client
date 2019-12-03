@@ -1,8 +1,10 @@
 package com.bend.his.web.controller;
 
+import com.bend.his.bean.bo.PayAccountBO;
 import com.bend.his.bean.entity.*;
 import com.bend.his.bean.vo.*;
 import com.bend.his.common.CommonPojo;
+import com.bend.his.common.DateUtil;
 import com.bend.his.common.GenericResponse;
 import com.bend.his.common.ResponseFormat;
 import com.bend.his.constant.TradeCode;
@@ -12,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -555,12 +558,33 @@ public class HISController {
             @ApiImplicitParam(name = "doctorId", value = "医生ID"),
             @ApiImplicitParam(name = "paymentList", value = "缴费方式列表"),
             @ApiImplicitParam(name = "manufacturerNumber", value = "厂商唯一标识"),
+            @ApiImplicitParam(name = "createDate", value = "挂号日期[YYYY-MM-DD，注：为空默认为当前时间]"),
             @ApiImplicitParam(name = "paySerialNumber", value = "缴费流水号")
     })
     @PostMapping("his/hospital/registration")
     public GenericResponse getHISRegistration(@RequestBody CommonPojo<RegistrationVo> commonPojo) throws HisException {
         if (null != commonPojo && null != commonPojo.getData()) {
             RegistrationVo data = commonPojo.getData();
+            if (StringUtils.isEmpty(data.getCreateDate())){
+                data.setCreateDate(DateUtil.getDate("yyyy-MM-dd"));
+            }
+            List<PayAccountBO> paymentList = data.getPaymentList();
+            String paymentListStr = "";
+            StringBuilder sbs = new StringBuilder();
+            sbs.append("[");
+            for (PayAccountBO payAccountBO : paymentList) {
+                String orgAccID = payAccountBO.getOrgAccID();
+                String paymentId = payAccountBO.getPaymentId();
+                String fee = payAccountBO.getFee();
+                sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                        .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                        .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+                        .append(",");
+            }
+            sbs.append("]");
+            paymentListStr = sbs.toString();
+            data.setPaymentListStr(paymentListStr);
+
             commonPojo.setInputParameter(data.getInputParameter());
             List<RegistrationDto> list = hisService.getHISRegistration(commonPojo);
             return ResponseFormat.retInfo(list);
@@ -657,6 +681,23 @@ public class HISController {
     public GenericResponse getHISOutpatientPayment(@RequestBody CommonPojo<OutpatientPaymentVo> commonPojo) throws HisException {
         if (null != commonPojo && null != commonPojo.getData()) {
             OutpatientPaymentVo data = commonPojo.getData();
+            List<PayAccountBO> paymentList = data.getPaymentList();
+            String paymentListStr = "";
+            StringBuilder sbs = new StringBuilder();
+            sbs.append("[");
+            for (PayAccountBO payAccountBO : paymentList) {
+                String orgAccID = payAccountBO.getOrgAccID();
+                String paymentId = payAccountBO.getPaymentId();
+                String fee = payAccountBO.getFee();
+                sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                        .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                        .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+                /*.append(",")*/;
+            }
+            sbs.append("]");
+            paymentListStr = sbs.toString();
+            data.setPaymentListStr(paymentListStr);
+
             commonPojo.setInputParameter(data.getInputParameter());
             OutpatientPaymentDto outpatientPaymentDto = hisService.getHISOutpatientPayment(commonPojo);
             return ResponseFormat.retInfo(outpatientPaymentDto);
@@ -758,6 +799,23 @@ public class HISController {
     public GenericResponse getHISInpatientPrepayment(@RequestBody CommonPojo<PrepaymentVo> commonPojo) throws HisException {
         if (null != commonPojo && null != commonPojo.getData()) {
             PrepaymentVo data = commonPojo.getData();
+            List<PayAccountBO> paymentList = data.getPaymentList();
+            String paymentListStr = "";
+            StringBuilder sbs = new StringBuilder();
+            sbs.append("[");
+            for (PayAccountBO payAccountBO : paymentList) {
+                String orgAccID = payAccountBO.getOrgAccID();
+                String paymentId = payAccountBO.getPaymentId();
+                String fee = payAccountBO.getFee();
+                sbs.append("{").append("\"PaymentID\"").append(":").append("\"").append(paymentId).append("\"").append(",")
+                        .append("\"OrgAccID\"").append(":").append("\"").append(orgAccID).append("\"").append(",")
+                        .append("\"Fee\"").append(":").append("\"").append(fee).append("\"").append("}")
+                /*.append(",")*/;
+            }
+            sbs.append("]");
+            paymentListStr = sbs.toString();
+            data.setPaymentListStr(paymentListStr);
+
             commonPojo.setInputParameter(data.getInputParameter());
             PrepaymentDto list = hisService.getHISInpatientPrepayment(commonPojo);
             return ResponseFormat.retInfo(list);
