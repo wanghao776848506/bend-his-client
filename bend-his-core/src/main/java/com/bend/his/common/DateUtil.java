@@ -53,6 +53,12 @@ public class DateUtil extends DateUtils {
         return DateFormatUtils.format(new Date(), pattern);
     }
 
+    public static String getDate(String date, String pattern) {
+        Date parseDate = parseDate(date);
+        return DateFormatUtils.format(parseDate, pattern);
+    }
+
+
     /**
      * 得到日期字符串 默认格式（yyyy-MM-dd） pattern可以为："yyyy-MM-dd" "HH:mm:ss" "E"
      */

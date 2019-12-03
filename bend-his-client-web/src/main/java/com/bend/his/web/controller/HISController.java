@@ -627,8 +627,8 @@ public class HISController {
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_6),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
             @ApiImplicitParam(name = "idCardNo", value = "身份证号码"),
-            @ApiImplicitParam(name = "beginTime", value = "开始日期"),
-            @ApiImplicitParam(name = "endTime", value = "结束日期"),
+            @ApiImplicitParam(name = "beginTime", value = "开始日期,格式:yyyy-MM-dd"),
+            @ApiImplicitParam(name = "endTime", value = "开始日期,格式:yyyy-MM-dd"),
             @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
     })
     @PostMapping("his/hospital/registration/record")
