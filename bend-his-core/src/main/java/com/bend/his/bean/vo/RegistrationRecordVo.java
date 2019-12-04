@@ -33,7 +33,7 @@ public class RegistrationRecordVo extends BaseEntity {
     public String getInputParameter() {
         JSONObject inputJson = new JSONObject();
         inputJson.put("验证码", this.getAuthCode());
-        inputJson.put("身份证号码", this.getIdCardNo());
+        inputJson.put("身份证ID", this.getIdCardNo());
         inputJson.put("机构编码", this.getOrganizationCode());
         inputJson.put("开始日期", DateUtil.getDate(this.getBeginTime(), "yyyy-MM-dd"));
         inputJson.put("结束日期", DateUtil.getDate(this.getEndTime(), "yyyy-MM-dd"));

@@ -38,7 +38,7 @@ public class RegistrationRecordDto extends AbstractBaseEntity {
     @JSONField(name = "医生")
     private String doctorName;
 
-    @ApiModelProperty(notes = "是否可退[0是1否]")
+    @ApiModelProperty(notes = "是否可退[1是，0否]")
     @JSONField(name = "是否可退")
     private String refundAble;
 }
