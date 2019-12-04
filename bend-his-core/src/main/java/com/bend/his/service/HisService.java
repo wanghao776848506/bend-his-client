@@ -200,7 +200,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
-    List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException;
+    List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException;
 
 
     /**

@@ -426,21 +426,8 @@ public class HISController {
     })
     @PostMapping("his/hospital/section/registration/template/list")
     public ResponseEntity<List<HospitalDepartmentDto>> getHISRegistrationDepartmentList(@RequestBody HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
-        RegistrationTemplateDto registrationTemplateDto = new RegistrationTemplateDto();
-        //挂号模板信息查询
-        registrationTemplateDto.setTradeCode(hospitalDepartmentDto.getTradeCode());
-        registrationTemplateDto.setAuthCode(hospitalDepartmentDto.getAuthCode());
-        registrationTemplateDto.setOrganizationCode(hospitalDepartmentDto.getOrganizationCode());
-        //返回所有挂号模板列表
-        QueryResult<List<RegistrationTemplateDto>> listQueryResult = hisService.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
-        List<RegistrationTemplateDto> registrationTemplateDtoList = listQueryResult.getData();
-        if (Objects.isNull(registrationTemplateDtoList)) {
-            throw new HisException(listQueryResult.getMsg());
-        }
-
         //所有科室下挂号模板--可以科室查询
-        List<HospitalDepartmentDto> registrationDepartmentList = hisService.getHISDepartmentRegistrationTemplateList(hospitalDepartmentDto, registrationTemplateDtoList);
-
+        List<HospitalDepartmentDto> registrationDepartmentList = hisService.getHISDepartmentRegistrationTemplateList(hospitalDepartmentDto);
         return ResponseEntity.ok(registrationDepartmentList);
     }
 

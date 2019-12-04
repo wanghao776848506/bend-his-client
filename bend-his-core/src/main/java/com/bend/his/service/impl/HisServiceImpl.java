@@ -669,7 +669,19 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto, List<RegistrationTemplateDto> registrationTemplateDtoList) throws HisException {
+    public List<HospitalDepartmentDto> getHISDepartmentRegistrationTemplateList(HospitalDepartmentDto hospitalDepartmentDto) throws HisException {
+        RegistrationTemplateDto registrationTemplateDto = new RegistrationTemplateDto();
+        //挂号模板信息查询
+        registrationTemplateDto.setTradeCode(hospitalDepartmentDto.getTradeCode());
+        registrationTemplateDto.setAuthCode(hospitalDepartmentDto.getAuthCode());
+        registrationTemplateDto.setOrganizationCode(hospitalDepartmentDto.getOrganizationCode());
+        //返回所有挂号模板列表
+        QueryResult<List<RegistrationTemplateDto>> listQueryResult = this.getHISHospitalRegistrationTemplateList(registrationTemplateDto);
+        List<RegistrationTemplateDto> registrationTemplateDtoList = listQueryResult.getData();
+        if (Objects.isNull(registrationTemplateDtoList)) {
+            throw new HisException(listQueryResult.getMsg());
+        }
+
         //所有科室
         List<HospitalDepartmentDto> departmentAllList = new ArrayList<>();
         if (!CollectionUtils.isEmpty(registrationTemplateDtoList)) {
