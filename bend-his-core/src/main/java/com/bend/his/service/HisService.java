@@ -288,7 +288,7 @@ public interface HisService {
      * @return
      * @throws HisException
      */
-    List<PrepaymentRecordDto> getHISInpatientPrepaymentRecordList(CommonPojo<PrepaymentRecordVo> commonPojo) throws HisException;
+    List<PrepaymentDto> getHISInpatientPrepaymentRecordList(CommonPojo<PrepaymentRecordVo> commonPojo) throws HisException;
 
     /**
      * No.31 30-13 每日清单查询:此接口用于获取HIS系统中每日清单记录

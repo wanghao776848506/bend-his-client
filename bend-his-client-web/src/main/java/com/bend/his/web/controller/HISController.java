@@ -836,7 +836,7 @@ public class HISController {
         if (null != commonPojo && null != commonPojo.getData()) {
             PrepaymentRecordVo data = commonPojo.getData();
             commonPojo.setInputParameter(data.getInputParameter());
-            List<PrepaymentRecordDto> list = hisService.getHISInpatientPrepaymentRecordList(commonPojo);
+            List<PrepaymentDto> list = hisService.getHISInpatientPrepaymentRecordList(commonPojo);
             return ResponseFormat.retInfo(list);
         } else {
             return ResponseFormat.retInfo(ResponseFormat.CODE_10004);

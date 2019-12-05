@@ -560,14 +560,14 @@ public class HisServiceImpl implements HisService {
     }
 
     @Override
-    public List<PrepaymentRecordDto> getHISInpatientPrepaymentRecordList(CommonPojo<PrepaymentRecordVo> commonPojo) throws HisException {
+    public List<PrepaymentDto> getHISInpatientPrepaymentRecordList(CommonPojo<PrepaymentRecordVo> commonPojo) throws HisException {
         HISResult hisResult = hiswsClient.invokeWebService(commonPojo);
         /*ws服务请求成功验证*/
         if (IConstant.RESULT_FAILURE_CODE.equals(hisResult.getResult())) {
             throw new HisException(ResponseFormat.CODE_50004, hisResult.getMsg());
         } else {
             String queryResultMsg = hisResult.getMsg();
-            return JSON.parseArray(queryResultMsg, PrepaymentRecordDto.class);
+            return JSON.parseArray(queryResultMsg, PrepaymentDto.class);
         }
     }
 
