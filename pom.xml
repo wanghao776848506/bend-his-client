@@ -6,7 +6,7 @@
     <groupId>com.bend.his</groupId>
     <artifactId>bend-his-client</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>bend :: his :: client</name>
     <description>bend his sdk</description>
 
@@ -31,7 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.0.2-SNAPSHOT</revision>
         <swagger.version>1.5.21</swagger.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <swagger-bootstrap-ui.version>1.9.3</swagger-bootstrap-ui.version>
