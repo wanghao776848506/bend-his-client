@@ -45,58 +45,6 @@ import lombok.Data;
 @ApiModel(value = "OldHealthCheckupDto - 老年人体检查询", description = "老年人体检查询")
 public class OldHealthCheckupDto extends AbstractBaseEntity {
 
-    @ApiModelProperty(notes = "验证码/产品验证码")
-    @JSONField(name = "ProductCode")
-    private String productCode;
-
-    @ApiModelProperty(notes = "分页大小(1~100)(必填)")
-    @JSONField(name = "PageSize")
-    private String pageSize;
-
-    @ApiModelProperty(notes = "分页索引(0~)(必填)")
-    @JSONField(name = "PageIndex")
-    private String pageIndex;
-
-    @ApiModelProperty(notes = "区划编码(必填)")
-    @JSONField(name = "RegionCode")
-    private String regionCode;
-
-    @ApiModelProperty(notes = "是否完善 0:是 1:否 (不填则查全部)")
-    @JSONField(name = "IsPerfect")
-    private String isPerfect;
-
-    @ApiModelProperty(notes = "随访开始时间(yyyy-MM-dd)")
-    @JSONField(name = "FollowUpDateS")
-    private String followUpDateS;
-
-    @ApiModelProperty(notes = "随访结束时间(yyyy-MM-dd)")
-    @JSONField(name = "FollowUpDateE")
-    private String followUpDateE;
-
-    @ApiModelProperty(notes = "下次随访开始时间(yyyy-MM-dd)")
-    @JSONField(name = "NextFollowUpDateS")
-    private String nextFollowUpDateS;
-
-    @ApiModelProperty(notes = "下次随访结束时间(yyyy-MM-dd)")
-    @JSONField(name = "NextFollowUpDateE")
-    private String nextFollowUpDateE;
-
-    @ApiModelProperty(notes = "随访医生ID")
-    @JSONField(name = "DoctorID")
-    private String doctorID;
-
-    @ApiModelProperty(notes = "1:姓名或拼音 2:身份证号 3:档案号 (不填则不用填写KeyValue中内容)")
-    @JSONField(name = "KeyValueType")
-    private String keyValueType;
-
-    @ApiModelProperty(notes = "与KeyValueType绑定内容")
-    @JSONField(name = "KeyValue")
-    private String keyValue;
-
-    @ApiModelProperty(notes = "管辖区划列表")
-    @JSONField(name = "ManageRegionCodeList")
-    private String manageRegionCodeList;
-
     /*response data*/
     @ApiModelProperty(notes = "个人ID/居民ID")
     @JSONField(name = "PERSONID")
