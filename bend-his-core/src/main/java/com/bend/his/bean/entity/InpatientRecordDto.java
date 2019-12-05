@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 @Data
 @ApiModel(value = "InpatientRecordDto - 病人住院记录", description = "病人住院记录")
 public class InpatientRecordDto extends AbstractBaseEntity {
-    /*response data*/
-    @ApiModelProperty(notes = "住院记录ID")
-    @JSONField(name = "ID")
-    private String recordId;
+
+    @ApiModelProperty(notes = "住院ID/业务ID,不同场景下参数，功能一致")
+    @JSONField(name = "住院ID")
+    private String hospitalizationId;
 
     @ApiModelProperty(notes = "住院号")
     @JSONField(name = "住院号")
@@ -26,12 +26,16 @@ public class InpatientRecordDto extends AbstractBaseEntity {
     @JSONField(name = "姓名")
     private String patientName;
 
-    @ApiModelProperty(notes = "入院时间")
-    @JSONField(name = "入院时间")
+    @ApiModelProperty(notes = "身份证")
+    @JSONField(name = "身份证")
+    private String idCardNo;
+
+    @ApiModelProperty(notes = "入院日期")
+    @JSONField(name = "入院日期")
     private String admissionDate;
 
-    @ApiModelProperty(notes = "出院时间")
-    @JSONField(name = "出院时间")
+    @ApiModelProperty(notes = "出院日期")
+    @JSONField(name = "出院日期")
     private String leaveHospitalDate;
 
     @ApiModelProperty(notes = "医院名称")
@@ -43,12 +47,10 @@ public class InpatientRecordDto extends AbstractBaseEntity {
     private String inDepartmentName;
 
     @ApiModelProperty(notes = "住院总费用/总费用")
-    @JSONField(name = "总费用")
+    @JSONField(name = "住院总费用")
     private BigDecimal totalFee;
 
-    @ApiModelProperty(notes = "住院ID/业务ID,不同场景下参数，功能一致")
-    @JSONField(name = "住院ID")
-    private String hospitalizationId;
+
 
 
 }
