@@ -767,9 +767,10 @@ public class HISController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "tradeCode", value = "交易编号" + TradeCode.TRADE_30_10),
             @ApiImplicitParam(name = "authCode", value = "验证码"),
-            @ApiImplicitParam(name = "idCardNo", value = "身份证ID"),
-            @ApiImplicitParam(name = "patientName", value = "病人姓名"),
-            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]")
+            @ApiImplicitParam(name = "idCardNo", value = "身份证ID,姓名为空身份证不为空时通过身份证检索；身份证和姓名均为空时获取该机构下所有在院数据"),
+            @ApiImplicitParam(name = "patientName", value = "病人姓名,不为空时优先通过姓名检索在院数据"),
+            @ApiImplicitParam(name = "organizationCode", value = "机构编码[取接口30返回的ID]"),
+            @ApiImplicitParam(name = "isInsurance", value = "0否1是，当值为1时只取医保已经登记的在院数据（泸州医保专用，其他情况可不传）"),
     })
     @PostMapping("his/hospital/hospitalization/record/list")
     public GenericResponse getHISHospitalizationRecordList(@RequestBody CommonPojo<InpatientRecordVo> commonPojo) throws HisException {
